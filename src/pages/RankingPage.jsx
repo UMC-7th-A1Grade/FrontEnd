@@ -1,13 +1,15 @@
-import styles from './Ranking.module.css';
-// 일단 뷰 다 만들고 컴포넌트로 분리
-import characterA from '../../assets/images/모자4.png';
-import characterB from '../../assets/images/머리2.png';
-import characterC from '../../assets/images/안경1.png';
-import ranking1 from '../../assets/images/1stRankBar.png';
-import ranking2 from '../../assets/images/2ndRankBar.png';
-import ranking3 from '../../assets/images/3rdRankBar.png';
+import React from 'react';
+import styles from '../styles/rankingPage/RankingPage.module.css';
+import UserCard from '../components/rankingPage/UserCard.jsx';
 
-function Ranking() {
+import characterA from '../assets/images/rankingPage/모자4.png';
+import characterB from '../assets/images/rankingPage/머리2.png';
+import characterC from '../assets/images/rankingPage/안경1.png';
+import ranking1 from '../assets/images/rankingPage/1stRankBar.png';
+import ranking2 from '../assets/images/rankingPage/2ndRankBar.png';
+import ranking3 from '../assets/images/rankingPage/3rdRankBar.png';
+
+function RankingPage() {
   // 임시데이터
   const rankingData = [
     { name: '임채현님', character: characterA },
@@ -23,39 +25,24 @@ function Ranking() {
         <div className={styles.infoText}>매일 밤 12시 초기화 됩니다.</div>
       </div>
       <div className={styles.rankContainer}>
-        <div> {/* 2위영역 */}
-          <img
-            src={rankingData[0].character} 
-            alt="2위 캐릭터 아이콘" 
-            className={styles.characterIcon}
-          />
-          <div className={styles.rankName}>{rankingData[0].name}</div>
+        <div> {/* 2위 영역 */}
+          <UserCard name={rankingData[0].name} character={rankingData[0].character} />
           <img
             src={ranking2} 
             alt="2위 그래프" 
             className={styles.rankingIcon}
           />
         </div>
-        <div> {/* 1위영역 */}
-          <img
-            src={rankingData[1].character} 
-            alt="1위 캐릭터 아이콘" 
-            className={styles.characterIcon}
-          />
-          <div className={styles.rankName}>{rankingData[1].name}</div>
+        <div> {/* 1위 영역 */}
+          <UserCard name={rankingData[1].name} character={rankingData[1].character} />
           <img
             src={ranking1} 
             alt="1위 그래프" 
             className={styles.rankingIcon}
           />
         </div>
-        <div> {/* 3위영역 */}
-          <img
-            src={rankingData[2].character} 
-            alt="3위 캐릭터 아이콘" 
-            className={styles.characterIcon}
-          />
-          <div className={styles.rankName}>{rankingData[2].name}</div>
+        <div> {/* 3위 영역 */}
+          <UserCard name={rankingData[2].name} character={rankingData[2].character} />
           <img
             src={ranking3} 
             alt="3위 그래프" 
@@ -70,6 +57,6 @@ function Ranking() {
       </div>
     </>
   );
-};
+}
 
-export default Ranking;
+export default RankingPage;

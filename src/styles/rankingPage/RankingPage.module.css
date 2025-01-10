@@ -36,25 +36,11 @@
   margin-top: 68px;
 }
 
-.characterIcon {
-  width: 54px;
-  height: 54px;
-  cursor: none;
-}
-
 .rankingIcon {
   width: 50px;
   height: 100%;
   cursor: none;
   position: relative;
-}
-
-.rankName {
-  color: #1E1E1E;
-  font-size: 12px;
-  font-weight: 600;
-  margin-top: 4px;
-  margin-bottom: 8px;
 }
 
 /* 하단부분 */
