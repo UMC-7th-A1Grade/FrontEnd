@@ -3,12 +3,14 @@ import Layout from "../layout/Layout";
 
 //pages
 import HomePage from "../pages/HomePage";
+import Ranking from "../pages/Ranking/Ranking";
 
 const Routes = () => {
   return (
     <ReactRouters>
       <Route path="/" element={<Layout />}>
         <Route path="" element={<HomePage />} />
+        <Route path="ranking" element={<Ranking />} />
       </Route>
     </ReactRouters>
   );
