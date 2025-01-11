@@ -1,3 +1,9 @@
-export default function HomePage() {
-  return <></>;
+function HomePage() {
+  return (
+    <>
+      <h1>Home</h1>
+    </>
+  );
 }
+
+export default HomePage;
