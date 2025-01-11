@@ -1,0 +1,16 @@
+.userCard {
+  text-align: center;
+}
+
+.characterIcon {
+  width: 54px;
+  height: 54px;
+}
+
+.rankName {
+  color: #1E1E1E;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}

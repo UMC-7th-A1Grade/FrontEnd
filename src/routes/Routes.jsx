@@ -4,8 +4,8 @@ import Layout from '../layout/Layout';
 //pages
 import HomePage from '../pages/HomePage';
 import MyPage from '../pages/MyPage';
-import Ranking from '../pages/Ranking/Ranking';
 import StoragePage from '../pages/StoragePage';
+import RankingPage from '../pages/RankingPage';
 
 const Routes = () => {
   return (
@@ -24,7 +24,7 @@ const Routes = () => {
         />
         <Route
           path='ranking'
-          element={<Ranking />}
+          element={<RankingPage />}
         />
         <Route
           path='storage'
