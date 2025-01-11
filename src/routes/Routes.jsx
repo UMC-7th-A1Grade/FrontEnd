@@ -3,10 +3,8 @@ import Layout from "../layout/Layout";
 
 //pages
 import HomePage from "../pages/HomePage";
-import Ranking from "../pages/Ranking/Ranking";
-import StoragePage from "../pages/StoragePage";
 import Login from "../pages/LoginPage/LoginPage";
-import Register from "../pages/RegisterPage/RegisterPage";
+import NicknamePage from "../pages/NicknamePage/NicknamePage";
 
 
 const Routes = () => {
@@ -15,9 +13,7 @@ const Routes = () => {
       <Route path="/" element={<Layout />}>
         <Route path="" element={<HomePage />} />
         <Route path="login" element={<Login />} />
-        <Route path="Register" element={<Register />} />
-        <Route path="ranking" element={<Ranking />} />
-        <Route path="storage" element={<StoragePage />} />
+        <Route path="nickname" element={<NicknamePage />} />
       </Route>
     </ReactRouters>
   );

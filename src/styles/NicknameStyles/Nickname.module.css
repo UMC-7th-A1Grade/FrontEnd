@@ -1,0 +1,93 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.background {
+  width: 100vw;
+  height: 100vh;
+  min-height: 844px;
+  background-color: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 390px;
+  height: 844px;
+  margin: auto;
+  background-color: #FFFFFF;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 390px) {
+  .container {
+    height: 100vh;
+  }
+}
+
+.contentWrapper {
+  position: absolute;
+  width: 322px;
+  top: 238px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.logoSection {
+  width: 212px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  margin: 0;
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.welcomeText {
+  width: 212px;
+  font-family: "Pretendard", sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 34px;
+  letter-spacing: 0.02em;
+  text-align: left;
+  color: var(--1, #00E3EA);
+  margin: 0;
+}
+
+.welcomeText span {
+  display: inline-block;
+  white-space: nowrap;
+  font-family: "Pretendard", sans-serif;
+}
+
+@media screen and (max-height: 844px) {
+  .background {
+    position: absolute;
+    min-height: 844px;
+  }
+}

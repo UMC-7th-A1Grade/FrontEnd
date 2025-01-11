@@ -1,0 +1,39 @@
+.inputSection {
+  width: 100%;
+  max-width: 322px;
+  height: 2.5rem; /* 40px */
+  border: 1px solid #E3E3E3;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.nicknameInput {
+  width: 100%;
+  height: 100%;
+  background-color: #FFFFFF;
+  border: none;
+  outline: none;
+  padding: 0 0.8125rem; /* 13px */
+  font-family: "Pretendard", sans-serif;
+  font-size: 0.875rem; /* 14px */
+  color: #919191;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.nicknameInput::placeholder {
+  color: #919191;
+}
+
+@media screen and (max-width: 320px) {
+  .inputSection {
+    max-width: 290px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .inputSection {
+    max-width: 322px;
+  }
+}

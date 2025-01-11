@@ -1,0 +1,25 @@
+.nextButton {
+    width: 150px;
+    height: 42px;
+    position: absolute;
+    top: 486px;
+    left: 120px;
+    padding: 14px 54px;
+    gap: 10px;
+    border-radius: 4px 0 0 0;
+    background-color: #00203E;
+    border: none;
+    cursor: pointer;
+    font-family: "Pretendard", sans-serif;
+    color: #FFFFFF;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    box-sizing: border-box;
+  }
+  
+  .nextButton:hover {
+    opacity: 0.9;
+  }
