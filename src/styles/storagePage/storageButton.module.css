@@ -1,0 +1,48 @@
+.allContainer{
+    
+}
+
+.buttonContainer{
+    display: flex;
+    justify-content: center;
+    padding: 10% 5%;
+    gap: 3%;
+}
+
+.button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 30px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: "Pretendard";
+    color: #626262;
+    padding: 3% 5%;
+    background-color: white;
+    border: 1px solid #626262;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.button:active {
+    background-color: #00203E;
+    color: white;
+    transform: scale(0.95);
+}
+
+.active {
+    background-color: #00203E;
+    color: white;
+    border: 1px solid #00203E;
+}
+
+/* PC용 */
+@media (hover: hover) {
+    .button:hover {
+        background-color: #00203E;
+        color: white;
+    }
+}

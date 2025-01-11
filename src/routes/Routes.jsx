@@ -5,7 +5,8 @@ import Layout from "../layout/Layout";
 import HomePage from "../pages/HomePage";
 import Login from "../pages/LoginPage/LoginPage";
 import NicknamePage from "../pages/NicknamePage/NicknamePage";
-
+import Ranking from "../pages/Ranking/Ranking";
+import StoragePage from "../pages/StoragePage";
 
 const Routes = () => {
   return (
@@ -14,6 +15,8 @@ const Routes = () => {
         <Route path="" element={<HomePage />} />
         <Route path="login" element={<Login />} />
         <Route path="nickname" element={<NicknamePage />} />
+        <Route path="ranking" element={<Ranking />} />
+        <Route path="storage" element={<StoragePage />} />
       </Route>
     </ReactRouters>
   );
