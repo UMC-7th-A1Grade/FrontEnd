@@ -1,0 +1,78 @@
+/* 공통 버튼 스타일 */
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Pretendard";
+  font-size: 12px;
+  font-weight: bold;
+  border: 1px solid;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
+.filled {
+  color: #fff;
+}
+
+/* 색상별 스타일 */
+.red {
+  border-color: #ec2d30;
+  background-color: #ec2d30;
+}
+
+.red:hover,
+.red:active {
+  border-color: #ec2d30;
+  background-color: #ec2d30;
+}
+
+.blue {
+  border-color: #19ced4;
+  background-color: #19ced4;
+}
+
+.blue:hover,
+.blue:active {
+  border-color: #009499;
+  background-color: #009499;
+}
+
+.gray {
+  border-color: #f4f4f4;
+  background-color: #f4f4f4;
+  color: #000;
+}
+
+.gray:hover,
+.gray:active {
+  background-color: #f4f4f4;
+  color: #000;
+}
+
+.darkBlue {
+  border-color: #00203e;
+  background-color: #00203e;
+}
+
+.darkBlue:hover,
+.darkBlue:active {
+  border-color: #001426;
+  background-color: #001426;
+}
+
+.outline {
+  background-color: transparent;
+}
+
+.outline:active {
+  background-color: transparent !important;
+}
+
+.outline:hover {
+  background-color: transparent !important;
+}
