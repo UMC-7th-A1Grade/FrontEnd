@@ -1,0 +1,37 @@
+.timerContainer {
+  display: inline-flex;
+  padding: 0px 4px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 2px;
+  border: 1px solid #E3E3E3;
+  width: 64px;
+  height: 22px;
+}
+
+.warningContainer {
+  border: 1px solid #EC2D30;
+}
+
+.timerIcon {
+  width: 16px;
+  height: 16px;;
+}
+
+.timerText {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.defaultText {
+  color: #E3E3E3;
+}
+
+.activeText {
+  color: #1E1E1E;
+}
+
+.warningText {
+  color: #EC2D30;
+}
