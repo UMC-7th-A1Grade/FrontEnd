@@ -13,7 +13,7 @@ const Routes = () => {
   return (
     <ReactRouters>
       <Route path="/" element={<Layout />}>
-        <Route path="" element={<HomePage />} />
+        <Route path="home" element={<HomePage />} />
         <Route path="login" element={<Login />} />
         <Route path="Register" element={<Register />} />
         <Route path="ranking" element={<Ranking />} />
