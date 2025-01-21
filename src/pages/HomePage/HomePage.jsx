@@ -32,7 +32,7 @@ const HomePage = () => {
     <main className={styles.layout}>
       <header className={styles.layout__header}>
         <img
-          src="/src/assets/images/Logo/Logo_Nickname.svg"
+          src="/src/assets/images/nickname/Logo_Nickname.svg"
           alt="Logo"
           className={styles.layout__logo}
         />
@@ -70,8 +70,7 @@ const HomePage = () => {
       <aside className={styles.layout__random_button}>
         <RandomQuestionButton />
         <p className={styles.review_text}>
-          문제를 클릭해서 나의 복습을 확인해보세요!
-        </p>
+        AI의 Ai가 당신의 오답을 기록해놨어요        </p>
       </aside>
 
       <aside className={styles.layout__myButton}>
