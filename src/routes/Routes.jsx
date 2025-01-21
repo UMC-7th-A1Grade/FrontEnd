@@ -6,6 +6,7 @@ import HomePage from '../pages/HomePage';
 import MyPage from '../pages/MyPage';
 import StoragePage from '../pages/StoragePage';
 import RankingPage from '../pages/RankingPage';
+import AfterShootingPage from '../pages/AfterShootingPage';
 
 const Routes = () => {
   return (
@@ -29,6 +30,10 @@ const Routes = () => {
         <Route
           path='storage'
           element={<StoragePage />}
+        />
+        <Route
+          path='afterShooting'
+          element={<AfterShootingPage />}
         />
       </Route>
     </ReactRouters>
