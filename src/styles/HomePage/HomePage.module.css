@@ -1,0 +1,124 @@
+.layout {
+    position: relative;
+    width: 390px;
+    height: 844px;
+    background-color: white;
+    margin: 0 auto;
+  }
+  
+  .layout__header {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 128px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .layout__logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  .layout__greeting {
+    position: absolute;
+    width: 205px;
+    height: 29px;
+    top: 192px;
+    bottom: 623px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29.05px;
+    text-align: left;
+  }
+  
+  .layout__subtext {
+    position: absolute;
+    width: 261px;
+    height: 22px;
+    top: 227px;
+    bottom: 595px;
+    left: 72.5px;
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21.78px;
+    text-align: left;
+  }
+  
+  .layout__message {
+    position: absolute;
+    top: 262px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .layout__random_button {
+    position: absolute;
+    top: 544px;
+    left: 62.5px;
+  }
+  
+  .layout__slider {
+    position: absolute;
+    width: 100%;
+    height: 160px;
+    top: 316px;
+  }
+  
+  .review_text {
+    position: absolute;
+    width: 202px;
+    height: 14px;
+    left: 40px;
+    top: -32px;
+    font-family: 'Pretendard';
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 14.32px;
+    text-align: left;
+    color: #1E1E1E;
+  }
+  
+  .layout__myButton {
+    position: absolute;
+    top: 617px;
+    left: 62px;
+    border-radius: 4px;
+  }
+  
+  .layout__storagebutton {
+    position: absolute;
+    top: 617px;
+    left: 239px;
+    border-radius: 4px;
+  }
+  
+  .layout__content {
+    position: relative;
+    width: 100%;
+  }
+  
+  .layout__slide_circle {
+    position: absolute;
+    top: 492px;
+    left: 168px;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+  }
+  
+  .layout__creditbutton {
+    position: absolute;
+    top: 128px;
+    left: 268.95px;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+  }

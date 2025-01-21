@@ -1,0 +1,22 @@
+.messageContainer {
+    width: 265px;
+    height: 40px;
+    position: relative;
+  }
+  
+  .semicircle {
+    width: 100%;
+    height: 100%;
+    background-color: #19CED4;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .messageText {
+    color: white;
+    font-family: 'Pretendard';
+    font-size: 14px;
+    font-weight: 500;
+  }

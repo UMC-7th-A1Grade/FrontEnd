@@ -1,0 +1,22 @@
+.randomButton {
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  .icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+  }
+  
+  .randomButton:hover .icon {
+    transform: scale(1.1);
+  }
