@@ -92,7 +92,7 @@ const NicknameInput = ({ onComplete }) => {
      <input
        type="text"
        className={inputClassName}
-       placeholder="닉네임을 입력해 주세요"
+       placeholder="닉네임을 입력해 주세요!"
        value={nickname}
        onChange={handleInputChange}
        maxLength={5}
