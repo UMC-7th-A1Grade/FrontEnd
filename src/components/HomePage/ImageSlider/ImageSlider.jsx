@@ -9,11 +9,11 @@ const ImageSlider = ({ currentPage, onPageChange }) => {
     '/src/assets/images/home/math_4.png',
     '/src/assets/images/home/math_5.png'
   ]);
-
   const [direction, setDirection] = useState('right');
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [currentTranslate, setCurrentTranslate] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const sliderRef = useRef(null);
 
   useEffect(() => {
@@ -64,42 +64,77 @@ const ImageSlider = ({ currentPage, onPageChange }) => {
     setCurrentTranslate(0);
   };
 
-  return (
-    <div className={styles.slider}>
-      {images.map((image, index) => {
-        let position;
-        if (index === currentPage - 2) position = 'farLeft';
-        else if (index === currentPage - 1) position = 'left';
-        else if (index === currentPage) position = 'center';
-        else if (index === currentPage + 1) position = 'right';
-        else if (index === currentPage + 2) position = 'farRight';
-        else return null;
+  const handleImageClick = (index, position) => {
+    if (position === 'center') {
+      setIsModalOpen(true);
+    } else {
+      onPageChange(index);
+    }
+  };
 
-        return (
-          <div
-            key={index}
-            className={`${styles.slider__item} ${styles[`slider__item--${position}`]}`}
-            style={{
-              transform: isDragging ? `translateX(${currentTranslate}px)` : undefined
-            }}
-            onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
-            onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
-            onTouchEnd={handleDragEnd}
-            onMouseDown={(e) => handleDragStart(e.clientX)}
-            onMouseMove={(e) => handleDragMove(e.clientX)}
-            onMouseUp={handleDragEnd}
-            onMouseLeave={() => isDragging && handleDragEnd()}
+  return (
+    <>
+      <div className={styles.slider}>
+        {images.map((image, index) => {
+          let position;
+          if (index === currentPage - 2) position = 'farLeft';
+          else if (index === currentPage - 1) position = 'left';
+          else if (index === currentPage) position = 'center';
+          else if (index === currentPage + 1) position = 'right';
+          else if (index === currentPage + 2) position = 'farRight';
+          else return null;
+
+          return (
+            <div
+              key={index}
+              className={`${styles.slider__item} ${styles[`slider__item--${position}`]}`}
+              style={{
+                transform: isDragging ? `translateX(${currentTranslate}px)` : undefined
+              }}
+              onClick={() => handleImageClick(index, position)}
+              onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
+              onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
+              onTouchEnd={handleDragEnd}
+              onMouseDown={(e) => handleDragStart(e.clientX)}
+              onMouseMove={(e) => handleDragMove(e.clientX)}
+              onMouseUp={handleDragEnd}
+              onMouseLeave={() => isDragging && handleDragEnd()}
+            >
+              <img
+                src={image}
+                alt={`Slide ${index + 1}`}
+                className={styles.slider__image}
+                draggable="false"
+              />
+            </div>
+          );
+        })}
+      </div>
+
+      {isModalOpen && (
+        <div 
+          className={styles.modal__overlay}
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div 
+            className={styles.modal__content}
+            onClick={e => e.stopPropagation()}
           >
             <img
-              src={image}
-              alt={`Slide ${index + 1}`}
-              className={styles.slider__image}
-              draggable="false"
+              src={images[currentPage]}
+              alt={`확대된 이미지 ${currentPage + 1}`}
+              className={styles.modal__image}
             />
+            <button 
+              className={styles.modal__close}
+              onClick={() => setIsModalOpen(false)}
+            >
+              닫기
+            </button>
           </div>
-        );
-      })}
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 

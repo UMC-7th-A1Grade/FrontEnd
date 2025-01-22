@@ -1,16 +1,18 @@
 .container {
   width: 100%;
-  height: 100%;
+  min-height: 100vh; /* 고정 높이 대신 최소 높이 사용 */
   margin: auto;
   position: relative;
+  display: flex; /* flex 컨테이너로 변경 */
 }
 
 .contentWrapper {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-  height: 100%;
+  padding: 0 20px; /* 좌우 패딩 추가 */
+  flex: 1; /* 남은 공간 차지 */
 }
 
 .logoSection {
@@ -32,11 +34,10 @@
 
 .welcomeText {
   width: 239px;
-  height: 68px;
   margin-top: 24px;
   font-family: 'Pretendard';
   font-size: 28px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 34px;
   letter-spacing: 0.02em;
   text-align: center;
@@ -54,22 +55,25 @@
 }
 
 .inputWrapper {
-  position: absolute;
-  top: 420.66px;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 28px; /* 간격 조정 */
 }
 
 .buttonWrapper {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 521px;
-  bottom: 281px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 28px; /* 입력창과의 간격 */
 }
 
 @media screen and (max-width: 320px) {
   .container {
     max-width: 320px;
+  }
+  
+  .logoSection {
+    margin-top: 64px; /* 모바일에서는 상단 여백 줄임 */
   }
 }
