@@ -6,7 +6,7 @@ const SemicircleMessage = () => {
     <div className={styles.messageContainer}>
       <div className={styles.semicircle}>
         <p className={styles.messageText}>
-          오늘의 복습 문제를 풀어보세요!
+        AI의 Ai가 당신의 오답을 기록해놨어요       
         </p>
       </div>
     </div>

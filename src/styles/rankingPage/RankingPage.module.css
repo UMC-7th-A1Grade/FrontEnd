@@ -1,0 +1,64 @@
+/* 상단부분 */
+.textContainerTop {
+  text-align: center;
+  position: relative;
+  margin-top: 38px;
+}
+
+.titleText {
+  color: #1E1E1E;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.mvpText {
+  color: #2D2D2D;
+  font-size: 24px;
+  font-weight: 500;
+  margin-top: 6px;
+}
+
+.infoText {
+  color: #575757;
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 4px;
+}
+
+/* 중앙부분 */
+.rankContainer {
+  text-align: center;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 32px; /* 피그마 32.5 or 32.11이어서 일단 통일 */
+  margin-top: 68px;
+}
+
+.rankingIcon {
+  width: 50px;
+  height: 100%;
+  cursor: none;
+  position: relative;
+}
+
+/* 하단부분 */
+.textContainerBtm {
+  text-align: center;
+  position: relative;
+  margin-top: 17px;
+}
+
+.titleTextBtm {
+  color: #1E1E1E;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.infoTextBtm {
+  color: #575757;
+  font-size: 11px;
+  font-weight: 400;
+  margin-top: 7px;
+}

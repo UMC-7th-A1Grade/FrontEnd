@@ -6,6 +6,9 @@ import SlideCircle from '../../components/HomePage/SlideCircle/SlideCircle';
 import RandomQuestionButton from '../../components/HomePage/RandomQusetionButton/RandomQusetionButton';
 import LinkMyPageButton from '../../components/HomePage/LinkMyPageButton/LinkMyPageButton';
 import LinkStorageButton from '../../components/HomePage/LinkStorageButton/LinkStorageButton';
+import CreditButton from '../../components/HomePage/CreditButton/CreditButton';
+
+
 const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(2);
   const [userNickname, setUserNickname] = useState('홍길동');
@@ -80,6 +83,11 @@ const HomePage = () => {
       <aside className={styles.layout__storagebutton}>
         <LinkStorageButton />
       </aside>
+
+      <aside className={styles.layout__creditButton}>
+        <CreditButton />
+      </aside>
+
     </main>
   );
 };
