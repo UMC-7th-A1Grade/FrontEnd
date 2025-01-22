@@ -7,6 +7,7 @@ import RandomQuestionButton from '../../components/HomePage/RandomQusetionButton
 import LinkMyPageButton from '../../components/HomePage/LinkMyPageButton/LinkMyPageButton';
 import LinkStorageButton from '../../components/HomePage/LinkStorageButton/LinkStorageButton';
 import CreditButton from '../../components/HomePage/CreditButton/CreditButton';
+import LinkCameraButton from '../../components/HomePage/LinkCameraButton/LinkCameraButton';
 
 
 const HomePage = () => {
@@ -73,7 +74,7 @@ const HomePage = () => {
       <aside className={styles.layout__random_button}>
         <RandomQuestionButton />
         <p className={styles.review_text}>
-        AI의 Ai가 당신의 오답을 기록해놨어요        </p>
+        문제를 클릭해서 나의 복습을 확인해보세요! </p>
       </aside>
 
       <aside className={styles.layout__myButton}>
@@ -86,6 +87,10 @@ const HomePage = () => {
 
       <aside className={styles.layout__creditButton}>
         <CreditButton />
+      </aside>
+
+      <aside className={styles.layout__CameraButton}>
+        <LinkCameraButton />
       </aside>
 
     </main>

@@ -3,11 +3,11 @@ import styles from './ImageSlider.module.css';
 
 const ImageSlider = ({ currentPage, onPageChange }) => {
   const [images] = useState([
-    '/src/assets/images/math_1.png',
-    '/src/assets/images/math_1.png',
-    '/src/assets/images/math_1.png',
-    '/src/assets/images/math_1.png',
-    '/src/assets/images/math_1.png'
+    '/src/assets/images/home/math_1.png',
+    '/src/assets/images/home/math_2.png',
+    '/src/assets/images/home/math_3.png',
+    '/src/assets/images/home/math_4.png',
+    '/src/assets/images/home/math_5.png'
   ]);
 
   const [direction, setDirection] = useState('right');

@@ -6,23 +6,21 @@
   background-color: white;
   border: 1px solid #FFC700;
   border-radius: 2px;
-  padding: 6px 20px;
-  box-sizing: border-box;
+  padding: 5px 8px;
+
  }
  
  .credit_icon {
-  width: 14px;  /* 아이콘 크기 조정 */
-  height: 14px;
-  flex-shrink: 0;
+  width: 16px; 
+  height: 16px;
+  gap: 24px;
  }
  
  .credit_amount {
   color: #1E1E1E;
   font-family: 'Pretendard';
-  font-size: 12px;  
-  line-height: 1; 
-  font-weight: 500;
-  opacity: 1;
+  font-size: 12px;   
   white-space: nowrap;  
-  margin-left: 8px; 
+  padding: 6px 8px 6px 8px;
+
  }

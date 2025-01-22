@@ -25,7 +25,7 @@ const CreditButton = () => {
   // }, []);
 
   // 임시 더미 데이터
-  const [credits] = useState(5);
+  const [credits] = useState(1);
 
   return (
     <button className={styles.credit_button}>

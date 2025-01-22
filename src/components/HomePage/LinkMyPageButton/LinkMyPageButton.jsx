@@ -1,16 +1,22 @@
-import React from 'react';
-import styles from './LinkMyPageButton.module.css';
+import CustomButton from '../../global/CustomButton';
+import { useNavigate } from 'react-router-dom';
 
 const LinkMyPageButton = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/mypage');
+  };
+
   return (
-    <button className={styles.myPageButton}>
-      <img
-        src="/src/assets/images/icons/mypage-icon.svg"
-        alt="my page"
-        className={styles.icon}
-      />
-    </button>
+    <CustomButton 
+      size="small"
+      color="blue"
+      type="filled"
+      onClick={handleClick}
+      text="MY"
+    />
   );
 };
 
-export default LinkMyPageButton;
+export default LinkMyPageButton; 

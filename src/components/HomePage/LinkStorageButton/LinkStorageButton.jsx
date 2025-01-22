@@ -1,16 +1,22 @@
-import React from 'react';
-import styles from './LinkStorageButton.module.css';
+import CustomButton from '../../global/CustomButton';
+import { useNavigate } from 'react-router-dom';
 
-const LinkMyPageButton = () => {
+const LinkStoragePageButton = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/storage');
+  };
+
   return (
-    <button className={styles.myPageButton}>
-      <img
-        src="/src/assets/images/icons/mypage-icon.svg"
-        alt="my page"
-        className={styles.icon}
-      />
-    </button>
+    <CustomButton 
+      size="small"
+      color="blue"
+      type="filled"
+      onClick={handleClick}
+      text="저장소"
+    />
   );
 };
 
-export default LinkMyPageButton;
+export default LinkStoragePageButton; 
