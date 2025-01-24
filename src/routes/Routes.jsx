@@ -7,6 +7,8 @@ import MyPage from '../pages/MyPage';
 import StoragePage from '../pages/StoragePage';
 import RankingPage from '../pages/RankingPage';
 import AfterShootingPage from '../pages/AfterShootingPage';
+import SimilarQuestionPage from '../pages/SimilarQuestionPage';
+import ExplanationPage from '../pages/ExplanationPage';
 
 const Routes = () => {
   return (
@@ -34,6 +36,14 @@ const Routes = () => {
         <Route
           path='afterShooting'
           element={<AfterShootingPage />}
+        />
+        <Route
+          path='similarQuestion'
+          element={<SimilarQuestionPage />}
+        />
+        <Route
+          path='explanation'
+          element={<ExplanationPage />}
         />
       </Route>
     </ReactRouters>
