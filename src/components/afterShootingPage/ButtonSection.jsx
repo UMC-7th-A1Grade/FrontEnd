@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from '../../styles/afterShootingPage/buttonSection.module.css';
 import CustomButton from '../global/CustomButton';
 import NoteSection from './NoteSection';
@@ -8,6 +9,8 @@ export default function ButtonSection() {
   const [showNoteSection, setShowNoteSection] = useState(false);
   const [isNoteSaved, setIsNoteSaved] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleShowNoteSection = () => {
     setShowNoteSection(true);
@@ -23,8 +26,17 @@ export default function ButtonSection() {
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false); // 모달 닫기
+    setIsModalOpen(false);
   };
+
+  const goSimilerQuestion = () => {
+    setIsModalOpen(false);
+    navigate('/similarQuestion');
+  }
+
+  const goStorage = () => {
+    navigate('/storage');
+  }
 
   return (
     <div className={styles.allContainer}>
@@ -51,6 +63,7 @@ export default function ButtonSection() {
                 color='blue'
                 type='filled'
                 text='저장하기'
+                onClick={goStorage}
               />
             </>
           ) : (
@@ -88,7 +101,7 @@ export default function ButtonSection() {
             color='blue'
             type='filled'
             text='네'
-            onClick={handleCloseModal}
+            onClick={goSimilerQuestion}
           />
         </div>
       </SimilerQuestionModal>
