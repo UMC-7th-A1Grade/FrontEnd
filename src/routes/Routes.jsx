@@ -8,6 +8,7 @@ import StoragePage from '../pages/StoragePage';
 import RankingPage from '../pages/RankingPage';
 import CameraPage from '../pages/CameraPage';
 import EditPage from '../pages/EditPage';
+import AfterShootingPage from '../pages/AfterShootingPage';
 
 const Routes = () => {
   return (
@@ -42,6 +43,10 @@ const Routes = () => {
             element={<EditPage />}
           />
         </Route>
+        <Route
+          path='afterShooting'
+          element={<AfterShootingPage />}
+        />
       </Route>
     </ReactRouters>
   );
