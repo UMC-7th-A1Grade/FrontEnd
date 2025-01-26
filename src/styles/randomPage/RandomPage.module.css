@@ -1,12 +1,12 @@
 .titleContainer {
   margin: 0 25px;
-  margin-top: 38px;
+  margin-top: 58px;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 10;
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 10px 0;
   display: flex;
   align-items: center;
