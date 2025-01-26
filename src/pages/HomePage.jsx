@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../../styles/HomePage/HomePage.module.css';
-import ImageSlider from '../../components/HomePage/ImageSlider/ImageSlider';
-import SemicircleMessage from '../../components/HomePage/SemicircleMessage/SemicircleMessage';
-import SlideCircle from '../../components/HomePage/SlideCircle/SlideCircle';
-import RandomQuestionButton from '../../components/HomePage/RandomQusetionButton/RandomQusetionButton';
-import LinkMyPageButton from '../../components/HomePage/LinkMyPageButton/LinkMyPageButton';
-import LinkStorageButton from '../../components/HomePage/LinkStorageButton/LinkStorageButton';
-import CreditButton from '../../components/HomePage/CreditButton/CreditButton';
-import LinkCameraButton from '../../components/HomePage/LinkCameraButton/LinkCameraButton';
+import styles from '../styles/HomePage/HomePage.module.css';
+import ImageSlider from '../components/HomePage/ImageSlider/ImageSlider';
+import SemicircleMessage from '../components/HomePage/SemicircleMessage/SemicircleMessage';
+import SlideCircle from '../components/HomePage/SlideCircle/SlideCircle';
+import RandomQuestionButton from '../components/HomePage/RandomQusetionButton/RandomQusetionButton';
+import LinkMyPageButton from '../components/HomePage/LinkMyPageButton/LinkMyPageButton';
+import LinkStorageButton from '../components/HomePage/LinkStorageButton/LinkStorageButton';
+import CreditButton from '../components/HomePage/CreditButton/CreditButton';
+import LinkCameraButton from '../components/HomePage/LinkCameraButton/LinkCameraButton';
 
 
 const HomePage = () => {
