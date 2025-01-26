@@ -20,6 +20,10 @@
   color: #fff;
 }
 
+.outline {
+  color: #1E1E1E;
+}
+
 /* 색상별 스타일 */
 .red {
   border-color: #ec2d30;
@@ -46,13 +50,13 @@
 .gray {
   border-color: #f4f4f4;
   background-color: #f4f4f4;
-  color: #000;
+  color: #1E1E1E;
 }
 
 .gray:hover,
 .gray:active {
   background-color: #f4f4f4;
-  color: #000;
+  color: #1E1E1E;
 }
 
 .darkBlue {
