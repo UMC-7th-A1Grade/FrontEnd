@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from '../styles/randomPage/RandomPage.module.css';
 import Timer from '../components/randomPage/Timer.jsx';
 import Problem from '../components/randomPage/RandomProblem.jsx';
+import Header from '../components/global/Header.jsx';
 
 function RandomPage() {
   const [activeProblem, setActiveProblem] = useState(null);
@@ -12,6 +13,7 @@ function RandomPage() {
 
   return (
     <>
+      <Header/>
       <div className={styles.titleContainer}>
         <div className={styles.titleText}>오늘의 3문제</div>
         <Timer start={activeProblem !== null} />
