@@ -1,0 +1,63 @@
+  .slider__item {
+    position: absolute;
+    width: 240px;
+    height: 160px;
+    transition: all 0.3s ease;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 20px 0px #00000014;
+
+
+  -webkit-user-select: none;  /* 사파리리 */
+  -moz-user-select: none;     /* 파팍 */
+  -ms-user-select: none;      /* 엣지 */
+  user-select: none;          /* 대충 기본 */
+  -webkit-touch-callout: none; /* 사파리 */
+  -webkit-user-drag: none;       /* 크롬 */
+  -webkit-tap-highlight-color: transparent;  
+
+  }
+  
+  .slider__image {
+    width: 240px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 4px;
+    pointer-events: none;
+    
+  }
+  
+  .slider__item--farLeft {
+    left: 35.43px;
+    transform: scale(0.95);
+    opacity: 0.7;
+    z-index: 1;
+  }
+  
+  .slider__item--left {
+    left: 55.43px;
+    transform: scale(0.97);
+    opacity: 0.8;
+    z-index: 2;
+  }
+  
+  .slider__item--center {
+    left: 75px;
+    transform: scale(1);
+    opacity: 1;
+    z-index: 3;
+  }
+  
+  .slider__item--right {
+    left: 94.57px;
+    transform: scale(0.97);
+    opacity: 0.8;
+    z-index: 2;
+  }
+  
+  .slider__item--farRight {
+    left: 114.57px;
+    transform: scale(0.95);
+    opacity: 0.7;
+    z-index: 1;
+  }
+

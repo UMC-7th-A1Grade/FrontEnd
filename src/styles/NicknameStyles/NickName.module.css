@@ -1,0 +1,79 @@
+.container {
+  width: 100%;
+  min-height: 100vh; /* 고정 높이 대신 최소 높이 사용 */
+  margin: auto;
+  position: relative;
+  display: flex; /* flex 컨테이너로 변경 */
+}
+
+.contentWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px; /* 좌우 패딩 추가 */
+  flex: 1; /* 남은 공간 차지 */
+}
+
+.logoSection {
+  margin-top: 128px;
+  text-align: center;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.welcomeText {
+  width: 239px;
+  margin-top: 24px;
+  font-family: 'Pretendard';
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 34px;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: #19CED4;
+  text-decoration-skip-ink: none;
+  text-underline-position: from-font;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.welcomeText span {
+  display: block;
+  white-space: nowrap;
+}
+
+.inputWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 28px; /* 간격 조정 */
+}
+
+.buttonWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 28px; /* 입력창과의 간격 */
+}
+
+@media screen and (max-width: 320px) {
+  .container {
+    max-width: 320px;
+  }
+  
+  .logoSection {
+    margin-top: 64px; /* 모바일에서는 상단 여백 줄임 */
+  }
+}

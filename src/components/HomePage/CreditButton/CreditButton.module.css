@@ -1,0 +1,23 @@
+.credit_button {
+  width: 103px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 1px solid #FFC700;
+  box-sizing: border-box;
+}
+
+.credit_icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px; 
+}
+
+.credit_amount {
+  color: #1E1E1E;
+  font-family: 'Pretendard';
+  font-size: 12px;
+  white-space: nowrap;
+}

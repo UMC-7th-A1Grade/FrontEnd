@@ -1,15 +1,23 @@
-.allContainer{
-    
-}
-
-.buttonContainer{
+.allContainer {
     display: flex;
-    justify-content: center;
-    padding: 10% 5%;
-    gap: 3%;
-}
-
-.button{
+    align-items: center;
+    position: relative;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 10px;
+    padding: 25px;
+    width: 100%;
+  }
+  
+  .buttonContainer::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,29 +28,23 @@
     font-weight: 600;
     font-family: "Pretendard";
     color: #626262;
-    padding: 3% 5%;
+    padding: 0 15px;
     background-color: white;
     border: 1px solid #626262;
     white-space: nowrap;
     transition: all 0.3s ease;
-}
-
-.button:active {
+  }
+  
+  .button:active {
     background-color: #00203E;
     color: white;
     transform: scale(0.95);
-}
-
-.active {
+  }
+  
+  .active {
     background-color: #00203E;
     color: white;
     border: 1px solid #00203E;
-}
+  }
 
-/* PC용 */
-@media (hover: hover) {
-    .button:hover {
-        background-color: #00203E;
-        color: white;
-    }
-}
+  

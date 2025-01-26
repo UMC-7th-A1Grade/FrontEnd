@@ -1,0 +1,19 @@
+.circle_container {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .circle {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #E1E1E1;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .circle_active {
+    background-color: #00E3EA;
+  }
