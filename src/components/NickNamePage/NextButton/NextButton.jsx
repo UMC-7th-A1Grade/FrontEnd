@@ -38,7 +38,7 @@ const NextButton = ({ onComplete, isValid, nickname }) => {
           success: true, 
           nickname,
         });
-        navigate('/next-page');
+        navigate('/characterselect');
       }
     } catch (error) {
       console.error('Error:', error);
