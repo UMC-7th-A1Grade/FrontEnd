@@ -6,6 +6,8 @@ import HomePage from '../pages/HomePage';
 import MyPage from '../pages/MyPage';
 import StoragePage from '../pages/StoragePage';
 import RankingPage from '../pages/RankingPage';
+import CameraPage from '../pages/CameraPage';
+import EditPage from '../pages/EditPage';
 import AfterShootingPage from '../pages/AfterShootingPage';
 
 const Routes = () => {
@@ -31,6 +33,16 @@ const Routes = () => {
           path='storage'
           element={<StoragePage />}
         />
+        <Route path='camera'>
+          <Route
+            index
+            element={<CameraPage />}
+          />
+          <Route
+            path='edit'
+            element={<EditPage />}
+          />
+        </Route>
         <Route
           path='afterShooting'
           element={<AfterShootingPage />}
