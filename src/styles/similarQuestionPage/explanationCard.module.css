@@ -1,0 +1,54 @@
+.allContainer{
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+}
+
+.cardContainer {
+    width: 340px;
+    height: 480px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 16px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .answerButton {
+    background-color: #fff;
+    border: 2px solid #19CED4;
+    color: #19CED4;
+    padding: 10px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .inputContainer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .inputArea {
+    width: 308px;
+    height: auto;
+    overflow-y: auto;
+    min-height: 380px;
+    padding: 8px;
+    font-size: 12px;
+    font-family: 'Pretendard';
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f4f4f4;
+  }
+  

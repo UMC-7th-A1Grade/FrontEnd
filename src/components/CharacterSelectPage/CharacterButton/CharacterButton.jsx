@@ -8,7 +8,7 @@ const CharacterButton = ({ isSelected }) => {
 
  const handleClick = () => {
    if (isSelected) {
-     navigate('/home');
+     navigate('/');
    } else {
      navigate('/nickname');
    }

@@ -6,3 +6,28 @@
     gap: 15px;
     margin-top: 25%;
 }
+
+.allContainer h2{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.allContainer p{
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.buttonContainer{
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.textContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 13%;
+}

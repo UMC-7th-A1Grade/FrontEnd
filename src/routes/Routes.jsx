@@ -1,5 +1,6 @@
 import { Routes as ReactRouters, Route } from 'react-router-dom';
 import Layout from '../layout/Layout';
+
 //pages
 import HomePage from '../pages/HomePage';
 import Login from '../pages/LoginPage';
@@ -11,6 +12,8 @@ import RankingPage from '../pages/RankingPage';
 import CameraPage from '../pages/CameraPage';
 import EditPage from '../pages/EditPage';
 import AfterShootingPage from '../pages/AfterShootingPage';
+import SimilarQuestionPage from '../pages/SimilarQuestionPage';
+import ExplanationPage from '../pages/ExplanationPage';
 import AuthCallback from '../components/Auth/AuthCallback';
 
 const Routes = () => {
@@ -20,6 +23,10 @@ const Routes = () => {
        path='/'
        element={<Layout />}
      >
+      <Route
+         path=''
+         element={<HomePage />}
+       />
        <Route
          path='login'
          element={<Login />}
@@ -32,10 +39,7 @@ const Routes = () => {
          path='characterselect'
          element={<CharacterSelectPage />}
        />
-       <Route
-         path=''
-         element={<HomePage />}
-       />
+
        <Route
          path='myPage'
          element={<MyPage />}
@@ -66,7 +70,15 @@ const Routes = () => {
          path='auth/google/callback' 
          element={<AuthCallback />} 
        />
-     </Route>
+        <Route
+          path='similarQuestion'
+          element={<SimilarQuestionPage />}
+        />
+        <Route
+          path='explanation'
+          element={<ExplanationPage />}
+        />
+      </Route>
    </ReactRouters>
  );
 };
