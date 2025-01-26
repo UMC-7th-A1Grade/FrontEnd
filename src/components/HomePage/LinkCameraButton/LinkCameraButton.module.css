@@ -1,0 +1,27 @@
+.circleContainer {
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid #00D4DC;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease; 
+}
+
+.circleContainer:hover {
+  background-color: rgba(0, 0, 0, 0.1);  
+}
+
+.circleContainer:active {
+  background-color: rgba(0, 0, 0, 0.2);  
+}
+
+.cameraImage {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
