@@ -9,6 +9,8 @@ import RankingPage from '../pages/RankingPage';
 import CameraPage from '../pages/CameraPage';
 import EditPage from '../pages/EditPage';
 import AfterShootingPage from '../pages/AfterShootingPage';
+import SimilarQuestionPage from '../pages/SimilarQuestionPage';
+import ExplanationPage from '../pages/ExplanationPage';
 
 const Routes = () => {
   return (
@@ -46,6 +48,14 @@ const Routes = () => {
         <Route
           path='afterShooting'
           element={<AfterShootingPage />}
+        />
+        <Route
+          path='similarQuestion'
+          element={<SimilarQuestionPage />}
+        />
+        <Route
+          path='explanation'
+          element={<ExplanationPage />}
         />
       </Route>
     </ReactRouters>

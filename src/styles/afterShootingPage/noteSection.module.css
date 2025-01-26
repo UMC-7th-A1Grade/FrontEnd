@@ -9,11 +9,9 @@
 }
 
 .mainText{
-    font-family: 'Pretendard';
-    font-size: 18px;
+    font-size: 18px !important;
     color: #1E1E1E;
-    font-weight: bold;
-    margin-bottom: 2%;
+    font-weight: bold !important;
 }
 
 .buttonContainer{

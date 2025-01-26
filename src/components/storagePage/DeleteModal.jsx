@@ -1,6 +1,6 @@
 import styles from '../../styles/afterShootingPage/similarQuestionModal.module.css';
 
-const SimilerQuestionModal = ({ isOpen, onClose, children }) => {
+const DeleteModal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return (
@@ -14,4 +14,4 @@ const SimilerQuestionModal = ({ isOpen, onClose, children }) => {
   );
 };
 
-export default SimilerQuestionModal;
+export default DeleteModal;
