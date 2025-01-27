@@ -1,13 +1,25 @@
 import React from 'react';
 import styles from '../../styles/randomPage/RandomProblem.module.css';
+import Solved from '../../assets/images/randomPage/SolvedLogo.png';
+import NotSolved from '../../assets/images/randomPage/NotSolvedLogo.png';
 
-function RandomProblem({ problemNo, isActive, onClick }) {
+function RandomProblem({ problemNo, isActive, solved, bgImage, onClick }) {
   return (
     <div
       className={styles.problemContainer}
       onClick={onClick}
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
     >
-      <div className={`${styles.problemNo} ${isActive ? styles.active : ''}`}>{problemNo}</div>
+      <div className={styles.problemNo}>{problemNo}</div>
+      <img
+        src={solved ? Solved : NotSolved}
+        alt="풀이여부 아이콘"
+        className={styles.solvedIcon}
+      />
     </div>
   );
 }

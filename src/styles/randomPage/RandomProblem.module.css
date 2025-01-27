@@ -3,9 +3,14 @@
   width: 87.18%;
   height: 228px;
   flex-shrink: 0;
-  background-color: #F4F4F4;
+  background-color: #ffffff;
+  border: 1px solid #E3E3E3;
   border-radius: 4px;
   cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .problemNo {
@@ -18,12 +23,16 @@
   align-items: center;
   justify-content: center;
   border-radius: 500px;
-  background: #FFF;
-  color: #19CED4;
+  background: #19CED4;
+  color: #ffffff;
   font-size: 12px;
   font-weight: 500;
 }
 
-.problemNo.active {
-  border: 1px solid #19CED4;
+.solvedIcon {
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
 }
