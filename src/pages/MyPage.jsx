@@ -1,6 +1,7 @@
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js';
 import styles from '../styles/MyPage.module.css';
+import { Link } from 'react-router-dom';
 
 // Chart.js 모듈 등록
 ChartJS.register(ArcElement, Tooltip);
@@ -47,7 +48,9 @@ export default function MyPage() {
           </div>
         ))}
       </div>
-      <button className={styles.rankBtn}>1등급 경쟁 보러가기</button>
+      <Link to="/ranking">
+        <button className={styles.rankBtn}>1등급 경쟁 보러가기</button>
+      </Link>
     </div>
   );
 }
