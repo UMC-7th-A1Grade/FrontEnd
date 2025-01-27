@@ -1,3 +1,13 @@
+.titleSpacer {
+  height: 68px;
+  background-color: #ffffff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9;
+}
+
 .titleContainer {
   margin: 0 25px;
   margin-top: 38px;
@@ -28,4 +38,5 @@
   overflow-y: auto;
   height: auto;
   padding-top: 20px;
+  margin-bottom: 60px;
 }
