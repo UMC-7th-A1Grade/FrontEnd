@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/HomePage/HomePage.module.css';
 import ImageSlider from '../components/HomePage/ImageSlider/ImageSlider';
