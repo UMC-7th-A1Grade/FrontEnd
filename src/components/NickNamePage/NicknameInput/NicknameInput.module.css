@@ -1,4 +1,4 @@
-.nicknameInput {
+/* .nicknameInput {
   width: 322px;
   height: 40px;
   border: 1px solid #DDD;
@@ -46,4 +46,153 @@
   
   .valid {
     color: #19CED4;
+  } */
+
+
+  .inputContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 322px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  .nicknameInput {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #DDD;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    padding: 13px;
+    box-sizing: border-box;
+    font-family: Pretendard;
+    color: #919191;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.32px;
+    text-align: left;
+  }
+  
+  .nicknameInput:disabled {
+    background-color: #F5F5F5;
+    cursor: not-allowed;
+  }
+  
+  .nicknameInput:focus {
+    border-color: #19CED4;
+    box-shadow: 0 0 0 1px rgba(25, 206, 212, 0.1);
+  }
+  
+  .nicknameInput.validInput {
+    border-color: #19CED4;
+  }
+  
+  .nicknameInput.invalidInput {
+    border-color: #EC2D30;
+    border-width: 1px;
+  }
+  
+  .guide {
+    color: #919191;
+    font-family: Pretendard;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 14px;
+    text-align: left;
+    margin: 8px 0 0 0;
+    min-height: 14px;
+  }
+  
+  .error {
+    color: #EC2D30;
+  }
+  
+  .valid {
+    color: #19CED4;
+  }
+  
+  /* 로딩 상태 스타일 */
+  @keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+  
+  .inputContainer.validating .guide {
+    animation: pulse 1.5s infinite;
+  }
+  
+  /* 모바일 디바이스 (320px ~ 767px) */
+  @media screen and (max-width: 767px) {
+    .inputContainer {
+      max-width: 280px;
+    }
+  
+    .nicknameInput {
+      height: 36px;
+      font-size: 11px;
+      padding: 10px;
+    }
+  
+    .guide {
+      font-size: 9px;
+      line-height: 13px;
+    }
+  }
+  
+  /* 태블릿 디바이스 (768px ~ 1023px) */
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    .inputContainer {
+      max-width: 400px;
+    }
+  
+    .nicknameInput {
+      height: 44px;
+      font-size: 13px;
+      padding: 14px;
+    }
+  
+    .guide {
+      font-size: 11px;
+      line-height: 15px;
+    }
+  }
+  
+  /* 데스크톱 (1024px 이상) */
+  @media screen and (min-width: 1024px) {
+    .inputContainer {
+      max-width: 450px;
+    }
+  
+    .nicknameInput {
+      height: 48px;
+      font-size: 14px;
+      padding: 15px;
+    }
+  
+    .guide {
+      font-size: 12px;
+      line-height: 16px;
+      margin-top: 10px;
+    }
+  }
+  
+  /* 큰 화면 (1440px 이상) */
+  @media screen and (min-width: 1440px) {
+    .inputContainer {
+      max-width: 500px;
+    }
+  
+    .nicknameInput {
+      height: 52px;
+      font-size: 15px;
+      padding: 16px;
+    }
+  
+    .guide {
+      font-size: 13px;
+      line-height: 17px;
+    }
   }
