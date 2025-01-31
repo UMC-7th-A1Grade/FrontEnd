@@ -127,7 +127,7 @@ const NicknameInput = ({ onComplete }) => {
     if (isValidating) return '닉네임을 확인하는 중이에요...';
     if (validationState === 'invalid') return errorMessage;
     if (validationState === 'valid') return '사용 가능한 닉네임이에요!';
-    return '2자 이상 5자 이하, 한글, 영문, 숫자만 허용 / 공백 및 특수문자는 사용 불가합니다.';
+    return '2자 이상 5자 이하 한글,영문,숫자만 허용/공백,특수문자는 사용할 수 없습니다';
   };
 
   const guideClassName = `${styles.guide} ${

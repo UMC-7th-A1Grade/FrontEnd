@@ -1,3 +1,7 @@
+body, html {
+  background-color: #FFFFFF;
+}
+
 .container {
   width: 100%;
   min-height: 100vh;
@@ -59,7 +63,7 @@
 
 .inputWrapper {
   width: 100%;
-  max-width: 500px;
+  max-width: 400px;
   display: flex;
   justify-content: center;
   margin-top: 28px;
@@ -76,7 +80,7 @@
 /* 모바일 S (320px 이하) */
 @media screen and (max-width: 320px) {
   .logoSection {
-    margin-top: 48px;
+    margin-top: 120px;
   }
 
   .logo {
@@ -99,7 +103,7 @@
 /* 모바일 M (321px ~ 375px) */
 @media screen and (min-width: 321px) and (max-width: 375px) {
   .logoSection {
-    margin-top: 64px;
+    margin-top: 160px;
   }
 
   .logo {

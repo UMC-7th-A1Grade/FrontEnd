@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './CharacterBox.module.css';
 import selectedIcon from '../../../assets/images/characterSelectPage/Logo_character.svg';
 import character1 from '../../../assets/images/characterSelectPage/character_1.svg';
@@ -15,6 +15,8 @@ import character11 from '../../../assets/images/characterSelectPage/character_11
 import character12 from '../../../assets/images/characterSelectPage/character_12.svg';
 
 const CharacterBox = ({ onSelect, selected }) => {
+  const [isLoading, setIsLoading] = useState(true);
+
   const characters = [
     { id: 1, image: character1 },
     { id: 2, image: character2 },
@@ -30,35 +32,31 @@ const CharacterBox = ({ onSelect, selected }) => {
     { id: 12, image: character12 }
   ];
 
+  useEffect(() => {
+    // 2초 후에 로딩 상태를 false로 변경
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const handleCharacterClick = (id) => {
     onSelect(id);
-    console.log('Selected character ID:', id);
-
-    // 백엔드 전송 로직 (주석 처리)
-    // const sendCharacterToBackend = async () => {
-    //   try {
-    //     const response = await fetch('/api/select-character', {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': `Bearer ${localStorage.getItem('token')}`
-    //       },
-    //       body: JSON.stringify({ characterId: id })
-    //     });
-
-    //     if (!response.ok) {
-    //       throw new Error('Character selection failed');
-    //     }
-
-    //     const data = await response.json();
-    //     console.log('Backend response:', data);
-    //   } catch (error) {
-    //     console.error('Error selecting character:', error);
-    //   }
-    // };
-
-    // sendCharacterToBackend();
+    console.log('선택된 캐릭터의 ID:', id);
   };
+
+  if (isLoading) {
+    return (
+      <div className={styles.container}>
+        {Array(12).fill(null).map((_, index) => (
+          <button key={index} className={styles.characterButton}>
+            <div className={styles.skeleton}></div>
+          </button>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
