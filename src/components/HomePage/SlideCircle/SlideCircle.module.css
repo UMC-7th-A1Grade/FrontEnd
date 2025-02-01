@@ -1,0 +1,23 @@
+.circle_container {
+  position: relative;
+  width: 54px; /* 원형 6px * 5개 + 간격 6px * 4개 = 54px */
+  margin: 0 auto;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #E1E1E1;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.circle_active {
+  background-color: #00E3EA;
+}

@@ -1,0 +1,21 @@
+.semicircle {
+  width: 220px;
+  height: 34px;
+  background-color: white;
+  border: 2px solid #00D4DC;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;  
+
+
+}
+
+.messageText {
+  color: #00D4DC;
+  font-family: 'Pretendard';
+  font-size: 12px;
+  font-weight: 500;
+  padding: 20px;
+}
