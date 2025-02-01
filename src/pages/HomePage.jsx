@@ -147,23 +147,29 @@ import LinkStorageButton from '../components/HomePage/LinkStorageButton/LinkStor
 import CreditButton from '../components/HomePage/CreditButton/CreditButton';
 import LinkCameraButton from '../components/HomePage/LinkCameraButton/LinkCameraButton';
 
+// 이미지 import - 상대 경로 사용
+import math1 from '../assets/images/home/math_1.png';
+import math2 from '../assets/images/home/math_2.png';
+import math3 from '../assets/images/home/math_3.png';
+import math4 from '../assets/images/home/math_4.png';
+import math5 from '../assets/images/home/math_5.png';
+import logoNickname from '../assets/images/nickname/Logo_Nickname.png';
+
 const HomePage = () => {
-  // 이미지 데이터 상태 추가
-  const [images, setImages] = useState([
-    '/src/assets/images/home/math_1.png',
-    '/src/assets/images/home/math_2.png',
-    '/src/assets/images/home/math_3.png',
-    '/src/assets/images/home/math_4.png',
-    '/src/assets/images/home/math_5.png'
+  // 이미지 데이터 상태
+  const [images] = useState([
+    math1,
+    math2,
+    math3,
+    math4,
+    math5
   ]);
   
-  // 상태 관리
-  const [currentPage, setCurrentPage] = useState(0); // 초기값을 0으로 변경
+  const [currentPage, setCurrentPage] = useState(0);
   const [userNickname, setUserNickname] = useState('사용자');
   const [selectedImage, setSelectedImage] = useState(null);
   const [showFullPopup, setShowFullPopup] = useState(false);
 
-  // localStorage에서 사용자 정보 가져오기
   useEffect(() => {
     const storedNickname = localStorage.getItem('userNickname');
     if (storedNickname) {
@@ -171,22 +177,18 @@ const HomePage = () => {
     }
   }, []);
 
-  // 페이지 변경 핸들러
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
 
-  // 이미지 클릭 핸들러
   const handleImageClick = (imageUrl, index) => {
     setSelectedImage({ url: imageUrl, index });
   };
 
-  // 풀팝업 표시 핸들러
   const handleShowFullPopup = () => {
     setShowFullPopup(true);
   };
 
-  // 팝업 닫기 핸들러
   const handleClosePopup = () => {
     setSelectedImage(null);
     setShowFullPopup(false);
@@ -196,7 +198,7 @@ const HomePage = () => {
     <main className={styles.layout}>
       <header className={styles.layout__header}>
         <img
-          src="/src/assets/images/nickname/Logo_Nickname.png"
+          src={logoNickname}
           alt="Logo"
           className={styles.layout__logo}
         />
@@ -221,7 +223,7 @@ const HomePage = () => {
             currentPage={currentPage}
             onPageChange={handlePageChange}
             onImageClick={handleImageClick}
-            images={images} // 이미지 배열 전달
+            images={images}
           />
         </article>
 
@@ -229,7 +231,7 @@ const HomePage = () => {
           <SlideCircle
             currentPage={currentPage}
             onPageChange={handlePageChange}
-            totalImages={images.length} // 이미지 개수 전달
+            totalImages={images.length}
           />
         </nav>
       </section>
