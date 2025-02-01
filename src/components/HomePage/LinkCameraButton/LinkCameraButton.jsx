@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './LinkCameraButton.module.css';
-import cameraIcon from '../../../assets/images/home/camera_Home.svg';
+import cameraIcon from '../../../assets/images/home/camera_Home.png';
 
 const LinkCameraButton = () => {
   const navigate = useNavigate();

@@ -45,7 +45,7 @@ const SmallPopup = ({ image, onClose, onShowFullPopup }) => {
           }}
         >
           <img
-            src="/src/assets/images/home/X_button.svg"
+            src="/src/assets/images/home/X_button.png"
             alt="닫기"
             className={styles.close_img}
           />

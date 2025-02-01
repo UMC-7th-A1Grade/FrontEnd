@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../styles/NicknameStyles/NickName.module.css';
-import logo from '../assets/images/nickname/Logo_Nickname.svg';
+import logo from '../assets/images/nickname/Logo_Nickname.png';
 import NicknameInput from '../components/NickNamePage/NicknameInput/NicknameInput';
 import NextButton from '../components/NickNamePage/NextButton/NextButton';
 
