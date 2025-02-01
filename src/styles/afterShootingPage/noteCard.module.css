@@ -45,3 +45,32 @@
   border-radius: 4px;
   background-color: #f4f4f4;
 }
+
+@media screen and (min-width: 768px){
+  .inputArea{
+    min-height: 300px;
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 820px){
+  .inputArea{
+    min-height: 400px;
+    font-size: 25px;
+  }
+
+  .answerButton{
+    font-size: 25px;
+  }
+}
+
+@media screen and (min-width: 1024px){
+  .inputArea{
+    min-height: 500px;
+    font-size: 30px;
+  }
+
+  .answerButton{
+    font-size: 30px;
+  }
+}

@@ -23,7 +23,7 @@
   left: 8px;
   width: 20px;
   height: 20px;
-  z-index: 10;
+  z-index: 5;
   cursor: pointer;
   background-color: #ccc;
   border: 2px solid #ccc;
@@ -41,4 +41,25 @@
 .sentinel {
   height: 1px;
   background: transparent;
+}
+
+@media screen and (min-width: 768px){
+  .checkbox{
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media screen and (min-width: 820px){
+  .checkbox{
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media screen and (min-width: 1024px){
+  .checkbox{
+    width: 30px;
+    height: 30px;
+  }
 }
