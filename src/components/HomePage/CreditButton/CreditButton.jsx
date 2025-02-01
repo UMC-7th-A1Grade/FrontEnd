@@ -1,6 +1,6 @@
-// CreditButton.jsx
 import React, { useState } from 'react';
 import styles from './CreditButton.module.css';
+import creditIcon from '../../../assets/images/home/credit.png';
 
 const CreditButton = () => {
   // API 연동 시 사용할 상태 관리
@@ -29,10 +29,14 @@ const CreditButton = () => {
 
   return (
     <button className={styles.credit_button}>
-      <img src="\src\assets\images\home\credit.png" 
-        alt="credit icon" className={styles.credit_icon}/>
-            <span className={styles.credit_amount}>{credits}
-            크레딧</span>
+      <img 
+        src={creditIcon}
+        alt="credit icon" 
+        className={styles.credit_icon}
+      />
+      <span className={styles.credit_amount}>
+        {credits} 크레딧
+      </span>
     </button>
   );
 };
