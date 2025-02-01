@@ -1,5 +1,6 @@
 import { Routes as ReactRouters, Route } from 'react-router-dom';
 import Layout from '../layout/Layout';
+import { TimerProvider } from '../components/randomPage/TimerContext';
 
 import HomePage from '../pages/HomePage';
 import Login from '../pages/LoginPage';
@@ -15,6 +16,7 @@ import SimilarQuestionPage from '../pages/SimilarQuestionPage';
 import ExplanationPage from '../pages/ExplanationPage';
 import GoogleCallbackPage from '../pages/GoogleCallbackPage';
 import RandomPage from '../pages/RandomPage';
+import RandomQuestionPage from '../pages/RandomQuestionPage';
 
 const Routes = () => {
  return (
@@ -79,8 +81,20 @@ const Routes = () => {
           element={<ExplanationPage />}
         />
         <Route
-          path='random'
-          element={<RandomPage />}
+          path="random"
+          element={
+            <TimerProvider>
+              <RandomPage />
+            </TimerProvider>
+          }
+        />
+        <Route
+          path="randomQuestion/:problemId"
+          element={
+            <TimerProvider>
+              <RandomQuestionPage />
+            </TimerProvider>
+          }
         />
       </Route>
    </ReactRouters>

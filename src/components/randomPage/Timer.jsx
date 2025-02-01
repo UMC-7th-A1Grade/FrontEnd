@@ -1,25 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from '../../styles/randomPage/Timer.module.css';
 import clock from '../../assets/images/randomPage/clock.svg';
+import { useTimer } from '../../components/randomPage/TimerContext';
 
-function Timer({ start }) {
-  const [time, setTime] = useState(60 * 60);
-
-  useEffect(() => {
-    if (!start) return;
-
-    const countdown = setInterval(() => {
-      setTime((prev) => {
-        if (prev <= 1) {
-          clearInterval(countdown);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(countdown);
-  }, [start]);
+function Timer() {
+  const { time, start } = useTimer();
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -28,15 +13,14 @@ function Timer({ start }) {
   };
 
   const getTextClass = () => {
-    if (!start) return styles.defaultText; // 타이머 시작전
-    if (time <= 20 * 60) return styles.warningText; // 20분 이하부터 빨간색
-    return styles.activeText; // 타이머 작동중
+    if (!start) return styles.defaultText; // 타이머 시작 전
+    if (time <= 20 * 60) return styles.warningText; // 20분 이하 경고 색상
+    return styles.activeText; // 기본 타이머 작동 중
   };
 
   const getContainerClass = () => {
-    if (time <= 20 * 60) return `${styles.timerContainer} ${styles.warningContainer}`;
-    return styles.timerContainer;
-  };  
+    return time <= 20 * 60 ? `${styles.timerContainer} ${styles.warningContainer}` : styles.timerContainer;
+  };
 
   return (
     <div className={getContainerClass()}>
