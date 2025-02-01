@@ -196,7 +196,7 @@ const HomePage = () => {
     <main className={styles.layout}>
       <header className={styles.layout__header}>
         <img
-          src="/src/assets/images/nickname/Logo_Nickname.svg"
+          src="/src/assets/images/nickname/Logo_Nickname.png"
           alt="Logo"
           className={styles.layout__logo}
         />

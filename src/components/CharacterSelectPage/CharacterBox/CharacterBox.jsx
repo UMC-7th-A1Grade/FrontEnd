@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import styles from './CharacterBox.module.css';
-import selectedIcon from '../../../assets/images/characterSelectPage/Logo_character.svg';
-import character1 from '../../../assets/images/characterSelectPage/character_1.svg';
-import character2 from '../../../assets/images/characterSelectPage/character_2.svg';
-import character3 from '../../../assets/images/characterSelectPage/character_3.svg';
-import character4 from '../../../assets/images/characterSelectPage/character_4.svg';
-import character5 from '../../../assets/images/characterSelectPage/character_5.svg';
-import character6 from '../../../assets/images/characterSelectPage/character_6.svg';
-import character7 from '../../../assets/images/characterSelectPage/character_7.svg';
-import character8 from '../../../assets/images/characterSelectPage/character_8.svg';
-import character9 from '../../../assets/images/characterSelectPage/character_9.svg';
-import character10 from '../../../assets/images/characterSelectPage/character_10.svg';
-import character11 from '../../../assets/images/characterSelectPage/character_11.svg';
-import character12 from '../../../assets/images/characterSelectPage/character_12.svg';
+import selectedIcon from '../../../assets/images/characterSelectPage/Logo_character.png';
+import character1 from '../../../assets/images/characterSelectPage/character_1.png';
+import character2 from '../../../assets/images/characterSelectPage/character_2.png';
+import character3 from '../../../assets/images/characterSelectPage/character_3.png';
+import character4 from '../../../assets/images/characterSelectPage/character_4.png';
+import character5 from '../../../assets/images/characterSelectPage/character_5.png';
+import character6 from '../../../assets/images/characterSelectPage/character_6.png';
+import character7 from '../../../assets/images/characterSelectPage/character_7.png';
+import character8 from '../../../assets/images/characterSelectPage/character_8.png';
+import character9 from '../../../assets/images/characterSelectPage/character_9.png';
+import character10 from '../../../assets/images/characterSelectPage/character_10.png';
+import character11 from '../../../assets/images/characterSelectPage/character_11.png';
+import character12 from '../../../assets/images/characterSelectPage/character_12.png';
 
 const CharacterBox = ({ onSelect, selected }) => {
   const [isLoading, setIsLoading] = useState(true);
