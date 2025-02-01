@@ -1,5 +1,6 @@
 import { Routes as ReactRouters, Route } from 'react-router-dom';
 import Layout from '../layout/Layout';
+import { TimerProvider } from '../components/randomPage/TimerContext';
 
 import HomePage from '../pages/HomePage';
 import Login from '../pages/LoginPage';
@@ -13,12 +14,17 @@ import EditPage from '../pages/EditPage';
 import AfterShootingPage from '../pages/AfterShootingPage';
 import SimilarQuestionPage from '../pages/SimilarQuestionPage';
 import ExplanationPage from '../pages/ExplanationPage';
-import AuthCallback from '../components/Auth/AuthCallback';
+import GoogleCallbackPage from '../pages/GoogleCallbackPage';
 import RandomPage from '../pages/RandomPage';
+import RandomQuestionPage from '../pages/RandomQuestionPage';
 
 const Routes = () => {
  return (
    <ReactRouters>
+    <Route 
+     path="/auth/google/callback" 
+     element={<GoogleCallbackPage />} />
+
      <Route
        path='/'
        element={<Layout />}
@@ -66,10 +72,6 @@ const Routes = () => {
          path='afterShooting'
          element={<AfterShootingPage />}
        />
-       <Route 
-         path='auth/google/callback' 
-         element={<AuthCallback />} 
-       />
         <Route
           path='similarQuestion'
           element={<SimilarQuestionPage />}
@@ -79,8 +81,20 @@ const Routes = () => {
           element={<ExplanationPage />}
         />
         <Route
-          path='random'
-          element={<RandomPage />}
+          path="random"
+          element={
+            <TimerProvider>
+              <RandomPage />
+            </TimerProvider>
+          }
+        />
+        <Route
+          path="randomQuestion/:problemId"
+          element={
+            <TimerProvider>
+              <RandomQuestionPage />
+            </TimerProvider>
+          }
         />
       </Route>
    </ReactRouters>
@@ -88,3 +102,4 @@ const Routes = () => {
 };
 
 export default Routes;
+
