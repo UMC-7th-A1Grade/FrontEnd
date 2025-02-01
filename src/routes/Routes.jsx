@@ -7,7 +7,6 @@ import MyPage from '../pages/MyPage';
 import StoragePage from '../pages/StoragePage';
 import RankingPage from '../pages/RankingPage';
 import CameraPage from '../pages/CameraPage';
-import EditPage from '../pages/EditPage';
 import AfterShootingPage from '../pages/AfterShootingPage';
 
 const Routes = () => {
@@ -37,10 +36,6 @@ const Routes = () => {
           <Route
             index
             element={<CameraPage />}
-          />
-          <Route
-            path='edit'
-            element={<EditPage />}
           />
         </Route>
         <Route
