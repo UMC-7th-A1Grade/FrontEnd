@@ -20,21 +20,20 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 10px;
-}
 
-button {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: #d3d3d3;
-  border: none;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #bdbdbd;
+  button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #d3d3d3;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #bdbdbd;
+  }
 }
 
 .toggle {

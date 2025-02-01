@@ -29,7 +29,7 @@ const CreditButton = () => {
 
   return (
     <button className={styles.credit_button}>
-      <img src="\src\assets\images\home\credit.svg" 
+      <img src="\src\assets\images\home\credit.png" 
         alt="credit icon" className={styles.credit_icon}/>
             <span className={styles.credit_amount}>{credits}
             크레딧</span>
