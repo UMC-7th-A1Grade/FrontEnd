@@ -12,7 +12,6 @@ const GoogleCallbackPage = () => {
 
     const handleGoogleLogin = async () => {
       try {
-        // 1. URL 파라미터 확인
         const code = searchParams.get('code');
         console.log('받은 인가 코드:', code);
 
@@ -22,7 +21,6 @@ const GoogleCallbackPage = () => {
           return;
         }
 
-        // 2. API 요청
         const apiUrl = `${import.meta.env.VITE_SERVER_URL}/api/users/google`;
         console.log('API 요청 준비:', {
           url: apiUrl,
@@ -45,7 +43,6 @@ const GoogleCallbackPage = () => {
         if (response.data.isSuccess) {
           const { email, accessToken, socialId } = response.data.result;
           
-          // 로컬 스토리지 저장 전 현재 상태 출력
           console.log('저장할 데이터:', {
             email,
             tokenLength: accessToken?.length,
@@ -64,7 +61,6 @@ const GoogleCallbackPage = () => {
             savedSocialId: localStorage.getItem('socialId')
           });
 
-          // 페이지 이동
           navigate('/nickname');
         } else {
           console.error('로그인 실패:', response.data);
