@@ -1,3 +1,4 @@
+//더미데이터 넣은 버전. 
 
 // import React, { useState, useEffect, useRef } from 'react';
 // import styles from './ImageSlider.module.css';
