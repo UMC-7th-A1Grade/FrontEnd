@@ -1,114 +1,3 @@
-/* .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #000000B2;
-  backdrop-filter: blur(12px);
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.container {
-  position: relative;
-  width: 340px;
-  height: 540px;
-  background: white;
-  border-radius: 4px 0px 0px 0px;
-}
-
-.header {
-  position: relative;
-  width: 100%;
-  padding-top: 20px;
-}
-
-.problem_number {
-  position: absolute;
-  top: 20px;
-  left: 16px;
-  padding: 6px 20px;
-  border-radius: 4px;
-  border: 1px solid #00D4DC;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.problem_number span {
-  font-family: 'Pretendard', sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 22px;
-  color: #27C5CB;
-  min-width: 20px;
-  height: 22px;
-}
-
-.close_button {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 16.67px;
-  height: 16.67px;
-  padding: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.close_button img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.toggle_buttons {
-  display: flex;
-  gap: 10px;
-  position: absolute;
-  top: 49px;
-  left: 14px;
-}
-
-.toggle_button {
-  padding: 4px 14px;
-  height: 22px;
-  border-radius: 100px;
-  font-size: 12px;
-  font-weight: 600;
-  font-family: "Pretendard";
-  color: #626262;
-  background-color: white;
-  border: 1px solid #626262;
-  white-space: nowrap;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: max-content;
-}
-
-.toggle_button:active {
-  background-color: #00203E;
-  color: white;
-  transform: scale(0.95);
-}
-
-.toggle_button.active {
-  background-color: #00203E;
-  color: white;
-  border: 1px solid #00203E;
-} */
-
-
-/* FullPopup.module.css */
 .overlay {
   position: fixed;
   top: 0;
@@ -184,7 +73,7 @@
   display: flex;
   gap: 10px;
   position: absolute;
-  top: 67px; /* 문제 번호와 18px 간격 */
+  top: 67px;
   left: 14px;
 }
 
@@ -233,12 +122,10 @@
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  /* 스크롤바 스타일링 */
   scrollbar-width: thin;
   scrollbar-color: #888888 #f1f1f1;
 }
 
-/* Webkit 브라우저용 스크롤바 스타일링 */
 .image_container::-webkit-scrollbar {
   width: 6px;
 }
@@ -257,8 +144,31 @@
   background: #555555;
 }
 
-.problem_image {
+/* 스켈레톤 로딩 */
+.skeleton {
   width: 100%;
-  height: auto;
-  display: block;
+  height: 100%;
+  background: #e0e0e0;
+  border-radius: 4px;
+  animation: pulse 1.5s infinite ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f5f5f5;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
+.problem_image.loaded {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
 }
