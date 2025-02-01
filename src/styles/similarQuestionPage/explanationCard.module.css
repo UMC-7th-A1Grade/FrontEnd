@@ -5,8 +5,8 @@
 }
 
 .cardContainer {
-    width: 340px;
-    height: 480px;
+    width: 80%;
+    height: auto;
     overflow-y: auto;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -40,10 +40,10 @@
   }
   
   .inputArea {
-    width: 308px;
+    width: 95%;
     height: auto;
     overflow-y: auto;
-    min-height: 380px;
+    min-height: 300px;
     padding: 8px;
     font-size: 12px;
     font-family: 'Pretendard';
@@ -51,4 +51,32 @@
     border-radius: 4px;
     background-color: #f4f4f4;
   }
-  
+
+  @media screen and (min-width: 768px){
+    .inputArea{
+      min-height: 600px;
+      font-size: 20px;
+    }
+  }
+
+  @media screen and (min-width: 820px){
+    .inputArea{
+      min-height: 700px;
+      font-size: 25px;
+    }
+
+    .answerButton{
+      font-size: 25px;
+    }
+  }
+
+  @media screen and (min-width: 1024px){
+    .inputArea{
+      min-height: 800px;
+      font-size: 30px;
+    }
+
+    .answerButton{
+      font-size: 30px;
+    }
+  }
