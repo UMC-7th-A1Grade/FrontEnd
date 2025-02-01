@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from '../styles/NicknameStyles/Nickname.module.css';
+import styles from '../styles/NicknameStyles/NickName.module.css';
 import logo from '../assets/images/nickname/Logo_Nickname.svg';
 import NicknameInput from '../components/NickNamePage/NicknameInput/NicknameInput';
 import NextButton from '../components/NickNamePage/NextButton/NextButton';

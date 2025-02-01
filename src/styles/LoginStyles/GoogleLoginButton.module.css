@@ -1,38 +1,68 @@
-.button {
-  width: 208px;
-  height: 40px;
-  padding: 11px 24px;
-  background-color: white;
-  border: none;
-  border-top: 0.96px solid rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
-.content {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  height: 100%;
-}
-
-.logo {
-  width: 18px;
-  height: 18px;
-  object-fit: contain;
-}
-
-.text {
-  color: #000;
-  font-size: 14px;
-  font-weight: 500;
-  white-space: nowrap;
-}
+   .button {
+    width: clamp(180px, 60vw, 208px);
+    height: clamp(36px, 8vh, 40px);
+    padding: clamp(8px, 2vw, 11px) clamp(16px, 4vw, 24px);
+    background-color: white;
+    border: none;
+    border-top: 0.96px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .button:active {
+    transform: scale(0.98);
+  }
+  
+  .content {
+    display: flex;
+    align-items: center;
+    gap: clamp(16px, 4vw, 24px);
+    height: 100%;
+  }
+  
+  .logo {
+    width: clamp(16px, 4vw, 18px);
+    height: clamp(16px, 4vw, 18px);
+    object-fit: contain;
+  }
+  
+  .text {
+    color: #000;
+    font-size: clamp(12px, 3vw, 14px);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  
+  /* 모바일 S (320px 이하) */
+  @media screen and (max-width: 320px) {
+    .button {
+      width: 160px;
+      height: 34px;
+      padding: 8px 16px;
+    }
+    
+    .content {
+      gap: 12px;
+    }
+  }
+  
+  /* 태블릿 이상 (768px 이상) */
+  @media screen and (min-width: 768px) {
+    .button {
+      width: 220px;
+      height: 44px;
+    }
+    
+    .logo {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .text {
+      font-size: 15px;
+    }
+  }

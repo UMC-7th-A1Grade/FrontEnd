@@ -14,13 +14,17 @@ import EditPage from '../pages/EditPage';
 import AfterShootingPage from '../pages/AfterShootingPage';
 import SimilarQuestionPage from '../pages/SimilarQuestionPage';
 import ExplanationPage from '../pages/ExplanationPage';
-import AuthCallback from '../components/Auth/AuthCallback';
+import GoogleCallbackPage from '../pages/GoogleCallbackPage';
 import RandomPage from '../pages/RandomPage';
 import RandomQuestionPage from '../pages/RandomQuestionPage';
 
 const Routes = () => {
  return (
    <ReactRouters>
+    <Route 
+     path="/auth/google/callback" 
+     element={<GoogleCallbackPage />} />
+
      <Route
        path='/'
        element={<Layout />}
@@ -68,10 +72,6 @@ const Routes = () => {
          path='afterShooting'
          element={<AfterShootingPage />}
        />
-       <Route 
-         path='auth/google/callback' 
-         element={<AuthCallback />} 
-       />
         <Route
           path='similarQuestion'
           element={<SimilarQuestionPage />}
@@ -102,3 +102,4 @@ const Routes = () => {
 };
 
 export default Routes;
+
