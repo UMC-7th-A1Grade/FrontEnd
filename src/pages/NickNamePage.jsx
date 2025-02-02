@@ -70,7 +70,7 @@ const NicknamePage = () => {
   const [isValid, setIsValid] = useState(true);  // 항상 유효하도록 설정
 
   const handleNicknameComplete = (data) => {
-    console.log("임시로 항상 성공 처리:", data);
+    console.log("API 응답답:", data);
     setValidNickname(data.nickname || '테스트');
     setIsValid(true);
   };
@@ -92,11 +92,12 @@ const NicknamePage = () => {
             <NicknameInput onComplete={handleNicknameComplete} />
           </div>
           <div className={styles.buttonWrapper}>
-            <NextButton 
-              // onComplete={handleNicknameComplete}
-              // isValid={true}  // 항상 true로 설정
-              // nickname={validNickname}
-            />
+            <NextButton  />
+           {/* <NextButton 
+               onComplete={handleNextComplete}
+               isValid={isValid}
+               nickname={validNickname}
+             /> */}
           </div>
         </section>
       </main>
