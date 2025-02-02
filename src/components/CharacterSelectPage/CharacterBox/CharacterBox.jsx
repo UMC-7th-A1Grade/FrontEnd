@@ -36,7 +36,7 @@ const CharacterBox = ({ onSelect, selected }) => {
     // 2초 후에 로딩 상태를 false로 변경
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);

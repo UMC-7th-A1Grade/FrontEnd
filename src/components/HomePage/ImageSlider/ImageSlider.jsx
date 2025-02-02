@@ -20,7 +20,7 @@ const ImageSlider = ({ currentPage, onPageChange, onImageClick, images }) => {
             ...prev,
             [src]: true
           }));
-        }, 1000);
+        }, 500);
       };
     });
   }, [images]);
