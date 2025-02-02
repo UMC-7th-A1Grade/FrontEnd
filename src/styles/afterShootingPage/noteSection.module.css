@@ -17,3 +17,9 @@
 .buttonContainer{
     margin-bottom: 10%;
 }
+
+@media screen and (min-width: 820px) and (max-width: 1024px) {
+    .mainText{
+        font-size: 1.8rem !important;
+    }
+}

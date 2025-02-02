@@ -49,12 +49,10 @@ const GoogleCallbackPage = () => {
             socialId
           });
 
-          // 데이터 저장
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('userEmail', email);
           localStorage.setItem('socialId', socialId);
 
-          // 저장 후 확인
           console.log('로컬 스토리지 저장 완료:', {
             savedToken: localStorage.getItem('accessToken'),
             savedEmail: localStorage.getItem('userEmail'),
@@ -90,11 +88,8 @@ const GoogleCallbackPage = () => {
       {error ? (
         <div className="text-red-500 text-xl text-center">
           <div>{error}</div>
-          <div className="mt-2 text-sm text-gray-600">
-            인가 코드: {searchParams.get('code')?.substring(0, 10)}...
-          </div>
           <button 
-            onClick={() => navigate('/login')} 
+            onClick={() => navigate('/login')}
             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             로그인 페이지로 돌아가기
@@ -102,11 +97,7 @@ const GoogleCallbackPage = () => {
         </div>
       ) : (
         <>
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-          <h2 className="mt-4 text-xl font-semibold">로그인 처리 중입니다...</h2>
-          <p className="mt-2 text-sm text-gray-600">
-            인가 코드: {searchParams.get('code')?.substring(0, 10)}...
-          </p>
+          {/* <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div> */}
         </>
       )}
     </div>
