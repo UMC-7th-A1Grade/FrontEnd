@@ -4,6 +4,7 @@ import styles from '../../styles/afterShootingPage/questionSection.module.css';
 export default function QuestionSection() {
   return (
     <div className={styles.allContainer}>
+
       <img
         src={QuestionImage}
         className={styles.image}

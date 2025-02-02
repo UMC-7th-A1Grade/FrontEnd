@@ -10,7 +10,6 @@ import MyPage from '../pages/MyPage';
 import StoragePage from '../pages/StoragePage';
 import RankingPage from '../pages/RankingPage';
 import CameraPage from '../pages/CameraPage';
-import EditPage from '../pages/EditPage';
 import AfterShootingPage from '../pages/AfterShootingPage';
 import SimilarQuestionPage from '../pages/SimilarQuestionPage';
 import ExplanationPage from '../pages/ExplanationPage';
@@ -19,59 +18,56 @@ import RandomPage from '../pages/RandomPage';
 import RandomQuestionPage from '../pages/RandomQuestionPage';
 
 const Routes = () => {
- return (
-   <ReactRouters>
-    <Route 
-     path="/auth/google/callback" 
-     element={<GoogleCallbackPage />} />
-
-     <Route
-       path='/'
-       element={<Layout />}
-     >
+  return (
+    <ReactRouters>
       <Route
-         path=''
-         element={<HomePage />}
-       />
-       <Route
-         path='login'
-         element={<Login />}
-       />
-       <Route
-         path='nickname'
-         element={<NickNamePage/>}
-       />
-       <Route
-         path='characterselect'
-         element={<CharacterSelectPage />}
-       />
+        path='/auth/google/callback'
+        element={<GoogleCallbackPage />}
+      />
 
-       <Route
-         path='myPage'
-         element={<MyPage />}
-       />
-       <Route
-         path='ranking'
-         element={<RankingPage />}
-       />
-       <Route
-         path='storage'
-         element={<StoragePage />}
-       />
-       <Route path='camera'>
-         <Route
-           index
-           element={<CameraPage />}
-         />
-         <Route
-           path='edit'
-           element={<EditPage />}
-         />
-       </Route>
-       <Route
-         path='afterShooting'
-         element={<AfterShootingPage />}
-       />
+      <Route
+        path='/'
+        element={<Layout />}
+      >
+        <Route
+          path=''
+          element={<HomePage />}
+        />
+        <Route
+          path='login'
+          element={<Login />}
+        />
+        <Route
+          path='nickname'
+          element={<NickNamePage />}
+        />
+        <Route
+          path='characterselect'
+          element={<CharacterSelectPage />}
+        />
+
+        <Route
+          path='myPage'
+          element={<MyPage />}
+        />
+        <Route
+          path='ranking'
+          element={<RankingPage />}
+        />
+        <Route
+          path='storage'
+          element={<StoragePage />}
+        />
+        <Route path='camera'>
+          <Route
+            index
+            element={<CameraPage />}
+          />
+        </Route>
+        <Route
+          path='afterShooting'
+          element={<AfterShootingPage />}
+        />
         <Route
           path='similarQuestion'
           element={<SimilarQuestionPage />}
@@ -81,7 +77,7 @@ const Routes = () => {
           element={<ExplanationPage />}
         />
         <Route
-          path="random"
+          path='random'
           element={
             <TimerProvider>
               <RandomPage />
@@ -89,7 +85,7 @@ const Routes = () => {
           }
         />
         <Route
-          path="randomQuestion/:problemId"
+          path='randomQuestion/:problemId'
           element={
             <TimerProvider>
               <RandomQuestionPage />
@@ -97,9 +93,8 @@ const Routes = () => {
           }
         />
       </Route>
-   </ReactRouters>
- );
+    </ReactRouters>
+  );
 };
 
 export default Routes;
-

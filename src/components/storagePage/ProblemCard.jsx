@@ -1,39 +1,47 @@
 import { useState, useEffect } from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import imageSrc from "../../assets/images/storagePage/image.png";
 import styles from "../../styles/storagePage/problemCard.module.css";
 
 export default function ProblemCard({ showCheckboxes, selectAll, onCheckedImagesChange }) {
-  const [images, setImages] = useState(Array(10).fill(imageSrc)); // 초기 더미 데이터
-  const [checkedImages, setCheckedImages] = useState([]); // 체크된 이미지 상태 관리
+  const [images, setImages] = useState(Array(10).fill(null)); // 초기 상태: null (스켈레톤 표시)
+  const [checkedImages, setCheckedImages] = useState([]);
 
-  // 체크박스 상태 관리
   useEffect(() => {
     if (selectAll) {
-      setCheckedImages(images.map((_, index) => index)); // 모두 선택
+      setCheckedImages(images.map((_, index) => index));
     } else {
-      setCheckedImages([]); // 선택 해제
+      setCheckedImages([]);
     }
   }, [selectAll, images]);
 
   useEffect(() => {
-    // 부모에게 체크된 이미지 목록 전달
     onCheckedImagesChange(checkedImages);
   }, [checkedImages, onCheckedImagesChange]);
 
   const handleCheckboxChange = (index) => {
     setCheckedImages((prev) =>
-      prev.includes(index)
-        ? prev.filter((item) => item !== index) // 체크 해제
-        : [...prev, index] // 체크 추가
+      prev.includes(index) ? prev.filter((item) => item !== index) : [...prev, index]
     );
   };
 
-  // 무한 스크롤용 핸들러
+  // 이미지 로딩 시뮬레이션 (2초 후 로드 완료)
+  useEffect(() => {
+    setTimeout(() => {
+      setImages(Array(10).fill(imageSrc)); // 스켈레톤 대신 실제 이미지로 변경
+    }, 2000);
+  }, []);
+
   const loadMoreImages = () => {
-    setImages((prevImages) => [...prevImages, ...Array(10).fill(imageSrc)]);
+    setImages((prevImages) => [...prevImages, ...Array(10).fill(null)]);
+    setTimeout(() => {
+      setImages((prevImages) =>
+        prevImages.map((img) => (img === null ? imageSrc : img))
+      );
+    }, 2000);
   };
 
-  // Intersection Observer 설정
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -64,7 +72,11 @@ export default function ProblemCard({ showCheckboxes, selectAll, onCheckedImages
               onChange={() => handleCheckboxChange(index)}
             />
           )}
-          <img src={src} alt={`Image ${index}`} className={styles.image} />
+          {src ? (
+            <img src={src} alt={`Image ${index}`} className={styles.image} />
+          ) : (
+            <Skeleton className={styles.skeleton} width={100} height={110} />
+          )}
         </div>
       ))}
       <div id="sentinel" className={styles.sentinel}></div>
