@@ -107,13 +107,14 @@ const CameraPage = () => {
             },
           });
 
-          const data = res.data.result.success;
+          const data = res.data.result;
           console.log(data);
 
-          if (data) {
+          if (data.result) {
             navigate('/afterShooting', {
               state: {
                 image: croppedDataUrl,
+                url: data.imageUrl,
               },
             });
           } else {
