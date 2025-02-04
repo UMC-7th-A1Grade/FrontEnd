@@ -151,11 +151,11 @@ const GoogleCallbackPage = () => {
           localStorage.setItem('socialId', socialId);
 
           try {
-            // 사용자 정보 가져오기
-            const userResponse = await axios({
+            // 사용자 정보 조회
+            const userInfoResponse = await axios({
               method: 'GET',
               baseURL: import.meta.env.VITE_SERVER_URL,
-              url: '/api/users',
+              url: '/api/users/info',
               withCredentials: true,
               headers: {
                 'Authorization': `Bearer ${accessToken}`,
@@ -163,10 +163,10 @@ const GoogleCallbackPage = () => {
               }
             });
 
-            console.log('사용자 정보 응답:', userResponse.data);
+            console.log('사용자 정보 응답:', userInfoResponse.data);
 
-            // 사용자 정보가 있으면 메인으로, 없으면 온보딩으로
-            if (userResponse.data.isSuccess && userResponse.data.result) {
+            // 사용자 이름이 있으면 온보딩을 완료한 것으로 판단
+            if (userInfoResponse.data.isSuccess && userInfoResponse.data.result?.name) {
               console.log('기존 사용자: 메인 페이지로 이동');
               navigate('/main');
             } else {
