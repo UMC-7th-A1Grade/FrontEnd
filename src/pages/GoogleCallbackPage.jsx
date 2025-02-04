@@ -107,7 +107,6 @@
 // export default GoogleCallbackPage;
 
 
-
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -131,12 +130,6 @@ const GoogleCallbackPage = () => {
           return;
         }
 
-        const apiUrl = `${import.meta.env.VITE_SERVER_URL}/api/users/google`;
-        console.log('API 요청 준비:', {
-          url: apiUrl,
-          code: code
-        });
-
         const response = await axios({
           method: 'GET',
           baseURL: import.meta.env.VITE_SERVER_URL,
@@ -153,32 +146,36 @@ const GoogleCallbackPage = () => {
         if (response.data.isSuccess) {
           const { email, accessToken, socialId } = response.data.result;
 
-          // 이전 로그인 정보 확인
-          const existingEmail = localStorage.getItem('userEmail');
-          const existingNickname = localStorage.getItem('userNickname');
-
-          console.log('저장할 데이터:', {
-            email,
-            tokenLength: accessToken?.length,
-            socialId
-          });
-
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('userEmail', email);
           localStorage.setItem('socialId', socialId);
 
-          console.log('로컬 스토리지 저장 완료:', {
-            savedToken: localStorage.getItem('accessToken'),
-            savedEmail: localStorage.getItem('userEmail'),
-            savedSocialId: localStorage.getItem('socialId')
-          });
+          try {
+            // 사용자 정보 가져오기
+            const userResponse = await axios({
+              method: 'GET',
+              baseURL: import.meta.env.VITE_SERVER_URL,
+              url: '/api/users',
+              withCredentials: true,
+              headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+              }
+            });
 
-          // 이전에 로그인한 이력이 있고, 닉네임이 있으면 메인 페이지로
-          if (existingEmail === email && existingNickname) {
-            console.log('기존 사용자 확인됨, 메인 페이지로 이동');
-            navigate('/main');
-          } else {
-            console.log('신규 사용자 또는 온보딩 미완료, 닉네임 설정 페이지로 이동');
+            console.log('사용자 정보 응답:', userResponse.data);
+
+            // 사용자 정보가 있으면 메인으로, 없으면 온보딩으로
+            if (userResponse.data.isSuccess && userResponse.data.result) {
+              console.log('기존 사용자: 메인 페이지로 이동');
+              navigate('/main');
+            } else {
+              console.log('신규 사용자: 닉네임 설정 페이지로 이동');
+              navigate('/nickname');
+            }
+          } catch (userError) {
+            console.error('사용자 정보 조회 실패:', userError);
+            // 사용자 정보 조회 실패 시 닉네임 설정 페이지로 이동
             navigate('/nickname');
           }
         } else {
@@ -191,7 +188,7 @@ const GoogleCallbackPage = () => {
           response: error.response?.data,
           stack: error.stack
         });
-
+        
         if (error.response?.data?.code === 'AUTH4002') {
           navigate('/login');
           return;
