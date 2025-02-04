@@ -59,6 +59,7 @@
 
 // export default NicknamePage;
 
+
 import React, { useState } from 'react';
 import styles from '../styles/NicknameStyles/NickName.module.css';
 import logo from '../assets/images/nickname/Logo_Nickname.png';
@@ -66,13 +67,21 @@ import NicknameInput from '../components/NickNamePage/NicknameInput/NicknameInpu
 import NextButton from '../components/NickNamePage/NextButton/NextButton';
 
 const NicknamePage = () => {
-  const [validNickname, setValidNickname] = useState('테스트');  // 기본값 설정
-  const [isValid, setIsValid] = useState(true);  // 항상 유효하도록 설정
+  const [validNickname, setValidNickname] = useState(null);
+  const [isValid, setIsValid] = useState(false);
 
   const handleNicknameComplete = (data) => {
-    console.log("API 응답답:", data);
-    setValidNickname(data.nickname || '테스트');
-    setIsValid(true);
+    // 엄격한 유효성 검사 추가
+    if (data.success && data.nickname && 
+        data.nickname.length >= 2 && 
+        data.nickname.length <= 5 && 
+        /^[가-힣a-zA-Z0-9]+$/.test(data.nickname)) {
+      setValidNickname(data.nickname);
+      setIsValid(true);
+    } else {
+      setValidNickname(null);
+      setIsValid(false);
+    }
   };
 
   return (
@@ -92,12 +101,10 @@ const NicknamePage = () => {
             <NicknameInput onComplete={handleNicknameComplete} />
           </div>
           <div className={styles.buttonWrapper}>
-            <NextButton  />
-           {/* <NextButton 
-               onComplete={handleNextComplete}
-               isValid={isValid}
-               nickname={validNickname}
-             /> */}
+            <NextButton 
+              isValid={isValid}
+              nickname={validNickname}
+            />
           </div>
         </section>
       </main>
