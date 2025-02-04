@@ -7,7 +7,6 @@ const FullPopup = ({ image, onClose }) => {
   const [showSkeleton, setShowSkeleton] = useState(true);
 
   useEffect(() => {
-    // 탭 변경 시 스켈레톤 다시 표시
     setShowSkeleton(true);
     setImageLoaded(false);
 
