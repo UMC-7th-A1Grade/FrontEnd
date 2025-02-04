@@ -1,6 +1,6 @@
 import styles from '../../styles/afterShootingPage/noteCard.module.css';
 
-export default function NoteSection() {
+export default function NoteCard({ memo, setMemo }) {
   return (
     <div className={styles.cardContainer}>
       <div className={styles.header}>
@@ -11,6 +11,8 @@ export default function NoteSection() {
         <textarea
           placeholder='내용을 입력해주세요'
           className={styles.inputArea}
+          value={memo}
+          onChange={(e) => setMemo(e.target.value)}
         ></textarea>
       </div>
     </div>
