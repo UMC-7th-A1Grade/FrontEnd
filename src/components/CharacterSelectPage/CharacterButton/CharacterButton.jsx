@@ -49,18 +49,27 @@ const CharacterButton = ({ isSelected, selectedCharacter }) => {
         return;
       }
 
-      const response = await api.patch('/users', {
+      // 올바른 엔드포인트와 요청 본문 구조
+      const response = await api.patch('/api/users', {
         nickname,
         characterId: selectedCharacter
       });
 
-      if (response.status === 200) {
+      if (response.data.isSuccess) {
         localStorage.removeItem('tempNickname');
+        // 성공 응답 처리
+        console.log('저장된 사용자 정보:', response.data.result);
         navigate('/');
+      } else {
+        alert(response.data.message || '오류가 발생했습니다.');
       }
     } catch (error) {
       console.error('Error:', error);
-      alert(error.response?.data?.message || '오류가 발생했습니다.');
+      if (error.response?.status === 404) {
+        alert('API 엔드포인트를 찾을 수 없습니다.');
+      } else {
+        alert(error.response?.data?.message || '오류가 발생했습니다.');
+      }
     }
   };
 
