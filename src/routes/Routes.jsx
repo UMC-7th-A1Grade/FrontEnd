@@ -1,6 +1,7 @@
 import { Routes as ReactRouters, Route } from 'react-router-dom';
 import Layout from '../layout/Layout';
 import { TimerProvider } from '../components/randomPage/TimerContext';
+import { SimilarProvider } from '../contexts/SimilarContext';
 
 import HomePage from '../pages/HomePage';
 import Login from '../pages/LoginPage';
@@ -66,15 +67,27 @@ const Routes = () => {
         </Route>
         <Route
           path='afterShooting'
-          element={<AfterShootingPage />}
+          element={
+            <SimilarProvider>
+              <AfterShootingPage />
+            </SimilarProvider>
+          }
         />
         <Route
           path='similarQuestion'
-          element={<SimilarQuestionPage />}
+          element={
+            <SimilarProvider>
+              <SimilarQuestionPage />
+            </SimilarProvider>
+          }
         />
         <Route
           path='explanation'
-          element={<ExplanationPage />}
+          element={
+            <SimilarProvider>
+              <ExplanationPage />
+            </SimilarProvider>
+          }
         />
         <Route
           path='random'
