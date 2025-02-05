@@ -14,16 +14,7 @@
 .header {
   display: flex;
   justify-content: flex-start;
-}
-
-.answerButton {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  color: #919191;
-  padding: 10px 25px;
-  font-size: 14px;
-  cursor: pointer;
-  border-radius: 4px;
+  gap: 5px;
 }
 
 .inputContainer {
@@ -46,31 +37,73 @@
   background-color: #f4f4f4;
 }
 
-@media screen and (min-width: 768px){
-  .inputArea{
+.answerInput {
+  width: 10vw;
+  text-align: center;
+  padding: 10px 25px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.toggleButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.rotated {
+  transform: rotate(-180deg);
+}
+
+.arrowIcon {
+  font-size: 18px;
+  color: black;
+}
+
+.calculatorContainer {
+  max-height: 0;
+  margin-top: 5%;
+  overflow: hidden;
+  position: absolute;
+  z-index: 100;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.calculatorContainer.open {
+  max-height: 100%; /* 충분한 크기로 변경 */
+}
+
+.calculatorContainer.closed {
+  max-height: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .inputArea {
     min-height: 300px;
     font-size: 20px;
   }
 }
 
-@media screen and (min-width: 820px){
-  .inputArea{
+@media screen and (min-width: 820px) {
+  .inputArea {
     min-height: 400px;
     font-size: 25px;
   }
 
-  .answerButton{
+  .answerButton {
     font-size: 25px;
   }
 }
 
-@media screen and (min-width: 1024px){
-  .inputArea{
+@media screen and (min-width: 1024px) {
+  .inputArea {
     min-height: 500px;
     font-size: 30px;
   }
 
-  .answerButton{
+  .answerButton {
     font-size: 30px;
   }
 }
