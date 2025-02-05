@@ -3,9 +3,8 @@ import styles from '../../styles/storagePage/storageImages.module.css';
 import ProblemCard from './ProblemCard.jsx';
 import { FiTrash2 } from 'react-icons/fi';
 import DeleteModal from './DeleteModal';
-import CustomButton from '../global/CustomButton';
 
-export default function StorageImages() {
+export default function StorageImages({ filter }) {
   const [showCheckboxes, setShowCheckboxes] = useState(false); // 체크박스 표시 여부
   const [selectAll, setSelectAll] = useState(false); // 전체 선택 여부
   const [checkedImages, setCheckedImages] = useState([]); // 체크된 이미지 목록
@@ -67,9 +66,10 @@ export default function StorageImages() {
 
       <div className={styles.imageContainer}>
         <ProblemCard
+          filters={filter}
           showCheckboxes={showCheckboxes}
           selectAll={selectAll}
-          onCheckedImagesChange={handleCheckedImagesChange} // 체크된 이미지 변경 처리
+          onCheckedImagesChange={handleCheckedImagesChange}
         />
       </div>
 
@@ -78,27 +78,11 @@ export default function StorageImages() {
         <div className={styles.overlay}></div>
       </div>
 
-      <DeleteModal isOpen={isModalOpen} onClose={closeModal}>
-      <div className={styles.textContainer}>
-          <p>정말 삭제하시겠습니까?</p>
-        </div>
-        <div className={styles.modalButtonContainer}>
-          <CustomButton
-            size='middle'
-            color='gray'
-            type='filled'
-            text='아니오'
-            onClick={closeModal}
-          />
-          <CustomButton
-            size='middle'
-            color='blue'
-            type='filled'
-            text='네'
-            onClick={closeModal}
-          />
-        </div>
-      </DeleteModal>
+      <DeleteModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        checkedImages={checkedImages}
+      />
     </div>
   );
 }
