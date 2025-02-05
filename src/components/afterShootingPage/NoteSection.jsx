@@ -2,13 +2,13 @@ import styles from '../../styles/afterShootingPage/noteSection.module.css';
 import CustomButton from '../global/CustomButton';
 import NoteCard from './NoteCard';
 
-export default function NoteSection({ memo, setMemo, onSave }) {
+export default function NoteSection({ memo, setMemo, answer, setAnswer, onSave }) {
   const handleSave = () => {
     if (!memo.trim()) {
       alert('메모를 입력해주세요!');
       return;
     }
-    onSave(memo);
+    onSave(memo, answer);
   };
 
   return (
@@ -18,6 +18,8 @@ export default function NoteSection({ memo, setMemo, onSave }) {
       <NoteCard
         memo={memo}
         setMemo={setMemo}
+        answer={answer}
+        setAnswer={setAnswer}
       />
       <div className={styles.buttonContainer}>
         <CustomButton

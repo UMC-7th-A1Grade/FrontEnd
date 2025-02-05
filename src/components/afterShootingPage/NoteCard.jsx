@@ -3,9 +3,8 @@ import styles from '../../styles/afterShootingPage/noteCard.module.css';
 import Calculator from '../global/Calculator';
 import { FaChevronDown } from 'react-icons/fa';
 
-export default function NoteCard({ memo, setMemo }) {
+export default function NoteCard({ memo, setMemo, answer, setAnswer }) {
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
-  const [answer, setAnswer] = useState(''); // 답 input 상태 추가
 
   const toggleCalculator = () => {
     setIsCalculatorOpen((prev) => !prev);
@@ -23,7 +22,7 @@ export default function NoteCard({ memo, setMemo }) {
           onChange={(e) => setAnswer(e.target.value)}
         />
 
-        {/* 계산기 토글 버튼튼*/}
+        {/* 계산기 토글 버튼*/}
         <button
           className={`${styles.toggleButton} ${isCalculatorOpen ? styles.rotated : ''}`}
           onClick={toggleCalculator}
