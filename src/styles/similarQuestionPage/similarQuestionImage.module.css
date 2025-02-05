@@ -1,0 +1,12 @@
+.allContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 7% 5%;
+    margin-top: 10%;
+}
+
+.image{
+    width: 340px;
+    height: auto;
+}

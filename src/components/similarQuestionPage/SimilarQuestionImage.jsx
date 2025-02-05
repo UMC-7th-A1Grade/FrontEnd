@@ -1,11 +1,16 @@
+import { useContext } from 'react';
+import styles from '../../styles/similarQuestionPage/similarQuestionImage.module.css';
 import QuestionImage from '../../assets/images/afterShootingPage/image.png';
-import styles from '../../styles/afterShootingPage/questionSection.module.css';
+import { SimilarContext } from '../../contexts/SimilarContext.jsx';
 
 export default function SimilarQuestionImage() {
+  const { similarData } = useContext(SimilarContext);
+
   return (
     <div className={styles.allContainer}>
       <img
-        src={QuestionImage}
+        src={similarData.image || QuestionImage}
+        alt='Generated Question'
         className={styles.image}
       />
     </div>
