@@ -1,6 +1,6 @@
 import styles from './Calculator.module.css';
 
-const Calculator = (input, setInput) => {
+const Calculator = ({ input, setInput }) => {
   //   const [input, setInput] = useState('');
 
   const handleClick = (value) => {
