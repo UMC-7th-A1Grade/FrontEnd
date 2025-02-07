@@ -1,3 +1,18 @@
+.calculatorContainer {
+  position: absolute;
+  z-index: 1000;
+  margin-top: 10px;
+  border-radius: 15px;
+}
+
+@media (max-width: 768px) {
+  .calculatorContainer {
+    width: 80%;
+    left: 42%;
+    transform: translateX(-50%);
+  }
+}
+
 .container {
   display: flex;
   align-items: center;
@@ -50,6 +65,10 @@
   border: 1px solid #E3E3E3;
   border-radius: 4px;
   font-size: 12px;
+}
+
+input:focus {
+  outline: 2px solid #19CED4;
 }
 
 .input::placeholder {
