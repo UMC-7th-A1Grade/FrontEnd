@@ -2,8 +2,15 @@
   width: 350px;
   padding: 10px;
   border-radius: 15px;
-  border: 2px solid black;
-  background: white;
+  border: 2px solid #19CED4;
+  background: #F4F4F4;
+}
+
+@media (max-width: 768px) {
+  .calculator {
+    width: 250px;
+    padding: 5px;
+  }
 }
 
 .display {
@@ -16,24 +23,51 @@
   margin-bottom: 10px;
 }
 
+@media (max-width: 768px) {
+  .display {
+    height: 40px;
+    font-size: 18px;
+    padding: 5px;
+  }
+}
+
 .buttons {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 10px;
+}
 
-  button {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: #d3d3d3;
-    border: none;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
+@media (max-width: 768px) {
+  .buttons {
+    gap: 5px;
   }
+}
+
+button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #d3d3d3;
+  border: none;
+  font-size: 18px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  button {
+    width: 45px;
+    height: 45px;
+    font-size: 14px;
+  }
+  
   button:hover {
     background: #bdbdbd;
   }
+}
+
+button:hover {
+  background: #bdbdbd;
 }
 
 .toggle {
