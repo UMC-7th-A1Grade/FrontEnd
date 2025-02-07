@@ -26,6 +26,18 @@
 }
 
 /* 중앙부분 */
+.errorContainer {
+  text-align: center;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin: 200px 0px;
+  text-align: center; 
+  font-size: 12px;
+  color: #00E3EA;
+}
+
 .rankContainer {
   text-align: center;
   position: relative;
