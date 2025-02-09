@@ -1,34 +1,39 @@
-//더미데이터 입력된 버전 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './ImageSlider.module.css';
 
-const ImageSlider = ({ currentPage, onPageChange, onImageClick, images }) => {
+const ImageSlider = ({ currentPage, onPageChange, onImageClick }) => {
+  const [images] = useState([
+    '/src/assets/images/home/math_1.png',
+    '/src/assets/images/home/math_2.png',
+    '/src/assets/images/home/math_3.png',
+    '/src/assets/images/home/math_4.png',
+    '/src/assets/images/home/math_5.png'
+  ]);
   const [loadedImages, setLoadedImages] = useState({});
   const [direction, setDirection] = useState('right');
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [currentTranslate, setCurrentTranslate] = useState(0);
+  const sliderRef = useRef(null);
 
-  // 일부러 스켈레톤 ui를 넣었어요. 
+  // 이미지 프리로딩 처리 (테스트를 위한 지연 추가)
   useEffect(() => {
     images.forEach((src) => {
       const img = new Image();
       img.src = src;
       img.onload = () => {
+        // 3초 지연 추가
         setTimeout(() => {
           setLoadedImages(prev => ({
             ...prev,
             [src]: true
           }));
-        }, 500);
+        }, 3000);
       };
     });
   }, [images]);
 
-  // 자동 슬라이드 (이미지가 2개 이상일 때만 작동)
   useEffect(() => {
-    if (images.length < 2) return;
-
     const interval = setInterval(() => {
       if (!isDragging) {
         if (direction === 'right') {
@@ -53,7 +58,6 @@ const ImageSlider = ({ currentPage, onPageChange, onImageClick, images }) => {
   }, [currentPage, direction, images.length, onPageChange, isDragging]);
 
   const handleDragStart = (clientX) => {
-    if (images.length < 2) return; // 이미지가 1개일 때는 드래그 비활성화
     setIsDragging(true);
     setStartX(clientX);
   };
@@ -67,11 +71,9 @@ const ImageSlider = ({ currentPage, onPageChange, onImageClick, images }) => {
   const handleDragEnd = () => {
     if (!isDragging) return;
 
-    const minSwipeDistance = 30; // 최소 스와이프 거리
-    
-    if (currentTranslate > minSwipeDistance && currentPage > 0) {
+    if (currentTranslate > 30 && currentPage > 0) {
       onPageChange(currentPage - 1);
-    } else if (currentTranslate < -minSwipeDistance && currentPage < images.length - 1) {
+    } else if (currentTranslate < -30 && currentPage < images.length - 1) {
       onPageChange(currentPage + 1);
     }
 
@@ -79,77 +81,55 @@ const ImageSlider = ({ currentPage, onPageChange, onImageClick, images }) => {
     setCurrentTranslate(0);
   };
 
-  const EmptyState = () => (
-    <div className={styles.empty_state}>
-      <p className={styles.empty_state__title}>아직 입력된 문제가 없습니다</p>
-      <p className={styles.empty_state__subtitle}>카메라 버튼을 눌러 문제를 추가해보세요!</p>
-    </div>
-  );
-
-  const renderImages = () => {
-    if (images.length === 0) {
-      return <EmptyState />;
+  const handleImageClick = (image, index, e) => {
+    if (!isDragging && onImageClick) {
+      e.stopPropagation();
+      onImageClick(image, index);
     }
-
-    return images.map((image, index) => {
-      let position;
-      
-      // 이미지 개수별 위치 설정
-      if (images.length === 1) {
-        position = 'center';
-      } else if (images.length === 2) {
-        if (index === currentPage) position = 'center';
-        else position = currentPage === 0 ? 'right' : 'left';
-      } else if (images.length === 3) {
-        if (index === currentPage) position = 'center';
-        else if (index === (currentPage + 1) % 3) position = 'right';
-        else position = 'left';
-      } else {
-        if (index === currentPage) position = 'center';
-        else if (index === (currentPage + 1) % images.length) position = 'right';
-        else if (index === (currentPage - 1 + images.length) % images.length) position = 'left';
-        if (index === (currentPage + 2) % images.length) position = 'farRight';
-        else if (index === (currentPage - 2 + images.length) % images.length) position = 'farLeft';
-      }
-
-      if (!position) return null;
-
-      return (
-        <div
-          key={index}
-          className={`${styles.slider__item} ${styles[`slider__item--${position}`]}`}
-          style={{
-            transform: isDragging ? `translateX(${currentTranslate}px)` : undefined
-          }}
-          onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
-          onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
-          onTouchEnd={handleDragEnd}
-          onMouseDown={(e) => handleDragStart(e.clientX)}
-          onMouseMove={(e) => handleDragMove(e.clientX)}
-          onMouseUp={handleDragEnd}
-          onMouseLeave={() => isDragging && handleDragEnd()}
-          onClick={(e) => !isDragging && onImageClick && onImageClick(image, index, e)}
-        >
-          {!loadedImages[image] ? (
-            <div className={styles.skeleton_loader}>
-              <div className={styles.skeleton_shimmer}></div>
-            </div>
-          ) : (
-            <img
-              src={image}
-              alt={`Slide ${index + 1}`}
-              className={styles.slider__image}
-              draggable="false"
-            />
-          )}
-        </div>
-      );
-    });
   };
 
   return (
     <div className={styles.slider}>
-      {renderImages()}
+      {images.map((image, index) => {
+        let position;
+        if (index === currentPage - 2) position = 'farLeft';
+        else if (index === currentPage - 1) position = 'left';
+        else if (index === currentPage) position = 'center';
+        else if (index === currentPage + 1) position = 'right';
+        else if (index === currentPage + 2) position = 'farRight';
+        else return null;
+
+        return (
+          <div
+            key={index}
+            className={`${styles.slider__item} ${styles[`slider__item--${position}`]}`}
+            style={{
+              transform: isDragging ? `translateX(${currentTranslate}px)` : undefined
+            }}
+            onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
+            onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
+            onTouchEnd={handleDragEnd}
+            onMouseDown={(e) => handleDragStart(e.clientX)}
+            onMouseMove={(e) => handleDragMove(e.clientX)}
+            onMouseUp={handleDragEnd}
+            onMouseLeave={() => isDragging && handleDragEnd()}
+            onClick={(e) => handleImageClick(image, index, e)}
+          >
+            {!loadedImages[image] ? (
+              <div className={styles.skeleton_loader}>
+                <div className={styles.skeleton_shimmer}></div>
+              </div>
+            ) : (
+              <img
+                src={image}
+                alt={`Slide ${index + 1}`}
+                className={styles.slider__image}
+                draggable="false"
+              />
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };
