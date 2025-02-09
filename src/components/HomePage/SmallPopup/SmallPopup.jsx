@@ -6,7 +6,6 @@ const SmallPopup = ({ image, onClose, onShowFullPopup }) => {
   const [showSkeleton, setShowSkeleton] = useState(true);
 
   useEffect(() => {
-    // 최소 1.5초 동안 스켈레톤 유지
     const timer = setTimeout(() => {
       setShowSkeleton(false);
     }, 1500);
@@ -45,7 +44,7 @@ const SmallPopup = ({ image, onClose, onShowFullPopup }) => {
           }}
         >
           <img
-            src="/src/assets/images/home/X_button.png"
+            src="src\assets\images\home\X_button.png"
             alt="닫기"
             className={styles.close_img}
           />
