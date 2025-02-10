@@ -66,7 +66,7 @@ const GoogleCallbackPage = () => {
              
              if (newDecodedToken.isProfileComplete) {
                console.log('기존 사용자: 메인 페이지로 이동');
-               navigate('/main');
+               navigate('/');
              } else {
                console.log('신규 사용자: 닉네임 설정 페이지로 이동');
                navigate('/nickname');
