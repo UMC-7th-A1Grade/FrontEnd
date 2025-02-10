@@ -63,7 +63,7 @@ const GoogleCallbackPage = () => {
                const decodedToken = jwtDecode(newAccessToken);
                console.log('디코딩된 토큰:', decodedToken);
 
-               if (decodedToken.isProfileComplete) {
+               if (decodedToken.idProfileComplete) {
                  console.log('기존 사용자: 메인 페이지로 이동');
                  navigate('/');
                } else {
