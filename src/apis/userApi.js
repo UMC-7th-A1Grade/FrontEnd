@@ -1,54 +1,4 @@
-// // userApi.js
-// import api from './axios';
-
-// // 인증 토큰을 헤더에 추가하는 함수
-// const getAuthHeader = () => {
-//   const token = localStorage.getItem('token');
-//   return token ? { Authorization: `Bearer ${token}` } : {};
-// };
-
-// // 사용자 닉네임 조회
-// export const getUserNickname = async () => {
-//   try {
-//     const response = await api.get('/api/users/nickname', {
-//       headers: {
-//         ...getAuthHeader()
-//       }
-//     });
-    
-//     // API 응답 구조에 맞게 데이터 추출
-//     return {
-//       nickname: response.data.result.nickName,
-//       isSuccess: response.data.isSuccess
-//     };
-//   } catch (error) {
-//     console.error('닉네임 조회 실패:', error);
-//     throw error;
-//   }
-// };
-
-// // 사용자 크레딧 조회
-// export const getUserCredits = async () => {
-//   try {
-//     const response = await api.get('/api/credits', {
-//       headers: {
-//         ...getAuthHeader()
-//       }
-//     });
-    
-//     // API 응답 구조에 맞게 데이터 추출
-//     return {
-//       credits: response.data.result.totalCredit,
-//       isSuccess: response.data.isSuccess
-//     };
-//   } catch (error) {
-//     console.error('크레딧 조회 실패:', error);
-//     throw error;
-//   }
-// };
-
-
-// userApi 디버깅 개빡센 버전전
+// userApiDebug.js
 import api from './axios';
 
 // 디버깅을 위한 유틸리티 함수
@@ -74,8 +24,18 @@ const debugLog = (type, message, data = null) => {
 // 인증 토큰을 헤더에 추가하는 함수
 const getAuthHeader = () => {
   const token = localStorage.getItem('token');
-  debugLog('info', '인증 토큰 상태 확인', { exists: !!token, token: token ? 'exists' : 'not found' });
-  return token ? { Authorization: `Bearer ${token}` } : {};
+  
+  if (!token) {
+    debugLog('warning', '토큰이 존재하지 않음');
+    return {};
+  }
+
+  debugLog('info', '토큰 정보', {
+    tokenExists: true,
+    tokenPreview: `${token.substring(0, 15)}...`
+  });
+
+  return { Authorization: `Bearer ${token}` };
 };
 
 // 사용자 닉네임 조회
@@ -83,9 +43,8 @@ export const getUserNickname = async () => {
   debugLog('api', '닉네임 조회 시작');
   
   try {
-    // 요청 전 상태 확인
     const headers = {
-      ...api.defaults.headers,
+      'Content-Type': 'application/json',
       ...getAuthHeader()
     };
     
@@ -96,6 +55,7 @@ export const getUserNickname = async () => {
     });
 
     const response = await api.get('/api/users/nickname', { headers });
+    
     debugLog('success', '닉네임 조회 성공', response.data);
 
     // 응답 데이터 구조 검증
@@ -126,9 +86,8 @@ export const getUserCredits = async () => {
   debugLog('api', '크레딧 조회 시작');
   
   try {
-    // 요청 전 상태 확인
     const headers = {
-      ...api.defaults.headers,
+      'Content-Type': 'application/json',
       ...getAuthHeader()
     };
     
@@ -139,6 +98,7 @@ export const getUserCredits = async () => {
     });
 
     const response = await api.get('/api/credits', { headers });
+    
     debugLog('success', '크레딧 조회 성공', response.data);
 
     // 응답 데이터 구조 검증
@@ -162,4 +122,14 @@ export const getUserCredits = async () => {
     });
     throw error;
   }
+};
+
+// API 응답 성공 여부 확인
+export const isApiSuccess = (response) => {
+  return response?.data?.isSuccess === true;
+};
+
+// API 에러 메시지 추출
+export const getErrorMessage = (error) => {
+  return error.response?.data?.message || '알 수 없는 오류가 발생했습니다.';
 };

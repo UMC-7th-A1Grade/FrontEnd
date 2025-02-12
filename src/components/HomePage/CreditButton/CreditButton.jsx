@@ -38,7 +38,8 @@
 
 // export default CreditButton;
 
-// CreditButton.jsx
+
+
 import React, { useState, useEffect } from 'react';
 import styles from './CreditButton.module.css';
 import creditIcon from '../../../assets/images/home/credit.png';
@@ -65,15 +66,17 @@ const CreditButton = () => {
   }, []);
 
   return (
-    <button className={styles.credit_button}>
-      <img 
-        src={creditIcon}
-        alt="credit icon" 
-        className={styles.credit_icon}
-      />
-      <span className={styles.credit_amount}>
-        {isLoading ? '로딩중...' : `${credits} 크레딧`}
-      </span>
+    <button className={`${styles.credit_button} layout__creditButton`}>
+      <div className={styles.credit_content}>
+        <img
+          src={creditIcon}
+          alt="credit icon"
+          className={styles.credit_icon}
+        />
+        <span className={styles.credit_amount}>
+          {isLoading ? '로딩중...' : `${credits} 크레딧`}
+        </span>
+      </div>
     </button>
   );
 };
