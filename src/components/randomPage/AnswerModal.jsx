@@ -22,7 +22,6 @@ function AnswerModal({ isOpen, isCorrect, onClose }) {
         </div>
       </div>
 
-      {/* SolutionModal 추가 */}
       <SolutionModal isOpen={isSolutionOpen} onClose={onClose} />
     </>
   );
