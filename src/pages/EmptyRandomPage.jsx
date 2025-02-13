@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from '../styles/randomPage/LoadingRandomPage.module.css';
+import styles from '../styles/randomPage/EmptyRandomPage.module.css';
 import Logo from "../assets/images/smallLogo.png";
 
-function LoadingRandomPage() {
+function EmptyRandomPage() {
   return (
     <div className={styles.loadingContainer}>
       <img src={Logo} alt="Logo" className={styles.logo}/>
@@ -12,4 +12,4 @@ function LoadingRandomPage() {
   );
 }
 
-export default LoadingRandomPage;
+export default EmptyRandomPage;
