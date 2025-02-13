@@ -87,7 +87,7 @@
 
 import React, { useState, useEffect } from 'react';
 import styles from './FullPopup.module.css';
-import { mathService } from '../api/mathApi';
+import { mathService } from '../../../apis/mathApi';
 
 const FullPopup = ({ userQuestionId, onClose }) => {
   const [activeTab, setActiveTab] = useState('memo');
