@@ -1,0 +1,64 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  width: 340px;
+  height: 480px;
+  background: #ffffff;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+}
+
+.closeButton {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 33px;
+  height: 33px;
+  cursor: pointer;
+}
+
+.solutionWrapper {
+  position: relative;
+  margin-left: -73%;
+  padding: 10px 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #00E3EA;
+  border-radius: 4px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+  color: #00D4DC;
+  margin-bottom: 15px;
+}
+
+.solutionText {
+  margin: 0;
+}
+
+.explanationBox {
+  width: 95%;
+  min-height: 400px;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #F4F4F4;
+  text-align: left;
+  color: #414141;
+  font-size: 14px;
+  font-weight: 600;
+}
