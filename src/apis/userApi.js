@@ -73,7 +73,7 @@ const validateToken = (token) => {
 // axios 인터셉터 설정
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('accessToken');  // 여기를 수정
     if (token) {
       if (!validateToken(token)) {
         debugLog('warning', '유효하지 않은 토큰 형식');
@@ -90,7 +90,11 @@ api.interceptors.request.use(
     } else {
       debugLog('warning', '토큰이 존재하지 않음', {
         url: config.url,
-        method: config.method
+        method: config.method,
+        localStorage: {
+          accessToken: localStorage.getItem('accessToken'),
+          allKeys: Object.keys(localStorage)
+        }
       });
     }
     return config;
