@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './ChatbotButton.module.css';
+import styles from './ChatBotButton.module.css';
 import chatbotImage from '../../../assets/images/home/chatbot.png';
 
 const ChatbotButton = () => {
