@@ -17,7 +17,7 @@ import ExplanationPage from '../pages/ExplanationPage';
 import GoogleCallbackPage from '../pages/GoogleCallbackPage';
 import RandomPage from '../pages/RandomPage';
 import RandomQuestionPage from '../pages/RandomQuestionPage';
-import Terms from '../pages/terms';
+import Terms from '../pages/Terms';
 import Privacy from '../pages/Privacy';
 
 const Routes = () => {
