@@ -1,4 +1,3 @@
-// userApiDebug.js
 import api from './axios';
 
 // 백엔드 에러 메시지 분석 함수
@@ -24,6 +23,16 @@ const analyzeBackendError = (error) => {
     메소드: validateToken() 또는 extractSocialId()
     원인: JWT 토큰 검증 실패
     `;
+  } else if (errorData.code === 'CREDIT4002') {
+    errorLocation = `
+    위치: CreditServiceImpl.java
+    메소드: getCredit()
+    원인: 사용자의 크레딧 정보를 찾지 못함
+    검증 필요:
+    1. CreditRepository.findByUser_Email()
+    2. OAuth2TokenService.handleLogin()에서 크레딧 생성 여부
+    3. Credit 테이블 데이터 상태
+    `;
   }
 
   return errorLocation || '알 수 없는 위치';
@@ -40,7 +49,7 @@ const debugLog = (type, message, data = null) => {
     backend: 'color: #795548; font-weight: bold;'
   };
 
-  console.group(`%c[${type.toUpperCase()}]`, styles[type.toLowerCase()]);
+  console.group(`%c[${type.toUpperCase()}] ${new Date().toISOString()}`, styles[type.toLowerCase()]);
   console.log(message);
   if (data) {
     console.log('상세 정보:', data);
@@ -73,10 +82,13 @@ const validateToken = (token) => {
 // axios 인터셉터 설정
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('accessToken');  // 여기를 수정
+    const token = localStorage.getItem('accessToken');
     if (token) {
       if (!validateToken(token)) {
-        debugLog('warning', '유효하지 않은 토큰 형식');
+        debugLog('warning', '유효하지 않은 토큰 형식', {
+          token: token.substring(0, 10) + '...',
+          timestamp: new Date().toISOString()
+        });
         return Promise.reject(new Error('Invalid token format'));
       }
 
@@ -126,7 +138,8 @@ export const getUserNickname = async () => {
     debugLog('success', '닉네임 조회 성공', {
       data: response.data,
       status: response.status,
-      headers: response.headers
+      headers: response.headers,
+      timestamp: new Date().toISOString()
     });
     
     return {
@@ -144,7 +157,8 @@ export const getUserNickname = async () => {
         url: error.config?.url,
         method: error.config?.method,
         headers: error.config?.headers
-      }
+      },
+      timestamp: new Date().toISOString()
     });
     throw error;
   }
@@ -164,14 +178,19 @@ export const getUserCredits = async () => {
     3. CustomUserDetailsService.loadUserByUsername()
       - socialId로 사용자 조회
     4. CreditController.getCredit()
-      - 크레딧 정보 반환
+      - creditService.getCredit() 호출
+    5. CreditService.getCredit()
+      - User 엔티티로 크레딧 정보 조회
+    6. CreditRepository.findByUser()
+      - DB에서 사용자 크레딧 조회
     `);
 
     const response = await api.get('/api/credits');
     debugLog('success', '크레딧 조회 성공', {
       data: response.data,
       status: response.status,
-      headers: response.headers
+      headers: response.headers,
+      timestamp: new Date().toISOString()
     });
     
     return {
@@ -180,16 +199,41 @@ export const getUserCredits = async () => {
     };
   } catch (error) {
     const errorLocation = analyzeBackendError(error);
+    
+    if (error.response?.data?.code === 'CREDIT4002') {
+      debugLog('info', '크레딧 정보 없음 - 기본값 반환', {
+        errorType: error.response.data.code,
+        errorMessage: error.response.data.message,
+        errorLocation: errorLocation,
+        defaultValue: 10,
+        추가확인사항: [
+          '회원가입 완료 여부',
+          'OAuth2TokenService handleLogin 메소드에서 크레딧 생성 로직',
+          'CreditService의 createCredit 메소드 동작',
+          'credit 테이블의 데이터 상태'
+        ],
+        timestamp: new Date().toISOString()
+      });
+      
+      return {
+        credits: 10,
+        isSuccess: true
+      };
+    }
+
     debugLog('error', '크레딧 조회 실패', {
       errorType: error.name,
       errorMessage: error.message,
       errorLocation: errorLocation,
+      errorCode: error.response?.data?.code,
       response: error.response?.data,
       request: {
         url: error.config?.url,
         method: error.config?.method,
         headers: error.config?.headers
-      }
+      },
+      timestamp: new Date().toISOString(),
+      stackTrace: error.stack
     });
     throw error;
   }

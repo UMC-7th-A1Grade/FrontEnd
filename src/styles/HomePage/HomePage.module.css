@@ -11,6 +11,16 @@
   padding: 0;
 }
 
+.layout__chatbotButton {
+  position: absolute;
+  top: 129px;
+  left: 35.43px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .layout__header {
   position: absolute;
   width: 40px;
@@ -129,5 +139,33 @@
   width: 100%;
 }
 
+.layout__footer {
+  position: absolute;
+  top: 680px;
+  left: 60px;
+  width: calc(100% - 70px);
+  padding: 10px 0;
+  background-color: white;
+  text-align: left;
+  font-size: 12px;
+}
 
+.layout__representative {
+  margin: 0 0 5px 0;
+  color: #666;
+  font-family: 'Pretendard';
+}
 
+.layout__terms,
+.layout__privacy {
+  color: #666;
+  text-decoration: none;
+  margin-right: 10px;
+  font-family: 'Pretendard';
+  display: inline-block;
+}
+
+.layout__terms:hover,
+.layout__privacy:hover {
+  text-decoration: underline;
+}
