@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import styles from '../styles/randomPage/RandomQuestionPage.module.css';
 import Header from '../components/global/Header.jsx';
 import CustomButton from '../components/global/CustomButton.jsx';
@@ -19,6 +20,7 @@ function RandomQuestionPage() {
   const [showCalculator, setShowCalculator] = useState(false);
   const inputRef = useRef(null);
   const calculatorRef = useRef(null);
+  const handwritingRef = useRef(null); // Handwriting 컴포넌트 참조
 
   // 문제 정보 가져오기
   const problems = location.state?.problems || [];
@@ -31,13 +33,44 @@ function RandomQuestionPage() {
     }
   }, [problemData, navigate]);
 
-  const handleSubmit = () => {
-    const correct = Number(inputAnswer) === problemData.answer;
-    setIsCorrect(correct);
-    setIsModalOpen(true);
+  const submitAnswer = async () => {
+    if (!problemData) return;
 
-    if (correct) {
-      problems[problemIndex].solved = true;
+    // Handwriting에서 이미지(Base64) 데이터 가져오기
+    const handwritingImage = handwritingRef.current?.getCanvasImage();
+
+    if (!handwritingImage) {
+      alert("필기 내용을 먼저 작성해주세요.");
+      return;
+    }
+
+    const token = localStorage.getItem('accessToken');
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/api/question/${problemId}/submit/`,
+        {
+          note: handwritingImage, // Base64 이미지 데이터
+          answer: inputAnswer,
+        },
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+
+      const data = response.data;
+      if (data.isSuccess) {
+        setIsCorrect(data.result.correct); // API 응답의 correct 값 반영
+        setIsModalOpen(true);
+
+        if (data.result.correct) {
+          problems[problemIndex].solved = true;
+        }
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      alert('답안을 제출하는 도중 오류가 발생했습니다.');
+      console.error(error);
     }
   };
 
@@ -45,7 +78,6 @@ function RandomQuestionPage() {
     navigate('/random', { state: { problems } });
   };
 
-  // 화면 클릭 시 계산기 숨기기 (계산기 내부 클릭은 예외)
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -85,11 +117,11 @@ function RandomQuestionPage() {
               <Calculator input={inputAnswer} setInput={setInputAnswer} />
             </div>
           )}
-          <Handwriting />
+          <Handwriting ref={handwritingRef} /> 
         </div>
         <div className={styles.buttonContainer}>
           <CustomButton size="small" color="gray" type="filled" text="돌아가기" onClick={handleBack} />
-          <CustomButton size="small" color="blue" type="filled" text="제출하기" onClick={handleSubmit} />
+          <CustomButton size="small" color="blue" type="filled" text="제출하기" onClick={submitAnswer} />
         </div>
       </div>
 

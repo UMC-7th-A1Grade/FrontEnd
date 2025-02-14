@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const getMycorrect = async () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('accessToken');
   try {
     const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/grade`, {
       headers: {
@@ -11,6 +11,6 @@ export const getMycorrect = async () => {
     const data = res.data;
     return data;
   } catch {
-    alert('에러 발생');
+    location.href = '/login';
   }
 };

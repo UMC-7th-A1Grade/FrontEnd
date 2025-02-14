@@ -1,19 +1,13 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import styles from '../../styles/randomPage/Handwriting.module.css';
 
-function Handwriting() {
+const Handwriting = forwardRef((props, ref) => {
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [paths, setPaths] = useState([]);
   const [currentPath, setCurrentPath] = useState([]);
-  const [showControls, setShowControls] = useState(false);
-  const [scale, setScale] = useState(1);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const lastTouchDistance = useRef(null);
-  const lastTouchCenter = useRef({ x: 0, y: 0 });
-  const isZooming = useRef(false);
-  const activeTouchId = useRef(null);
+  const [showControls, setShowControls] = useState(false); // 되돌리기/지우기 버튼 표시 여부
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -25,69 +19,53 @@ function Handwriting() {
 
   useEffect(() => {
     redrawCanvas();
-  }, [paths, scale, offset]);
+  }, [paths]);
+
+  // 부모 컴포넌트에서 Base64 이미지 데이터를 가져갈 수 있도록 함
+  useImperativeHandle(ref, () => ({
+    getCanvasImage: () => {
+      const canvas = canvasRef.current;
+      return canvas.toDataURL('image/png'); // Base64 이미지 변환
+    }
+  }));
 
   const startDrawing = (event) => {
-    if (isZooming.current) return;
-    if (event.touches && event.touches.length > 1) return;
-    
-    // 첫번째 터치 추적해서 필기할때 불편함(손바닥이 캔버스에 닿아서 그림그려짐)을 방지함!
-    if (event.touches) {
-      if (activeTouchId.current === null) {
-        activeTouchId.current = event.touches[0].identifier;
-      } else {
-        return;
-      }
-    }
-    
-    const { offsetX, offsetY } = getCoordinates(event);
     setIsDrawing(true);
+    setShowControls(true); 
+    const { offsetX, offsetY } = getCoordinates(event);
     setCurrentPath([{ x: offsetX, y: offsetY }]);
-    setShowControls(true);
   };
 
   const draw = (event) => {
-    if (!isDrawing || isZooming.current) return;
-    
-    if (event.touches) {
-      const touch = [...event.touches].find(t => t.identifier === activeTouchId.current);
-      if (!touch) return;
-    }
-    
+    if (!isDrawing) return;
     const { offsetX, offsetY } = getCoordinates(event);
     setCurrentPath((prev) => [...prev, { x: offsetX, y: offsetY }]);
     drawPath([...currentPath, { x: offsetX, y: offsetY }]);
   };
 
-  const stopDrawing = (event) => {
-    // 그리기 종료 및 경로저장
-    if (isDrawing) {
+  const stopDrawing = () => {
+    setIsDrawing(false);
+    if (currentPath.length > 0) {
       setPaths((prev) => [...prev, currentPath]);
-      setCurrentPath([]);
-      setIsDrawing(false);
     }
-    
-    if (event.touches) {
-      activeTouchId.current = null;
-    }
+    setCurrentPath([]);
   };
 
   const getCoordinates = (event) => {
-    // 이벤트 좌표 가져옴
     if (event.touches) {
-      const touch = [...event.touches].find(t => t.identifier === activeTouchId.current);
-      if (!touch) return { offsetX: 0, offsetY: 0 };
+      const touch = event.touches[0];
       const rect = canvasRef.current.getBoundingClientRect();
       return {
-        offsetX: (touch.clientX - rect.left - offset.x) / scale,
-        offsetY: (touch.clientY - rect.top - offset.y) / scale,
+        offsetX: touch.clientX - rect.left,
+        offsetY: touch.clientY - rect.top,
       };
     }
-    return { offsetX: event.nativeEvent.offsetX / scale, offsetY: event.nativeEvent.offsetY / scale };
+    return { offsetX: event.nativeEvent.offsetX, offsetY: event.nativeEvent.offsetY };
   };
 
   const drawPath = (path) => {
     const ctx = ctxRef.current;
+    if (path.length < 2) return;
     ctx.beginPath();
     ctx.moveTo(path[0].x, path[0].y);
     path.forEach((point) => ctx.lineTo(point.x, point.y));
@@ -98,10 +76,9 @@ function Handwriting() {
 
   const redrawCanvas = () => {
     const ctx = ctxRef.current;
-    ctx.setTransform(scale, 0, 0, scale, offset.x, offset.y);
     ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
     drawGrid();
-    paths.forEach((path) => drawPath(path));
+    paths.forEach(drawPath);
   };
 
   const drawGrid = () => {
@@ -123,12 +100,11 @@ function Handwriting() {
   };
 
   const undoLastStroke = () => {
-    // 되돌리기 버튼용
     setPaths((prev) => prev.slice(0, -1));
+    if (paths.length === 1) setShowControls(false);
   };
 
   const clearCanvas = () => {
-    // 초기화 버튼용
     setPaths([]);
     setShowControls(false);
   };
@@ -146,6 +122,7 @@ function Handwriting() {
         onTouchMove={draw}
         onTouchEnd={stopDrawing}
       ></canvas>
+
       {showControls && (
         <div className={styles.controls}>
           <button onClick={undoLastStroke}>되돌리기</button>
@@ -154,6 +131,6 @@ function Handwriting() {
       )}
     </div>
   );
-}
+});
 
 export default Handwriting;

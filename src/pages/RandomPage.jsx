@@ -4,7 +4,7 @@ import styles from '../styles/randomPage/RandomPage.module.css';
 import Timer from '../components/randomPage/Timer.jsx';
 import Problem from '../components/randomPage/RandomProblem.jsx';
 import Header from '../components/global/Header.jsx';
-import LoadingRandomPage from './LoadingRandomPage.jsx';
+import Loading from '../components/common/Loading';
 import { useTimer } from '../components/randomPage/TimerContext';
 
 // 문제 예시 이미지 더미 데이터 (임시입니다!!)
@@ -40,7 +40,7 @@ function RandomPage() {
   };
 
   if (loading) {
-    return <LoadingRandomPage />;
+    return <Loading msg='랜덤 문제를 불러오는 중이에요' />;
   }
 
   return (
