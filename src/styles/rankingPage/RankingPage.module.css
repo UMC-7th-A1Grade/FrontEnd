@@ -1,4 +1,4 @@
-/* 상단부분 */
+
 .textContainerTop {
   text-align: center;
   position: relative;
@@ -23,6 +23,13 @@
   font-size: 12px;
   font-weight: 400;
   margin-top: 4px;
+}
+
+.layout__chatbotButton {
+  position: absolute;
+  top: 129px;
+  left: 35.43px;
+  z-index: 2;
 }
 
 /* 중앙부분 */

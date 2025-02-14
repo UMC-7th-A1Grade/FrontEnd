@@ -88,7 +88,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './FullPopup.module.css';
 import { mathService } from '../../../apis/mathApi';
-
 const FullPopup = ({ userQuestionId, onClose }) => {
   const [activeTab, setActiveTab] = useState('memo');
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -101,7 +100,6 @@ const FullPopup = ({ userQuestionId, onClose }) => {
   });
   const [error, setError] = useState(null);
 
-  // 문제 데이터 로드
   useEffect(() => {
     const loadQuestionData = async () => {
       try {
@@ -115,7 +113,6 @@ const FullPopup = ({ userQuestionId, onClose }) => {
     loadQuestionData();
   }, [userQuestionId]);
 
-  // 스켈레톤 UI와 이미지 로딩 처리
   useEffect(() => {
     setShowSkeleton(true);
     setImageLoaded(false);
@@ -133,7 +130,6 @@ const FullPopup = ({ userQuestionId, onClose }) => {
     }, 300);
   };
 
-  // 현재 탭에 따른 컨텐츠 반환
   const getContent = () => {
     if (activeTab === 'memo') {
       return (
@@ -145,7 +141,6 @@ const FullPopup = ({ userQuestionId, onClose }) => {
         />
       );
     } else {
-      // 필기 탭인 경우
       if (!questionData.noteUrls || questionData.noteUrls.length === 0) {
         return <div className={styles.no_note}>필기가 없습니다</div>;
       }
@@ -184,7 +179,7 @@ const FullPopup = ({ userQuestionId, onClose }) => {
             onClick={onClose}
           >
             <img
-              src="/src/assets/images/home/X_button.png"
+              src="/images/home/X_button.png"
               alt="닫기"
             />
           </button>
