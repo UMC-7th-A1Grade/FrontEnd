@@ -18,7 +18,7 @@ import GoogleCallbackPage from '../pages/GoogleCallbackPage';
 import RandomPage from '../pages/RandomPage';
 import RandomQuestionPage from '../pages/RandomQuestionPage';
 import Terms from '../pages/terms';
-import Privacy from '../pages/privacy';
+import Privacy from '../pages/Privacy';
 
 const Routes = () => {
   return (
