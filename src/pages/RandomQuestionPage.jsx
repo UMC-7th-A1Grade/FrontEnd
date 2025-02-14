@@ -44,7 +44,7 @@ function RandomQuestionPage() {
       return;
     }
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('accessToken');
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_URL}/api/question/${problemId}/submit/`,
