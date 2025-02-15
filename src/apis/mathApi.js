@@ -1,76 +1,97 @@
-// src/api/mathApi.js
 import axios from 'axios';
 
 const baseURL = import.meta.env.VITE_SERVER_URL;
 
-// 백엔드 에러 메시지 분석 함수
-const analyzeBackendError = (error) => {
-  if (!error.response?.data) return '백엔드 응답 없음';
-
-  const errorData = error.response.data;
-  let errorLocation = '';
-
-  if (errorData.code === 'QUESTION4005') {
-    errorLocation = `
-    위치: QuestionController.java
-    메소드: getQuestion()
-    원인: 유효하지 않은 문제 ID
-    검증 필요:
-    1. QuestionService.getQuestion()
-    2. QuestionRepository.findById()
-    `;
-  } else if (errorData.message?.includes('JWT')) {
-    errorLocation = `
-    위치: JwtProvider.java
-    메소드: validateToken() 또는 extractSocialId()
-    원인: JWT 토큰 검증 실패
-    `;
-  }
-
-  return errorLocation || '알 수 없는 위치';
+// 디버깅 로그 레벨 설정
+const DEBUG_LEVEL = {
+  NONE: 0,
+  ERROR: 1,
+  WARN: 2,
+  INFO: 3,
+  DEBUG: 4,
 };
 
-// 상세 디버깅 로그 함수
-const debugLog = (type, message, data = null) => {
+const CURRENT_DEBUG_LEVEL = DEBUG_LEVEL.DEBUG;
+
+// 향상된 디버깅 로그 함수
+const debugLog = (level, type, message, data = null) => {
+  if (level > CURRENT_DEBUG_LEVEL) return;
+
   const styles = {
     api: 'color: #2196F3; font-weight: bold;',
     success: 'color: #4CAF50; font-weight: bold;',
     error: 'color: #f44336; font-weight: bold;',
     warning: 'color: #ff9800; font-weight: bold;',
     info: 'color: #9c27b0; font-weight: bold;',
-    backend: 'color: #795548; font-weight: bold;'
+    backend: 'color: #795548; font-weight: bold;',
+    debug: 'color: #607D8B; font-weight: bold;'
   };
 
   console.group(`%c[${type.toUpperCase()}]`, styles[type.toLowerCase()]);
-  console.log(message);
+  console.log('Timestamp:', new Date().toISOString());
+  console.log('Message:', message);
+  
   if (data) {
-    console.log('상세 정보:', data);
+    console.log('Details:', data);
+    if (data.stack) {
+      console.log('Stack Trace:', data.stack);
+    }
   }
+  
   console.groupEnd();
 };
 
-// 토큰 검증 함수
-const validateToken = (token) => {
-  try {
-    const tokenParts = token.split('.');
-    if (tokenParts.length !== 3) {
-      throw new Error('잘못된 JWT 형식');
-    }
+// 백엔드 에러 분석 함수 개선
+const analyzeBackendError = (error) => {
+  debugLog(DEBUG_LEVEL.DEBUG, 'debug', 'Analyzing backend error', error);
 
-    const payload = JSON.parse(atob(tokenParts[1]));
-    debugLog('info', 'JWT 페이로드 분석', {
-      socialId: payload.sub,
-      exp: new Date(payload.exp * 1000).toLocaleString(),
-      iat: new Date(payload.iat * 1000).toLocaleString()
-    });
-
-    return true;
-  } catch (error) {
-    debugLog('error', 'JWT 토큰 분석 실패', error);
-    return false;
+  if (!error.response?.data) {
+    debugLog(DEBUG_LEVEL.ERROR, 'error', 'No backend response');
+    return {
+      location: '백엔드 응답 없음',
+      details: 'Network error or timeout'
+    };
   }
+
+  const errorData = error.response.data;
+  let errorInfo = {
+    location: '',
+    details: '',
+    stackTrace: error.stack
+  };
+
+  switch (errorData.code) {
+    case 'QUESTION4003':
+      errorInfo.location = 'QuestionService.getQuestion()';
+      errorInfo.details = 'UserQuestion 엔티티 조회 실패';
+      break;
+    case 'QUESTION4004':
+      errorInfo.location = 'QuestionService.getQuestion()';
+      errorInfo.details = 'Question 엔티티 조회 실패';
+      break;
+    case 'QUESTION4005':
+      errorInfo.location = 'QuestionController.getQuestion()';
+      errorInfo.details = 'userQuestionId 파라미터 검증 실패';
+      break;
+    case 'QUESTION5000':
+      errorInfo.location = 'QuestionRepository';
+      errorInfo.details = 'Database operation failed';
+      break;
+    default:
+      if (errorData.message?.includes('JWT')) {
+        errorInfo.location = 'JwtAuthenticationFilter';
+        errorInfo.details = 'JWT 토큰 검증 실패';
+      } else {
+        errorInfo.location = 'Unknown';
+        errorInfo.details = errorData.message || 'Unknown error';
+      }
+  }
+
+  debugLog(DEBUG_LEVEL.INFO, 'info', 'Error analysis result', errorInfo);
+  return errorInfo;
 };
 
+// axios 인스턴스 생성
 const api = axios.create({
   baseURL,
   timeout: 5000,
@@ -84,108 +105,106 @@ api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('accessToken');
     if (token) {
-      if (!validateToken(token)) {
-        debugLog('warning', '유효하지 않은 토큰 형식');
-        return Promise.reject(new Error('Invalid token format'));
-      }
-
       config.headers.Authorization = `Bearer ${token}`;
-      debugLog('info', 'API 요청 정보', {
+      debugLog(DEBUG_LEVEL.INFO, 'info', 'Request configuration', {
         url: config.url,
         method: config.method,
         headers: config.headers,
-        timestamp: new Date().toISOString()
-      });
-    } else {
-      debugLog('warning', '토큰이 존재하지 않음', {
-        url: config.url,
-        method: config.method,
-        localStorage: {
-          accessToken: localStorage.getItem('accessToken'),
-          allKeys: Object.keys(localStorage)
-        }
+        params: config.params,
+        data: config.data
       });
     }
     return config;
   },
   (error) => {
-    debugLog('error', '요청 인터셉터 에러', error);
+    debugLog(DEBUG_LEVEL.ERROR, 'error', 'Request interceptor error', error);
     return Promise.reject(error);
   }
 );
 
-// Response Interceptor 
+// Response Interceptor
 api.interceptors.response.use(
   (response) => {
-    if (response.data.isSuccess) {
-      debugLog('success', 'API 응답 성공', {
-        url: response.config.url,
-        data: response.data,
-        status: response.status
-      });
-      return response.data.result;
-    }
-    return Promise.reject(new Error(response.data.message));
+    debugLog(DEBUG_LEVEL.INFO, 'info', 'Response received', {
+      status: response.status,
+      data: response.data
+    });
+    return response;
   },
   (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('accessToken');
-      debugLog('error', '인증 에러', {
-        status: error.response.status,
-        message: error.response.data.message
-      });
-    }
-    return Promise.reject(error.response?.data || error);
+    debugLog(DEBUG_LEVEL.ERROR, 'error', 'Response interceptor error', error);
+    return Promise.reject(error);
   }
 );
 
-// 문제 관련 API 서비스
+// 수학 문제 관련 API 서비스
 export const mathService = {
-  // 개별 문제 조회 (문제 이미지, 답, 풀이, 메모)
   getQuestionData: async (userQuestionId) => {
-    debugLog('api', '문제 데이터 조회 API 호출 시작');
-    
-    try {
-      debugLog('info', '백엔드 처리 과정', `
-      1. JwtAuthenticationFilter.doFilterInternal() 
-        - Authorization 헤더에서 토큰 추출
-        - 토큰 유효성 검증
-      2. JwtProvider.extractSocialId()
-        - 토큰에서 socialId 추출
-      3. QuestionController.getQuestion()
-        - 문제 정보 조회 및 반환
-      `);
-
-      const data = await api.get(`/api/question/${userQuestionId}`);
-      debugLog('success', '문제 데이터 조회 성공', {
-        questionId: userQuestionId,
-        data: data
+    if (!userQuestionId || isNaN(Number(userQuestionId))) {
+      const error = new Error('유효한 문제 ID가 필요합니다.');
+      debugLog(DEBUG_LEVEL.ERROR, 'error', 'Invalid userQuestionId', {
+        userQuestionId,
+        type: typeof userQuestionId
       });
-
-      return {
-        questionImg: data.questionImg,
-        answer: data.answer,
-        memo: data.memo,
-        noteUrls: data.note
-      };
-    } catch (error) {
-      const errorLocation = analyzeBackendError(error);
-      debugLog('error', '문제 데이터 조회 실패', {
-        errorType: error.name,
-        errorMessage: error.message,
-        errorLocation: errorLocation,
-        response: error.response?.data,
-        request: {
-          url: error.config?.url,
-          method: error.config?.method,
-          headers: error.config?.headers
-        }
-      });
-      
-      if (error.code === 'QUESTION4005') {
-        throw new Error('유효하지 않은 문제 ID입니다.');
-      }
       throw error;
+    }
+
+    debugLog(DEBUG_LEVEL.INFO, 'info', 'Fetching question data', {
+      userQuestionId,
+      endpoint: `/api/question/${userQuestionId}`
+    });
+
+    try {
+      const response = await api.get(`/api/question/${userQuestionId}`);
+      
+      if (response.data?.isSuccess) {
+        const result = response.data.result;
+        debugLog(DEBUG_LEVEL.INFO, 'success', 'Question data fetched successfully', {
+          userQuestionId,
+          data: result
+        });
+        return result;
+      }
+      
+      throw new Error(response.data?.message || '데이터 조회에 실패했습니다.');
+    } catch (error) {
+      const errorInfo = analyzeBackendError(error);
+      debugLog(DEBUG_LEVEL.ERROR, 'error', 'Failed to fetch question data', {
+        userQuestionId,
+        errorInfo,
+        originalError: error
+      });
+
+      // 구체적인 에러 메시지 생성
+      let errorMessage;
+      switch(error.response?.data?.code) {
+        case 'QUESTION4003':
+          errorMessage = '유저 문제를 찾을 수 없습니다.';
+          break;
+        case 'QUESTION4004':
+          errorMessage = '존재하지 않는 문제입니다.';
+          break;
+        case 'QUESTION4005':
+          errorMessage = '유효하지 않은 문제 ID입니다.';
+          break;
+        case 'QUESTION5000':
+          errorMessage = '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+          break;
+        default:
+          if (error.response?.status === 400) {
+            errorMessage = '잘못된 요청입니다.';
+          } else if (error.response?.status === 401) {
+            errorMessage = '로그인이 필요합니다.';
+          } else if (error.response?.status === 404) {
+            errorMessage = '문제를 찾을 수 없습니다.';
+          } else {
+            errorMessage = error.response?.data?.message || '데이터를 불러오는 중 오류가 발생했습니다.';
+          }
+      }
+
+      const enrichedError = new Error(errorMessage);
+      enrichedError.details = errorInfo;
+      throw enrichedError;
     }
   }
 };
