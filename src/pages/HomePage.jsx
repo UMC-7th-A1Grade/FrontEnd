@@ -1,5 +1,7 @@
+
+
 // import React, { useState, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
+// import { useNavigate, Link } from 'react-router-dom';
 // import styles from '../styles/HomePage/HomePage.module.css';
 // import ImageSlider from '../components/HomePage/ImageSlider/ImageSlider';
 // import SmallPopup from '../components/HomePage/SmallPopup/SmallPopup';
@@ -41,7 +43,6 @@
 //   }, [navigate]);
 
 //   // 최근 문제 이미지 불러오기
-  
 //   useEffect(() => {
 //     const fetchRecentQuestions = async () => {
 //       try {
@@ -181,25 +182,21 @@
 //         <LinkCameraButton />
 //       </aside>
 
-//      <footer className={styles.layout__footer}>
+//       <footer className={styles.layout__footer}>
 //         <p className={styles.layout__representative}>대표자 : 이진동</p>
-//         <a 
-//           href="https://lanapi.github.io/a1-terms/terms.html"
+//         <Link 
+//           to="/terms"
 //           className={styles.layout__terms}
-//           target="_blank"
-//           rel="noopener noreferrer"
 //         >
 //           이용약관
-//         </a>
-//         <a 
-//           href="https://lanapi.github.io/a1-terms/privacy.html"
+//         </Link>
+//         <Link 
+//           to="/privacy"
 //           className={styles.layout__privacy}
-//           target="_blank"
-//           rel="noopener noreferrer"
 //         >
 //           개인정보처리방침
-//         </a>
-//       </footer> 
+//         </Link>
+//       </footer>
 
 //       {selectedImage && !showFullPopup && (
 //         <SmallPopup
@@ -221,7 +218,6 @@
 
 // export default HomePage;
 
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styles from '../styles/HomePage/HomePage.module.css';
@@ -242,7 +238,7 @@ import ChatbotButton from '../components/HomePage/ChatBotButton/ChatBotButton';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [images, setImages] = useState([]);
+  const [questions, setQuestions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const [userNickname, setUserNickname] = useState('사용자');
@@ -264,18 +260,17 @@ const HomePage = () => {
     checkAuthStatus();
   }, [navigate]);
 
-  // 최근 문제 이미지 불러오기
+  // 최근 문제 불러오기
   useEffect(() => {
     const fetchRecentQuestions = async () => {
       try {
         setIsLoading(true);
         const questions = await getRecentQuestions();
-        setImages(questions.map(question => question.questionImg));
+        setQuestions(questions);
         setIsError(false);
       } catch (error) {
         console.error('최근 문제 조회 실패:', error);
         setIsError(true);
-        // 인증 관련 에러인 경우 로그인 페이지로 리다이렉트
         if (error.response?.status === 401) {
           localStorage.removeItem('accessToken');
           navigate('/login');
@@ -299,13 +294,11 @@ const HomePage = () => {
         }
       } catch (error) {
         console.error('닉네임 조회 실패:', error);
-        // 인증 관련 에러인 경우 로그인 페이지로 리다이렉트
         if (error.response?.status === 401) {
           localStorage.removeItem('accessToken');
           navigate('/login');
           return;
         }
-        // 다른 에러의 경우 localStorage에서 닉네임 복구 시도
         const storedNickname = localStorage.getItem('userNickname');
         if (storedNickname) {
           setUserNickname(storedNickname);
@@ -321,7 +314,12 @@ const HomePage = () => {
   };
 
   const handleImageClick = (imageUrl, index) => {
-    setSelectedImage({ url: imageUrl, index });
+    const question = questions[index];
+    setSelectedImage({
+      url: question.questionImg,
+      index,
+      id: question.id
+    });
   };
 
   const handleShowFullPopup = () => {
@@ -362,7 +360,7 @@ const HomePage = () => {
             currentPage={currentPage}
             onPageChange={handlePageChange}
             onImageClick={handleImageClick}
-            images={images}
+            images={questions.map(q => q.questionImg)}
             isLoading={isLoading}
             isError={isError}
           />
@@ -372,7 +370,7 @@ const HomePage = () => {
           <SlideCircle
             currentPage={currentPage}
             onPageChange={handlePageChange}
-            totalImages={images.length}
+            totalImages={questions.length}
           />
         </nav>
       </section>
@@ -430,7 +428,7 @@ const HomePage = () => {
 
       {showFullPopup && selectedImage && (
         <FullPopup
-          image={selectedImage}
+          userQuestionId={selectedImage.id}
           onClose={handleClosePopup}
         />
       )}
