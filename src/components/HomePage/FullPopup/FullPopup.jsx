@@ -1,3 +1,4 @@
+
 // import React, { useState, useEffect } from 'react';
 // import styles from './FullPopup.module.css';
 // import { mathService } from '../../../apis/mathApi';
@@ -10,7 +11,7 @@
 //     questionImg: '',
 //     answer: '',
 //     memo: '',
-//     noteUrls: []
+//     note: []
 //   });
 //   const [error, setError] = useState(null);
 
@@ -18,7 +19,12 @@
 //     const loadQuestionData = async () => {
 //       try {
 //         const data = await mathService.getQuestionData(userQuestionId);
-//         setQuestionData(data);
+//         setQuestionData({
+//           questionImg: data.questionImg,
+//           answer: data.answer,
+//           memo: data.memo,
+//           note: data.note || []
+//         });
 //       } catch (error) {
 //         setError(error.message);
 //         console.error('Failed to load question data:', error);
@@ -33,7 +39,7 @@
 
 //     const timer = setTimeout(() => {
 //       setShowSkeleton(false);
-//     }, 500);
+//     }, 100);
 
 //     return () => clearTimeout(timer);
 //   }, [activeTab]);
@@ -41,7 +47,7 @@
 //   const handleImageLoad = () => {
 //     setTimeout(() => {
 //       setImageLoaded(true);
-//     }, 300);
+//     }, 100);
 //   };
 
 //   const getContent = () => {
@@ -55,12 +61,12 @@
 //         />
 //       );
 //     } else {
-//       if (!questionData.noteUrls || questionData.noteUrls.length === 0) {
+//       if (!questionData.note || questionData.note.length === 0) {
 //         return <div className={styles.no_note}>필기가 없습니다</div>;
 //       }
 //       return (
 //         <img
-//           src={questionData.noteUrls[0]}
+//           src={questionData.note[0]}
 //           alt="필기 이미지"
 //           className={`${styles.problem_image} ${imageLoaded ? styles.loaded : ''}`}
 //           onLoad={handleImageLoad}
@@ -127,7 +133,6 @@
 
 // export default FullPopup;
 
-
 import React, { useState, useEffect } from 'react';
 import styles from './FullPopup.module.css';
 import { mathService } from '../../../apis/mathApi';
@@ -147,13 +152,12 @@ const FullPopup = ({ userQuestionId, onClose }) => {
   useEffect(() => {
     const loadQuestionData = async () => {
       try {
-        const data = await mathService.getQuestionData(userQuestionId);
-        setQuestionData({
-          questionImg: data.questionImg,
-          answer: data.answer,
-          memo: data.memo,
-          note: data.note || []
-        });
+        const { data } = await mathService.getQuestionData(userQuestionId);
+        if (data.isSuccess) {
+          setQuestionData(data.result);
+        } else {
+          setError(data.message);
+        }
       } catch (error) {
         setError(error.message);
         console.error('Failed to load question data:', error);
@@ -168,26 +172,36 @@ const FullPopup = ({ userQuestionId, onClose }) => {
 
     const timer = setTimeout(() => {
       setShowSkeleton(false);
-    }, 100);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [activeTab]);
 
   const handleImageLoad = () => {
-    setTimeout(() => {
-      setImageLoaded(true);
-    }, 100);
+    setImageLoaded(true);
+    setShowSkeleton(false);
   };
 
   const getContent = () => {
+    if (showSkeleton) {
+      return <div className={styles.skeleton} />;
+    }
+
     if (activeTab === 'memo') {
       return (
-        <img
-          src={questionData.memo || questionData.questionImg}
-          alt="메모 이미지"
-          className={`${styles.problem_image} ${imageLoaded ? styles.loaded : ''}`}
-          onLoad={handleImageLoad}
-        />
+        <div className={styles.memo_container}>
+          <img
+            src={questionData.questionImg}
+            alt="문제 이미지"
+            className={styles.problem_image}
+            onLoad={handleImageLoad}
+          />
+          {questionData.memo && (
+            <div className={styles.memo_text}>
+              {questionData.memo}
+            </div>
+          )}
+        </div>
       );
     } else {
       if (!questionData.note || questionData.note.length === 0) {
@@ -197,7 +211,7 @@ const FullPopup = ({ userQuestionId, onClose }) => {
         <img
           src={questionData.note[0]}
           alt="필기 이미지"
-          className={`${styles.problem_image} ${imageLoaded ? styles.loaded : ''}`}
+          className={styles.problem_image}
           onLoad={handleImageLoad}
         />
       );
@@ -251,7 +265,6 @@ const FullPopup = ({ userQuestionId, onClose }) => {
 
         <div className={styles.content}>
           <div className={styles.image_container}>
-            {showSkeleton && <div className={styles.skeleton} />}
             {getContent()}
           </div>
         </div>
