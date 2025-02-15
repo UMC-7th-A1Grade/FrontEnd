@@ -1,6 +1,7 @@
 // import React, { useState, useEffect } from 'react';
 // import styles from './FullPopup.module.css';
 // import { mathService } from '../../../apis/mathApi';
+
 // const FullPopup = ({ userQuestionId, onClose }) => {
 //   const [activeTab, setActiveTab] = useState('memo');
 //   const [imageLoaded, setImageLoaded] = useState(false);
@@ -135,44 +136,29 @@ const FullPopup = ({ userQuestionId, onClose }) => {
   const [activeTab, setActiveTab] = useState('memo');
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showSkeleton, setShowSkeleton] = useState(true);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [questionData, setQuestionData] = useState({
     questionImg: '',
     answer: '',
     memo: '',
     note: []
   });
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const loadQuestionData = async () => {
-      if (!userQuestionId || isNaN(Number(userQuestionId))) {
-        setError('유효한 문제 ID가 필요합니다.');
-        setLoading(false);
-        return;
-      }
-
       try {
-        setLoading(true);
-        setError(null);
-        const data = await mathService.getQuestionData(Number(userQuestionId));
+        const data = await mathService.getQuestionData(userQuestionId);
         setQuestionData({
-          questionImg: data.questionImg || '',
-          answer: data.answer || '',
-          memo: data.memo || '',
-          note: Array.isArray(data.note) ? data.note : []
+          questionImg: data.questionImg,
+          answer: data.answer,
+          memo: data.memo,
+          note: data.note || []
         });
       } catch (error) {
         setError(error.message);
-        console.error('Question data loading error:', error);
-        if (error.details) {
-          console.error('Error details:', error.details);
-        }
-      } finally {
-        setLoading(false);
+        console.error('Failed to load question data:', error);
       }
     };
-
     loadQuestionData();
   }, [userQuestionId]);
 
@@ -182,7 +168,7 @@ const FullPopup = ({ userQuestionId, onClose }) => {
 
     const timer = setTimeout(() => {
       setShowSkeleton(false);
-    }, 500);
+    }, 100);
 
     return () => clearTimeout(timer);
   }, [activeTab]);
@@ -190,34 +176,8 @@ const FullPopup = ({ userQuestionId, onClose }) => {
   const handleImageLoad = () => {
     setTimeout(() => {
       setImageLoaded(true);
-    }, 300);
+    }, 100);
   };
-
-  if (loading) {
-    return (
-      <div className={styles.overlay}>
-        <div className={styles.container}>
-          <div className={styles.loading}>데이터를 불러오는 중...</div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className={styles.overlay}>
-        <div className={styles.error}>
-          <div className={styles.errorMessage}>{error}</div>
-          <button 
-            onClick={onClose}
-            className={styles.closeButton}
-          >
-            닫기
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   const getContent = () => {
     if (activeTab === 'memo') {
@@ -243,6 +203,17 @@ const FullPopup = ({ userQuestionId, onClose }) => {
       );
     }
   };
+
+  if (error) {
+    return (
+      <div className={styles.overlay}>
+        <div className={styles.error}>
+          {error}
+          <button onClick={onClose}>닫기</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.overlay}>
