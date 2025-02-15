@@ -133,6 +133,8 @@
 
 // export default FullPopup;
 
+
+
 import React, { useState, useEffect } from 'react';
 import styles from './FullPopup.module.css';
 import { mathService } from '../../../apis/mathApi';
@@ -152,11 +154,11 @@ const FullPopup = ({ userQuestionId, onClose }) => {
   useEffect(() => {
     const loadQuestionData = async () => {
       try {
-        const { data } = await mathService.getQuestionData(userQuestionId);
-        if (data.isSuccess) {
-          setQuestionData(data.result);
+        const response = await mathService.getQuestionData(userQuestionId);
+        if (response.isSuccess) {
+          setQuestionData(response.result);
         } else {
-          setError(data.message);
+          setError(response.message);
         }
       } catch (error) {
         setError(error.message);
