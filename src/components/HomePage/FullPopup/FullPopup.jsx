@@ -134,7 +134,6 @@
 // export default FullPopup;
 
 
-
 import React, { useState, useEffect } from 'react';
 import styles from './FullPopup.module.css';
 import { mathService } from '../../../apis/mathApi';
@@ -154,12 +153,8 @@ const FullPopup = ({ userQuestionId, onClose }) => {
   useEffect(() => {
     const loadQuestionData = async () => {
       try {
-        const response = await mathService.getQuestionData(userQuestionId);
-        if (response.isSuccess) {
-          setQuestionData(response.result);
-        } else {
-          setError(response.message);
-        }
+        const result = await mathService.getQuestionData(userQuestionId);
+        setQuestionData(result);
       } catch (error) {
         setError(error.message);
         console.error('Failed to load question data:', error);
@@ -198,11 +193,9 @@ const FullPopup = ({ userQuestionId, onClose }) => {
             className={styles.problem_image}
             onLoad={handleImageLoad}
           />
-          {questionData.memo && (
-            <div className={styles.memo_text}>
-              {questionData.memo}
-            </div>
-          )}
+          <div className={styles.memo_text}>
+            {questionData.memo || '메모가 없습니다'}
+          </div>
         </div>
       );
     } else {
