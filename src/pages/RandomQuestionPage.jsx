@@ -53,7 +53,7 @@ function RandomQuestionPage() {
           answer: inputAnswer,
         },
         {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
 
