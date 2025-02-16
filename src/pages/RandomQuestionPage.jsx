@@ -20,12 +20,12 @@ function RandomQuestionPage() {
   const [showCalculator, setShowCalculator] = useState(false);
   const inputRef = useRef(null);
   const calculatorRef = useRef(null);
-  const handwritingRef = useRef(null); // Handwriting 컴포넌트 참조
+  const handwritingRef = useRef(null);
 
   // 문제 정보 가져오기
   const problems = location.state?.problems || [];
   const problemIndex = problems.findIndex((p) => p.id === Number(problemId));
-  const problemData = problems[problemIndex];
+  const problemData = problemIndex !== -1 ? problems[problemIndex] : null;
 
   useEffect(() => {
     if (!problemData) {
@@ -35,21 +35,24 @@ function RandomQuestionPage() {
 
   const submitAnswer = async () => {
     if (!problemData) return;
-
-    // Handwriting에서 이미지(Base64) 데이터 가져오기
+    
     const handwritingImage = handwritingRef.current?.getCanvasImage();
-
     if (!handwritingImage) {
-      alert("필기 내용을 먼저 작성해주세요.");
+      alert('필기 내용을 먼저 작성해주세요.');
       return;
     }
 
     const token = localStorage.getItem('accessToken');
+    if (!token) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_URL}/api/question/${problemId}/submit/`,
         {
-          note: handwritingImage, // Base64 이미지 데이터
+          note: handwritingImage,
           answer: inputAnswer,
         },
         {
@@ -59,9 +62,9 @@ function RandomQuestionPage() {
 
       const data = response.data;
       if (data.isSuccess) {
-        setIsCorrect(data.result.correct); // API 응답의 correct 값 반영
+        setIsCorrect(data.result.correct);
         setIsModalOpen(true);
-
+        
         if (data.result.correct) {
           problems[problemIndex].solved = true;
         }
