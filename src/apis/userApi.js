@@ -166,82 +166,58 @@ export const getUserNickname = async () => {
 
 // 사용자 크레딧 조회
 export const getUserCredits = async () => {
- debugLog('api', '크레딧 조회 API 호출 시작');
- 
- try {
-   debugLog('info', '백엔드 처리 과정', `
-   1. JwtAuthenticationFilter.doFilterInternal() 
-     - Authorization 헤더에서 토큰 추출
-     - 토큰 유효성 검증
-   2. JwtProvider.extractSocialId()
-     - 토큰에서 socialId 추출
-   3. CustomUserDetailsService.loadUserByUsername()
-     - socialId로 사용자 조회
-   4. CreditController.getCredit()
-     - creditService.getCredit() 호출
-   5. CreditService.getCredit()
-     - User 엔티티로 크레딧 정보 조회
-   6. CreditRepository.findByUser()
-     - DB에서 사용자 크레딧 조회
-   `);
+  debugLog('api', '크레딧 조회 API 호출 시작');
+  
+  try {
+    debugLog('info', '백엔드 처리 과정', `
+    1. JwtAuthenticationFilter.doFilterInternal() 
+      - Authorization 헤더에서 토큰 추출
+      - 토큰 유효성 검증
+    2. JwtProvider.extractSocialId()
+      - 토큰에서 socialId 추출
+    3. CustomUserDetailsService.loadUserByUsername()
+      - socialId로 사용자 조회
+    4. CreditController.getCredit()
+      - creditService.getCredit() 호출
+    5. CreditService.getCredit()
+      - User 엔티티로 크레딧 정보 조회
+    6. CreditRepository.findByUser()
+      - DB에서 사용자 크레딧 조회
+    `);
 
-   const response = await api.get('/api/users/credits');
-   debugLog('success', '크레딧 조회 성공', {
-     data: response.data,
-     status: response.status,
-     headers: response.headers,
-     timestamp: new Date().toISOString()
-   });
-   
-   // 응답 구조에 맞게 데이터 반환
-   return {
-     credits: response.data.result.totalCredit,
-     isSuccess: true
-   };
- } catch (error) {
-   const errorLocation = analyzeBackendError(error);
-   
-   if (error.response?.data?.code === 'CREDIT4002') {
-     debugLog('info', '크레딧 정보 없음 - 기본값 반환', {
-       errorType: error.response.data.code,
-       errorMessage: error.response.data.message,
-       errorLocation: errorLocation,
-       defaultValue: 10,
-       추가확인사항: [
-         '회원가입 완료 여부',
-         'OAuth2TokenService handleLogin 메소드에서 크레딧 생성 로직',
-         'CreditService의 createCredit 메소드 동작',
-         'credit 테이블의 데이터 상태'
-       ],
-       timestamp: new Date().toISOString()
-     });
-     
-     // 크레딧이 없는 경우에도 동일한 구조로 응답
-     return {
-       credits: 10,
-       isSuccess: true
-     };
-   }
-
-   debugLog('error', '크레딧 조회 실패', {
-     errorType: error.name,
-     errorMessage: error.message,
-     errorLocation: errorLocation,
-     errorCode: error.response?.data?.code,
-     response: error.response?.data,
-     request: {
-       url: error.config?.url,
-       method: error.config?.method,
-       headers: error.config?.headers
-     },
-     timestamp: new Date().toISOString(),
-     stackTrace: error.stack
-   });
-   
-   // 그 외 에러의 경우에도 일관된 구조로 응답
-   return {
-     credits: 100,
-     isSuccess: false
-   };
- }
+    const response = await api.get('/api/users/credit');
+    debugLog('success', '크레딧 조회 성공', {
+      data: response.data,
+      status: response.status,
+      headers: response.headers,
+      timestamp: new Date().toISOString()
+    });
+    
+    return {
+      credits: response.data.result.credit,
+      isSuccess: response.data.isSuccess
+    };
+  } catch (error) {
+    const errorLocation = analyzeBackendError(error);
+    
+    debugLog('error', '크레딧 조회 실패', {
+      errorType: error.name,
+      errorMessage: error.message,
+      errorLocation: errorLocation,
+      errorCode: error.response?.data?.code,
+      response: error.response?.data,
+      request: {
+        url: error.config?.url,
+        method: error.config?.method,
+        headers: error.config?.headers
+      },
+      timestamp: new Date().toISOString(),
+      stackTrace: error.stack
+    });
+    
+    return {
+      credits: 0,
+      isSuccess: false
+    };
+  }
 };
