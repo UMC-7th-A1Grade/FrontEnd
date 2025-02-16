@@ -14,12 +14,17 @@ function RankingPage() {
 
   useEffect(() => {
     const fetchRankingData = async () => {
+      const token = localStorage.getItem('accessToken');
       try {
         console.log("API 호출 시작...");
-        const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/allgrade`);
+        const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/allgrade`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-        console.log("API 응답 받음:", res); 
-        console.log("응답 데이터:", res.data); 
+        console.log("API 응답 받음:", res);
+        console.log("응답 데이터:", res.data);
 
         if (res.data.isSuccess) {
           console.log("성공적인 데이터:", res.data.result);
