@@ -57,6 +57,9 @@
   font-weight: 700;
   line-height: 29.05px;
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .layout__subtext {

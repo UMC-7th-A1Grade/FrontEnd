@@ -185,7 +185,7 @@ export const getUserCredits = async () => {
      - DB에서 사용자 크레딧 조회
    `);
 
-   const response = await api.get('/api/credits');
+   const response = await api.get('/api/users/credits');
    debugLog('success', '크레딧 조회 성공', {
      data: response.data,
      status: response.status,
