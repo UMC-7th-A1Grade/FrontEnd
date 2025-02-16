@@ -1,53 +1,64 @@
 .nextButton {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    padding: 14px 54px;
-    gap: 10px;
-    background: var(--1, #00203E);
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: 'Pretendard';
+  /* Layout */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  
+  /* Base styles */
+  width: 150px;
+  height: 42px;
+  padding: 8px 20px;
+  background: var(--1, #00203E);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  /* Typography */
+  font-family: 'Pretendard', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14px;
+  color: white;
+  white-space: nowrap;
+  
+  /* Effects */
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 32, 62, 0.1);
+}
+
+/* Interactive states */
+.nextButton:not(:disabled):hover {
+  transform: translateY(-1px) scale(1.01);
+  box-shadow: 0 4px 8px rgba(0, 32, 62, 0.2);
+}
+
+.nextButton:not(:disabled):active {
+  transform: translateY(1px) scale(0.99);
+  box-shadow: 0 1px 2px rgba(0, 32, 62, 0.15);
+}
+
+.nextButton:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* 390x844 모바일 최적화 */
+@media screen and (max-width: 390px) {
+  .nextButton {
+    width: 150px;
+    height: 42px;
+    padding: 8px 20px;
     font-size: 12px;
-    font-weight: 500;
-    line-height: 14px;
-    color: white;
-    text-decoration-skip-ink: none;
-    text-underline-position: from-font;
-    border: none;
-    
-    /* 트랜지션 효과 추가 */
-    transition: all 0.2s ease-in-out;
-    transform: translateY(0) scale(1);
-    box-shadow: 0 2px 4px rgba(0, 32, 62, 0.1);
   }
-  
-  .nextButton:not(:disabled):hover {
-    /* 활성화 상태에서만 호버 효과 적용 */
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 4px 8px rgba(0, 32, 62, 0.2);
+}
+
+/* 태블릿 이상 */
+@media screen and (min-width: 391px) {
+  .nextButton {
+    width: 160px;
+    height: 44px;
+    padding: 10px 24px;
   }
-  
-  .nextButton:not(:disabled):active {
-    /* 활성화 상태에서만 클릭 효과 적용 */
-    transform: translateY(1px) scale(0.98);
-    box-shadow: 0 1px 2px rgba(0, 32, 62, 0.15);
-  }
-  
-  /* 비활성화 상태 */
-  .nextButton:disabled {
-    background: #cccccc;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-    opacity: 0.7;
-  }
-  
-  /* 비활성화 상태일 때 호버나 클릭 시도 시에도 스타일 유지 */
-  .nextButton:disabled:hover,
-  .nextButton:disabled:active {
-    background: #cccccc;
-    transform: none;
-    box-shadow: none;
-    cursor: not-allowed;
-  }
+}
