@@ -64,10 +64,8 @@ function RandomQuestionPage() {
       if (data.isSuccess) {
         setIsCorrect(data.result.correct);
         setIsModalOpen(true);
-        
-        if (data.result.correct) {
-          problems[problemIndex].solved = true;
-        }
+        // 제출 여부 업데이트: 정답 여부와 상관없이 제출 시 표시됨
+        problems[problemIndex].solved = true;
       } else {
         alert(data.message);
       }
@@ -128,7 +126,12 @@ function RandomQuestionPage() {
         </div>
       </div>
 
-      <AnswerModal isOpen={isModalOpen} isCorrect={isCorrect} onClose={handleBack} onExplain={() => {}} />
+      <AnswerModal 
+        isOpen={isModalOpen} 
+        isCorrect={isCorrect} 
+        onClose={handleBack} 
+        questionId={problemId} 
+      />
     </>
   );
 }
