@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import styles from '../styles/randomPage/RandomPage.module.css';
 import Timer from '../components/randomPage/Timer.jsx';
 import Problem from '../components/randomPage/RandomProblem.jsx';
@@ -7,31 +8,42 @@ import Header from '../components/global/Header.jsx';
 import Loading from '../components/common/Loading';
 import { useTimer } from '../components/randomPage/TimerContext';
 
-// 문제 예시 이미지 더미 데이터 (임시입니다!!)
-import ex1 from '../assets/images/home/math_2.png';
-import ex2 from '../assets/images/home/math_3.png';
-import ex3 from '../assets/images/home/math_5.png';
-
 function RandomPage() {
   const navigate = useNavigate();
-  const location = useLocation();
   const { startTimer } = useTimer();
   const [loading, setLoading] = useState(true);
-
-  const [problems, setProblems] = useState(
-    location.state?.problems || [
-      { id: 1, title: '랜덤 문제1', solved: false, answer: 11, bgImage: ex1 },
-      { id: 2, title: '랜덤 문제2', solved: false, answer: 22, bgImage: ex2 },
-      { id: 3, title: '랜덤 문제3', solved: false, answer: 33, bgImage: ex3 },
-    ]
-  );
+  const [problems, setProblems] = useState([]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    const fetchProblems = async () => {
+      const token = localStorage.getItem('accessToken');
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_SERVER_URL}/api/question/random`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        if (res.data.isSuccess) {
+          // API에서 받은 questions 배열을 매핑하여 문제 객체로 변환함
+          const mappedProblems = res.data.result.questions.map((question, index) => ({
+            id: question.id,
+            title: `랜덤 문제 ${index + 1}`,
+            solved: question.submitted,
+            bgImage: question.questionImg,
+          }));
+          setProblems(mappedProblems);
+        } else {
+          console.error('API 응답 실패:', res.data.message);
+        }
+      } catch (error) {
+        console.error('API 호출 중 오류 발생:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    return () => clearTimeout(timer);
+    fetchProblems();
   }, []);
 
   const handleProblemClick = (id) => {
@@ -40,7 +52,7 @@ function RandomPage() {
   };
 
   if (loading) {
-    return <Loading msg='랜덤 문제를 불러오는 중이에요' />;
+    return <Loading msg="랜덤 문제를 불러오는 중이에요" />;
   }
 
   return (
