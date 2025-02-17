@@ -15,7 +15,7 @@ function RandomProblem({ problemNo, solved, bgImage, onClick }) {
       }}
     >
       <div className={styles.problemNo}>{problemNo}</div>
-      <img src={solved ? Solved : NotSolved} alt="풀이여부 아이콘" className={styles.solvedIcon} />
+      <img src={solved ? Solved : NotSolved} alt="제출 여부 아이콘" className={styles.solvedIcon} />
     </div>
   );
 }

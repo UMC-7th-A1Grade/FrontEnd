@@ -3,7 +3,7 @@ import styles from '../../styles/randomPage/AnswerModal.module.css';
 import CustomButton from '../../components/global/CustomButton.jsx';
 import SolutionModal from './SolutionModal.jsx';
 
-function AnswerModal({ isOpen, isCorrect, onClose }) {
+function AnswerModal({ isOpen, isCorrect, onClose, questionId }) {
   const [isSolutionOpen, setIsSolutionOpen] = useState(false);
 
   if (!isOpen) return null; // 모달이 열리지 않았다면 렌더링하지 않음
@@ -22,7 +22,7 @@ function AnswerModal({ isOpen, isCorrect, onClose }) {
         </div>
       </div>
 
-      <SolutionModal isOpen={isSolutionOpen} onClose={onClose} />
+      <SolutionModal isOpen={isSolutionOpen} onClose={onClose} questionId={questionId} />
     </>
   );
 }

@@ -7,7 +7,7 @@ import CustomButton from '../../components/global/CustomButton.jsx';
 function SolutionModal({ isOpen, onClose, questionId }) {
   const [solutionText, setSolutionText] = useState('답: 오류');
   const [explanation, setExplanation] = useState('풀이를 불러오지 못했습니다');
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('accessToken'); // RandomPage와 동일한 토큰 사용
 
   useEffect(() => {
     if (!isOpen || !questionId) return;
