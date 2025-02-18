@@ -10,7 +10,7 @@ import { SimilarContext } from '../../contexts/SimilarContext.jsx';
 const SimilerQuestionModal = ({ isOpen, onClose, imageUrl }) => {
   const [loading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { updateSimilar } = useContext(SimilarContext); // 수정된 context 호출
+  const { updateSimilar } = useContext(SimilarContext);
 
   if (!isOpen) return null;
   if (loading) return <SimilarLoding />;
@@ -24,15 +24,14 @@ const SimilerQuestionModal = ({ isOpen, onClose, imageUrl }) => {
     }
 
     try {
-      // 토큰 가져오기
       const token = localStorage.getItem('accessToken');
 
       await axios.patch(`${import.meta.env.VITE_SERVER_URL}/api/users/credit`, {}, {
         headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       const params = new URLSearchParams({ imageUrl });
       const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/open-ai/generate?${params}`);
@@ -42,15 +41,15 @@ const SimilerQuestionModal = ({ isOpen, onClose, imageUrl }) => {
         const memo = response.data.result.memo;
         const answer = response.data.result.answer;
 
-        // question 텍스트를 이미지로 변환
-        const generatedImage = generateImageFromText(questionText);
+        // question 텍스트를 이미지로 변환 (await로 Promise가 해결되도록 함)
+        const generatedImage = await generateImageFromText(questionText);
 
-        // memo와 answer을 Context에 저장합니다.
+        // memo와 answer을 Context에 저장
         updateSimilar(memo, answer, generatedImage);
 
         onClose();
 
-        // 생성된 이미지 URL을 state로 전달하며 /similarQuestion 페이지로 이동합니다.
+        // 생성된 이미지 URL을 state로 전달하며 /similarQuestion 페이지로 이동
         navigate('/similarQuestion', { state: { generatedImage } });
       } else {
         alert('업로드 실패!');
