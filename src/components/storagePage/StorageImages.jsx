@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from '../../styles/storagePage/storageImages.module.css';
 import ProblemCard from './ProblemCard.jsx';
 import { FiTrash2 } from 'react-icons/fi';
@@ -9,6 +10,7 @@ export default function StorageImages({ filter }) {
   const [selectAll, setSelectAll] = useState(false); // 전체 선택 여부
   const [checkedImages, setCheckedImages] = useState([]); // 체크된 이미지 목록
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열기 상태
+  const navigate = useNavigate();
 
   // 삭제 버튼 클릭 처리
   const handleDeleteClick = () => {
@@ -33,6 +35,10 @@ export default function StorageImages({ filter }) {
   // 모달 닫기
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const goHome = () => {
+    navigate('/');
   };
 
   return (
@@ -74,7 +80,12 @@ export default function StorageImages({ filter }) {
       </div>
 
       <div className={styles.homeButtonContainer}>
-        <button className={styles.homeButton}>홈화면으로 가기</button>
+        <button
+          className={styles.homeButton}
+          onClick={goHome}
+        >
+          홈화면으로 가기
+        </button>
         <div className={styles.overlay}></div>
       </div>
 
