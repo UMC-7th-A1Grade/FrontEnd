@@ -7,11 +7,41 @@ import 'katex/dist/katex.min.css';
 export default function ExplanationCard() {
   const { similarData } = useContext(SimilarContext);
 
-  // 🔹 'Step'별로 문자열을 분리하여 줄바꿈 포함
   const formatMemo = (memo) => {
     if (!memo.includes('Step')) return [memo];
 
-    return memo.split(/(Step \d+: [^]*?(?=Step \d+:|$))/g).filter((part) => part.trim() !== '');
+    const result = memo.split(/(Step \d+: [^]*?(?=Step \d+:|$))/g).filter((part) => part.trim() !== "");
+
+    return result;
+  };
+
+  // 한글과 수식을 분리하는 함수
+  const separateTextAndMath = (text) => {
+    return text.split(/(\$[^$]+\$)/g).map((part, index) => {
+      if (part.startsWith("$") && part.endsWith("$")) {
+        // 수식 처리
+        return (
+          <span
+            key={index}
+            dangerouslySetInnerHTML={{
+              __html: katex.renderToString(part.slice(1, -1), {
+                throwOnError: false,
+                displayMode: false, // 인라인 수식
+                strict: false,
+                trust: true,
+                macros: {
+                  "\\ ": " ", // 공백 처리
+                  "\\quad": "  ", // 넓은 공백 처리
+                },
+              }),
+            }}
+          />
+        );
+      } else {
+        // 한글 및 일반 텍스트 처리
+        return <span key={index} style={{ whiteSpace: "pre-wrap" }}>{part}</span>;
+      }
+    });
   };
 
   return (
@@ -23,20 +53,13 @@ export default function ExplanationCard() {
         <div className={styles.inputContainer}>
           <div className={styles.inputArea}>
             {formatMemo(similarData.memo).map((part, index) => (
-              <div
-                key={index}
-                dangerouslySetInnerHTML={{
-                  __html: katex.renderToString(part.trim(), {
-                    throwOnError: false,
-                    displayMode: true, // 블록 수식
-                  }),
-                }}
-                style={{ fontSize: '12px',marginBottom: '16px', whiteSpace: 'pre-line' }} // Step 간 간격 추가
-              ></div>
+              <div key={index} style={{ fontSize: '12px', marginBottom: '16px', whiteSpace: 'pre-wrap', width: '100%' }}>
+                {separateTextAndMath(part)}
+              </div>
             ))}
           </div>
         </div>
       </div>
     </div>
   );
-} 
+}
