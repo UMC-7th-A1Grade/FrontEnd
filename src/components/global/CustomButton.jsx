@@ -5,7 +5,7 @@ const CustomButton = ({ size, color, type, onClick, text }) => {
   const sizes = {
     small: { width: '88px', height: '26px' },
     middle: { width: '100px', height: '32px' },
-    big: { wicddth: '162px', height: '34px' },
+    big: { width: '162px', height: '34px' },
     large: { width: '186px', height: '34px' },
   };
 
@@ -15,7 +15,7 @@ const CustomButton = ({ size, color, type, onClick, text }) => {
 
   return (
     <button
-      className={`${styles.button} ${styles[color]} ${
+      className={`${styles.customButton} ${styles[color]} ${
         type === 'outline' ? styles.outline : styles.filled
       }`}
       style={buttonStyle}

@@ -23,6 +23,8 @@
 }
 
 .answerButton {
+  width: auto;
+  text-align: center;
   background-color: #fff;
   border: 2px solid #19ced4;
   color: #19ced4;

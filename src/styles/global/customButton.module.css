@@ -1,5 +1,5 @@
 /* 공통 버튼 스타일 */
-.button {
+.customButton {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,7 +12,7 @@
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
 }
 
-.button:active {
+.customButton:active {
   transform: scale(0.95);
 }
 
