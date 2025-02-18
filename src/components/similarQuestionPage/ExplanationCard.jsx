@@ -15,7 +15,7 @@ export default function ExplanationCard() {
     return result;
   };
 
-  // 🔹 한글과 수식을 분리하는 함수
+  // 한글과 수식을 분리하는 함수
   const separateTextAndMath = (text) => {
     return text.split(/(\$[^$]+\$)/g).map((part, index) => {
       if (part.startsWith("$") && part.endsWith("$")) {
@@ -38,7 +38,7 @@ export default function ExplanationCard() {
           />
         );
       } else {
-        // 🔹 한글 및 일반 텍스트 처리
+        // 한글 및 일반 텍스트 처리
         return <span key={index} style={{ whiteSpace: "pre-wrap" }}>{part}</span>;
       }
     });
