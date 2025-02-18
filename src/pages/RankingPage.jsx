@@ -11,48 +11,51 @@ import ranking3 from '../assets/images/rankingPage/3rdRankBar.png';
 function RankingPage() {
   const [rankingData, setRankingData] = useState([]);
   const [error, setError] = useState(null);
-  const [dummyMode, setDummyMode] = useState(false); // dummy 모드 여부
+  const [dummyMode, setDummyMode] = useState(false);
 
   useEffect(() => {
     const fetchRankingData = async () => {
       const token = localStorage.getItem('accessToken');
       try {
         console.log("API 호출 시작...");
-        const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/allgrade`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await axios.get(
+          `${import.meta.env.VITE_SERVER_URL}/api/users/allgrade`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         console.log("API 응답 받음:", res);
         console.log("응답 데이터:", res.data);
 
         if (res.data.isSuccess) {
-          console.log("성공적인 데이터:", res.data.result);
-
           const apiData = res.data.result.map((user) => ({
             name: user.nickName,
             characterUrl: user.characterUrl,
           }));
-
           setRankingData(apiData);
         } else {
           console.warn("서버 응답 실패:", res.data.message);
-          // 3순위까지 비어있어서 아래 에러코드인 경우, dummyMode 활성화 및 dummy 데이터 할당함!
-          if (res.data.code === 'TOP3_4006') {
-            setDummyMode(true);
-            setRankingData([{}, {}, {}]); 
-          } else {
-            setError('랭킹 데이터를 불러오지 못했습니다.');
-          }
+          // 다른 오류는 기존 방식대로 처리
+          setError('랭킹 데이터를 불러오지 못했습니다.');
         }
       } catch (error) {
         console.error("API 호출 중 오류 발생:", error);
         if (error.response) {
           console.error("서버 응답 상태 코드:", error.response.status);
           console.error("서버 응답 데이터:", error.response.data);
+          if (error.response.status === 404) {
+            // 404 에러일 경우 dummyMode 활성화 및 dummy 데이터 할당
+            setDummyMode(true);
+            setRankingData([{}, {}, {}]);
+          } else {
+            setError('서버와의 연결에 실패했습니다.');
+          }
+        } else {
+          setError('서버와의 연결에 실패했습니다.');
         }
-        setError('서버와의 연결에 실패했습니다.');
       }
     };
 
@@ -87,7 +90,9 @@ function RankingPage() {
           className={styles.titleText}
           style={dummyMode ? { fontSize: '24px' } : {}}
         >
-          {dummyMode ? "랭킹에 참여한 사람이 없습니다." : "축하합니다!"}
+          {dummyMode
+            ? "랭킹에 참여한 사람이 없습니다."
+            : "축하합니다!"}
         </div>
         <div className={styles.mvpText}>
           {dummyMode
@@ -136,9 +141,7 @@ function RankingPage() {
         <div className={styles.infoTextBtm}>
           1순위 오늘의 오답 정답 개수/2순위 정답률
         </div>
-        <div className={styles.infoTextBtm}>
-          두가지를 종합해 산정 됩니다
-          </div>
+        <div className={styles.infoTextBtm}>두가지를 종합해 산정 됩니다</div>
       </div>
     </>
   );
