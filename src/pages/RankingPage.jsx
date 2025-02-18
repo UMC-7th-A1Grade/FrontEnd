@@ -11,6 +11,7 @@ import ranking3 from '../assets/images/rankingPage/3rdRankBar.png';
 function RankingPage() {
   const [rankingData, setRankingData] = useState([]);
   const [error, setError] = useState(null);
+  const [dummyMode, setDummyMode] = useState(false); // dummy 모드 여부
 
   useEffect(() => {
     const fetchRankingData = async () => {
@@ -29,7 +30,7 @@ function RankingPage() {
         if (res.data.isSuccess) {
           console.log("성공적인 데이터:", res.data.result);
 
-          const apiData = res.data.result.map((user, index) => ({
+          const apiData = res.data.result.map((user) => ({
             name: user.nickName,
             characterUrl: user.characterUrl,
           }));
@@ -37,7 +38,13 @@ function RankingPage() {
           setRankingData(apiData);
         } else {
           console.warn("서버 응답 실패:", res.data.message);
-          setError('랭킹 데이터를 불러오지 못했습니다.');
+          // 3순위까지 비어있어서 아래 에러코드인 경우, dummyMode 활성화 및 dummy 데이터 할당함!
+          if (res.data.code === 'TOP3_4006') {
+            setDummyMode(true);
+            setRankingData([{}, {}, {}]); 
+          } else {
+            setError('랭킹 데이터를 불러오지 못했습니다.');
+          }
         }
       } catch (error) {
         console.error("API 호출 중 오류 발생:", error);
@@ -76,14 +83,23 @@ function RankingPage() {
   return (
     <>
       <div className={styles.textContainerTop}>
-        <div className={styles.titleText}>축하합니다!</div>
+        <div
+          className={styles.titleText}
+          style={dummyMode ? { fontSize: '24px' } : {}}
+        >
+          {dummyMode ? "랭킹에 참여한 사람이 없습니다." : "축하합니다!"}
+        </div>
         <div className={styles.mvpText}>
-          {rankingData.length > 0 ? `오늘의 MVP ${rankingData[0].name}` : '랭킹 불러오는 중...'}
+          {dummyMode
+            ? "첫 번째 주자가 되어보세요!"
+            : rankingData.length > 0
+              ? `오늘의 MVP ${rankingData[0].name}`
+              : '랭킹 불러오는 중...'}
         </div>
         <div className={styles.infoText}>매일 밤 12시 초기화 됩니다.</div>
       </div>
 
-      {error ? (
+      {error && !dummyMode ? (
         <div className={styles.errorContainer}>{error}</div>
       ) : (
         <motion.div
@@ -99,7 +115,9 @@ function RankingPage() {
               style={{ order: index === 0 ? 1 : index === 1 ? 0 : 2 }}
               className={styles.rankItem}
             >
-              <UserCard name={user.name} characterUrl={user.characterUrl} />
+              {!dummyMode && (
+                <UserCard name={user.name} characterUrl={user.characterUrl} />
+              )}
               <motion.img
                 src={[ranking1, ranking2, ranking3][index]}
                 alt={`${index + 1}위 그래프`}
@@ -112,9 +130,15 @@ function RankingPage() {
       )}
 
       <div className={styles.textContainerBtm}>
-        <div className={styles.titleTextBtm}>지금까지 총 해결한 오답 개수 및 오늘의 정답률</div>
-        <div className={styles.infoTextBtm}>1순위 오늘의 오답 정답 개수/2순위 정답률</div>
-        <div className={styles.infoTextBtm}>두가지를 종합해 산정 됩니다</div>
+        <div className={styles.titleTextBtm}>
+          지금까지 총 해결한 오답 개수 및 오늘의 정답률
+        </div>
+        <div className={styles.infoTextBtm}>
+          1순위 오늘의 오답 정답 개수/2순위 정답률
+        </div>
+        <div className={styles.infoTextBtm}>
+          두가지를 종합해 산정 됩니다
+          </div>
       </div>
     </>
   );
