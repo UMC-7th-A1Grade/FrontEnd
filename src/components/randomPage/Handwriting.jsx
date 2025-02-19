@@ -126,7 +126,7 @@ const Handwriting = forwardRef((props, ref) => {
       {showControls && (
         <div className={styles.controls}>
           <button onClick={undoLastStroke}>되돌리기</button>
-          <button onClick={clearCanvas}>지우기</button>
+          <button onClick={clearCanvas}>초기화</button>
         </div>
       )}
     </div>
