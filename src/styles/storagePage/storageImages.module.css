@@ -69,6 +69,8 @@
 }
 
 .homeButton {
+  display: flex;
+  align-items: center;
   position: fixed;
   width: auto;
   bottom: 40px;
