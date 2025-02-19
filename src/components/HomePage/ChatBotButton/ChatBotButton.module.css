@@ -1,4 +1,4 @@
-.chatbot_button {
+/* .chatbot_button {
     width: 71px;
     height: 26px;
     display: flex;
@@ -34,4 +34,102 @@
     text-align: right;
     color: #1E1E1E;
     white-space: nowrap;
+  } */
+
+
+  .chatbot_button {
+    /* 퍼센트 기반 너비로 변경 */
+    width: auto;
+    min-width: 71px;
+    height: 26px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F4F4F4;
+    border: none;
+    box-sizing: border-box;
+    border-radius: 2px;
+    padding: 6px 16px;
+    
+    /* 부드러운 전환 효과 */
+    transition: all 0.3s ease;
+  }
+  
+  .chatbot_button:active {
+    transform: scale(0.95);
+  }
+  
+  .chatbot_content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  
+  .chatbot_icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    margin: 0;
+  }
+  
+  .chatbot_text {
+    font-family: 'Pretendard';
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14.32px;
+    letter-spacing: 0;
+    text-align: right;
+    color: #1E1E1E;
+    white-space: nowrap;
+  }
+  
+  /* 태블릿 */
+  @media screen and (min-width: 768px) {
+    .chatbot_button {
+      height: 32px;
+      padding: 8px 20px;
+    }
+    
+    .chatbot_icon {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .chatbot_text {
+      font-size: 14px;
+      line-height: 16px;
+    }
+  }
+  
+  /* 태블릿 (큰 화면) */
+  @media screen and (min-width: 820px) {
+    .chatbot_button {
+      height: 34px;
+      padding: 8px 22px;
+    }
+    
+    .chatbot_text {
+      font-size: 15px;
+      line-height: 18px;
+    }
+  }
+  
+  /* 데스크탑 */
+  @media screen and (min-width: 1024px) {
+    .chatbot_button {
+      height: 36px;
+      padding: 10px 25px;
+    }
+    
+    .chatbot_icon {
+      width: 18px;
+      height: 18px;
+    }
+    
+    .chatbot_text {
+      font-size: 16px;
+      line-height: 20px;
+    }
   }
