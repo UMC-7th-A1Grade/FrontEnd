@@ -26,11 +26,11 @@
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 20px; 
-  justify-content: center;
+  width: 220px;
+  justify-content: space-between;
   align-items: center;
   background: rgba(0, 0, 0, 0.4);
-  padding: 5px 20px; 
+  padding: 5px;
   border-radius: 4px;
 }
 
