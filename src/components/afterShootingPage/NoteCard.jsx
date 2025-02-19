@@ -48,25 +48,7 @@ export default function NoteCard({ memo, setMemo, answer, setAnswer }) {
             />
           </div>
         )}
-
-        {/* 계산기 토글 버튼*/}
-        {/* <button
-          className={`${styles.toggleButton} ${isCalculatorOpen ? styles.rotated : ''}`}
-          onClick={toggleCalculator}
-        >
-          <FaChevronDown className={styles.arrowIcon} />
-        </button> */}
       </div>
-
-      {/* 계산기 */}
-      {/* <div className={`${styles.calculatorContainer} ${isCalculatorOpen ? styles.open : styles.closed}`}>
-        {isCalculatorOpen && (
-          <Calculator
-            input={answer}
-            setInput={setAnswer}
-          />
-        )}
-      </div> */}
 
       {/* 메모 입력 필드 */}
       <div className={styles.inputContainer}>

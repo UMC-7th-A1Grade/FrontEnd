@@ -57,15 +57,6 @@
   transform: rotate(-180deg);
 }
 
-.arrowIcon {
-  font-size: 18px;
-  color: black;
-}
-
-
-
-
-
 .calculatorContainer {
   position: absolute;
   z-index: 1000;
@@ -76,8 +67,8 @@
 @media (max-width: 768px) {
   .calculatorContainer {
     width: 80%;
-    left: 50%;
     transform: translateX(-50%);
+    transform: translateY(-80%);
   }
 }
 
@@ -94,7 +85,7 @@
     font-size: 25px;
   }
 
-  .answerButton {
+  .answerInput {
     font-size: 25px;
   }
 }
@@ -105,7 +96,7 @@
     font-size: 30px;
   }
 
-  .answerButton {
+  .answerInput {
     font-size: 30px;
   }
 }

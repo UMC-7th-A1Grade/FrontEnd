@@ -1,12 +1,29 @@
-.allContainer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 7% 5%;
-    margin-top: 10%;
+.allContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7% 5%;
+  margin-top: 10%;
 }
 
-.image{
-    width: 340px;
-    height: 228px;
+.image {
+  width: 350px;
+  height: 250px;
+}
+
+@media screen and (min-width: 768px) {
+  .allContainer {
+    margin-top: 0;
+  }
+  .image {
+    width: 500px;
+    height: 400px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .image {
+    width: 600px;
+    height: 500px;
+  }
 }
