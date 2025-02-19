@@ -22,18 +22,18 @@
 
 .controls {
   position: absolute;
-  width: 200px;
   bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 5px;
-  justify-content: center;
+  width: 200px;
+  justify-content: space-between;
   align-items: center;
   background: rgba(0, 0, 0, 0.4);
-  padding: 2px;
+  padding: 5px 15px;
   border-radius: 4px;
 }
+
 
 .controls button {
   color: white;
