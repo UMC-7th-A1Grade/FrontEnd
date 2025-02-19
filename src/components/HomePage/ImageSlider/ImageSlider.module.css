@@ -124,43 +124,68 @@
   left: 0;
 }
 
-/* Error State Styles */
 .error_state {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  left: 75px;
+  width: 240px;
+  height: 160px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #F5F5F5;
-  border-radius: 4px;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.08);
 }
 
-.error_message {
+.error_icon {
+  font-size: 32px;
+  color: #FF4B4B;
+  margin-bottom: 12px;
+}
+
+.error_title {
+  font-family: 'Pretendard';
+  font-size: 16px;
+  font-weight: 600;
+  color: #1E1E1E;
+  margin-bottom: 4px;
+  text-align: center;
+  word-break: keep-all;
+}
+
+.error_description {
   font-family: 'Pretendard';
   font-size: 14px;
   font-weight: 400;
   color: #666666;
+  margin-bottom: 16px;
   text-align: center;
   word-break: keep-all;
-  padding: 0 16px;
 }
 
 .error_button {
-  margin-top: 8px;
-  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
   background-color: #003C74;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   font-family: 'Pretendard';
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .error_button:hover {
   background-color: #002B54;
+}
+
+.refresh_icon {
+  font-size: 16px;
 }
 
 @keyframes shimmer {

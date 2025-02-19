@@ -1,7 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styles from './ImageSlider.module.css';
+import { BiErrorCircle } from 'react-icons/bi';
+import { MdOutlineRefresh } from 'react-icons/md';
 
-const ImageSlider = ({ currentPage, onPageChange, onImageClick, images, isLoading }) => {
+const ImageSlider = ({ 
+  currentPage, 
+  onPageChange, 
+  onImageClick, 
+  images, 
+  isLoading,
+  isError,
+  onRetry 
+}) => {
   const [loadedImages, setLoadedImages] = useState(new Set());
   const [direction, setDirection] = useState('right');
   const [isDragging, setIsDragging] = useState(false);
@@ -12,19 +22,36 @@ const ImageSlider = ({ currentPage, onPageChange, onImageClick, images, isLoadin
     setLoadedImages(prev => new Set(prev).add(src));
   }, []);
 
+  // 이미지 삭제 시 실시간 반영을 위한 이미지 유효성 검사
+  const validateImage = useCallback(async (src) => {
+    try {
+      const response = await fetch(src, { method: 'HEAD' });
+      return response.ok;
+    } catch (error) {
+      return false;
+    }
+  }, []);
+
   useEffect(() => {
     if (!isLoading && images.length > 0) {
       setLoadedImages(new Set());
       
-      images.forEach((src) => {
+      images.forEach(async (src) => {
         if (src) {
-          const img = new Image();
-          img.src = src;
-          img.onload = () => handleImageLoad(src);
+          // 이미지 유효성 검사 추가
+          const isValid = await validateImage(src);
+          if (isValid) {
+            const img = new Image();
+            img.src = src;
+            img.onload = () => handleImageLoad(src);
+          } else {
+            // 유효하지 않은 이미지 처리
+            console.log('Invalid image:', src);
+          }
         }
       });
     }
-  }, [images, isLoading, handleImageLoad]);
+  }, [images, isLoading, handleImageLoad, validateImage]);
 
   useEffect(() => {
     if (images.length < 2 || isLoading || isDragging) return;
@@ -84,6 +111,21 @@ const ImageSlider = ({ currentPage, onPageChange, onImageClick, images, isLoadin
     </div>
   );
 
+  const ErrorState = () => (
+    <div className={styles.error_state}>
+      <BiErrorCircle className={styles.error_icon} />
+      <p className={styles.error_title}>일시적인 오류가 발생했습니다</p>
+      <p className={styles.error_description}>잠시 후 다시 시도해 주세요</p>
+      <button 
+        className={styles.error_button}
+        onClick={onRetry}
+      >
+        <MdOutlineRefresh className={styles.refresh_icon} />
+        새로고침
+      </button>
+    </div>
+  );
+
   const getImagePosition = useCallback((index, totalImages) => {
     if (totalImages === 1) return 'center';
     if (totalImages === 2) {
@@ -105,6 +147,7 @@ const ImageSlider = ({ currentPage, onPageChange, onImageClick, images, isLoadin
 
   const renderImages = useCallback(() => {
     if (isLoading) return <LoadingState />;
+    if (isError) return <ErrorState />;
     if (images.length === 0) return <EmptyState />;
 
     return images.map((image, index) => {
@@ -143,16 +186,18 @@ const ImageSlider = ({ currentPage, onPageChange, onImageClick, images, isLoadin
       );
     });
   }, [
-    isLoading, 
-    images, 
-    isDragging, 
-    currentTranslate, 
-    handleDragStart, 
-    handleDragMove, 
-    handleDragEnd, 
-    onImageClick, 
+    isLoading,
+    isError,
+    images,
+    isDragging,
+    currentTranslate,
+    handleDragStart,
+    handleDragMove,
+    handleDragEnd,
+    onImageClick,
     loadedImages,
-    getImagePosition
+    getImagePosition,
+    onRetry
   ]);
 
   return (
