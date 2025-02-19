@@ -21,14 +21,14 @@
 }
 
 .controls {
-  position: absolute;
+  position: relative;
   bottom: 5%;
   display: flex;
-  width: 220px;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
   background: rgba(0, 0, 0, 0.4);
-  padding: 15px 10px;
+  padding: 10px 15px;
   border-radius: 4px;
 }
 
