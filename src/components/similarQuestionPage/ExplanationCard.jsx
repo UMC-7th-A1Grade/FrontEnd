@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { SimilarContext } from '../../contexts/SimilarContext.jsx';
 import styles from '../../styles/similarQuestionPage/explanationCard.module.css';
@@ -6,6 +7,16 @@ import 'katex/dist/katex.min.css';
 
 export default function ExplanationCard() {
   const { similarData } = useContext(SimilarContext);
+  const [fontSize, setFontSize] = useState(window.innerWidth >= 768 ? '20px' : '14px');
+
+  useEffect(() => {
+    const handleResize = () => {
+      setFontSize(window.innerWidth >= 768 ? '20px' : '14px');
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const formatMemo = (memo) => {
     if (!memo.includes('Step')) return [memo];
@@ -62,7 +73,7 @@ export default function ExplanationCard() {
             {formatMemo(similarData.memo).map((part, index) => (
               <div
                 key={index}
-                style={{ fontSize: '12px', marginBottom: '16px', whiteSpace: 'pre-wrap', width: '100%' }}
+                style={{ fontSize, marginBottom: '16px', whiteSpace: 'pre-wrap', width: '100%' }}
               >
                 {separateTextAndMath(part)}
               </div>
