@@ -55,11 +55,14 @@
   height: 60vh;
   justify-content: center;
   gap: 2%;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .logoImage {
   width: 32px;
   height: 32px;
+  cursor: none;
 }
 
 .emptyMessage {
