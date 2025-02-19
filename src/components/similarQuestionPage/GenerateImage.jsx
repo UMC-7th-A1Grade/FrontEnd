@@ -11,7 +11,8 @@ export const generateImageFromText = async (rawText) => {
   container.style.position = 'absolute';
   container.style.left = '-10000px';
   container.style.top = '0';
-  container.style.width = '320px'; // 원하는 이미지 너비
+  container.style.width = '320px'; // 이미지 너비
+  container.style.height = '250px' // 이미지 높이이
   container.style.padding = '20px';
   container.style.fontSize = '11px';
   container.style.fontFamily = 'Arial, sans-serif';
