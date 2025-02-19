@@ -3,12 +3,14 @@ import axios from 'axios';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import styles from '../../styles/storagePage/problemCard.module.css';
+import FullPopup from '../HomePage/FullPopup/FullPopup';
 
 export default function ProblemCard({ filters, showCheckboxes, selectAll, onCheckedImagesChange }) {
   const [images, setImages] = useState([]); // 이미지 상태
   const [checkedImages, setCheckedImages] = useState([]); // 체크된 이미지
   const [cursor, setCursor] = useState(null); // 첫 요청에서 받을 커서
   const [loading, setLoading] = useState(false);
+  const [selectedImageId, setSelectedImageId] = useState(null); // FullPopup에 전달할 ID
 
   // 이미지 요청 함수
   const fetchImages = async (newCursor = null) => {
@@ -49,10 +51,18 @@ export default function ProblemCard({ filters, showCheckboxes, selectAll, onChec
   // 체크박스 변경 핸들러
   const handleCheckboxChange = (userQuestionId) => {
     setCheckedImages((prev) =>
-      prev.includes(userQuestionId)
-        ? prev.filter((id) => id !== userQuestionId)
-        : [...prev, userQuestionId]
+      prev.includes(userQuestionId) ? prev.filter((id) => id !== userQuestionId) : [...prev, userQuestionId],
     );
+  };
+
+  // 이미지 클릭 핸들러 (FullPopup 열기)
+  const handleImageClick = (userQuestionId) => {
+    setSelectedImageId(userQuestionId);
+  };
+
+  // FullPopup 닫기 핸들러
+  const handleClosePopup = () => {
+    setSelectedImageId(null);
   };
 
   // 전체 선택 기능
@@ -77,7 +87,7 @@ export default function ProblemCard({ filters, showCheckboxes, selectAll, onChec
           fetchImages(cursor); // sentinel에 닿으면 커서로 이미지 요청
         }
       },
-      { threshold: 1.0 }
+      { threshold: 1.0 },
     );
 
     const sentinel = document.getElementById('sentinel');
@@ -89,27 +99,53 @@ export default function ProblemCard({ filters, showCheckboxes, selectAll, onChec
   }, [cursor]); // cursor 변경될 때마다 observer 설정
 
   return (
-    <div className={styles.gridContainer}>
-      {loading && images.length === 0
-        ? Array(10)
-            .fill(null)
-            .map((_, index) => (
-              <Skeleton key={index} className={styles.skeleton} width={100} height={110} />
-            ))
-        : images.map((img, index) => (
-            <div key={index} className={styles.imageWrapper}>
-              {showCheckboxes && (
-                <input
-                  type="checkbox"
-                  className={styles.checkbox}
-                  checked={checkedImages.includes(img.userQuestionId)}
-                  onChange={() => handleCheckboxChange(img.userQuestionId)}
+    <>
+      <div className={styles.gridContainer}>
+        {loading && images.length === 0
+          ? Array(10)
+              .fill(null)
+              .map((_, index) => (
+                <Skeleton
+                  key={index}
+                  className={styles.skeleton}
+                  width={100}
+                  height={110}
                 />
-              )}
-              <img src={img.imageUrl} alt={`Image ${index}`} className={styles.image} />
-            </div>
-          ))}
-      <div id="sentinel" className={styles.sentinel}></div>
-    </div>
+              ))
+          : images.map((img, index) => (
+              <div
+                key={index}
+                className={styles.imageWrapper}
+              >
+                {showCheckboxes && (
+                  <input
+                    type='checkbox'
+                    className={styles.checkbox}
+                    checked={checkedImages.includes(img.userQuestionId)}
+                    onChange={() => handleCheckboxChange(img.userQuestionId)}
+                  />
+                )}
+                <img
+                  src={img.imageUrl}
+                  alt={`Image ${index}`}
+                  className={styles.image}
+                  onClick={() => handleImageClick(img.userQuestionId)} // 이미지 클릭 이벤트 추가
+                />
+              </div>
+            ))}
+        <div
+          id='sentinel'
+          className={styles.sentinel}
+        ></div>
+      </div>
+
+      {/* FullPopup 컴포넌트 */}
+      {selectedImageId && (
+        <FullPopup
+          userQuestionId={selectedImageId}
+          onClose={handleClosePopup}
+        />
+      )}
+    </>
   );
 }
