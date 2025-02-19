@@ -19,11 +19,12 @@
   -webkit-user-drag: none;
   -webkit-tap-highlight-color: transparent;
   border-radius: 4px;
+  overflow: hidden; /* 자식 요소가 넘치지 않도록 설정 */
 }
 
 .slider__image {
-  width: 240px;
-  height: 160px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 4px;
   pointer-events: none;
@@ -67,7 +68,7 @@
 /* Empty State Styles */
 .empty_state {
   position: absolute;
-  left: 75px; /* center 이미지와 동일한 left 값 */
+  left: 75px;
   width: 240px;
   height: 160px;
   display: flex;
@@ -85,6 +86,8 @@
   font-weight: 500;
   color: #666666;
   margin-bottom: 8px;
+  text-align: center;
+  word-break: keep-all;
 }
 
 .empty_state__subtitle {
@@ -92,6 +95,8 @@
   font-size: 14px;
   font-weight: 400;
   color: #999999;
+  text-align: center;
+  word-break: keep-all;
 }
 
 /* Skeleton Loader Styles */
@@ -117,6 +122,45 @@
   position: absolute;
   top: 0;
   left: 0;
+}
+
+/* Error State Styles */
+.error_state {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #F5F5F5;
+  border-radius: 4px;
+}
+
+.error_message {
+  font-family: 'Pretendard';
+  font-size: 14px;
+  font-weight: 400;
+  color: #666666;
+  text-align: center;
+  word-break: keep-all;
+  padding: 0 16px;
+}
+
+.error_button {
+  margin-top: 8px;
+  padding: 6px 12px;
+  background-color: #003C74;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Pretendard';
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.error_button:hover {
+  background-color: #002B54;
 }
 
 @keyframes shimmer {

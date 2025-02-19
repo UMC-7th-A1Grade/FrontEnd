@@ -38,7 +38,7 @@ const CreditButton = () => {
   };
 
   return (
-    <button className={`${styles.credit_button} layout__creditButton`}>
+    <div className={`${styles.credit_button} layout__creditButton`}>
       <div className={styles.credit_content}>
         <img
           src="/images/home/credit.png"
@@ -49,7 +49,7 @@ const CreditButton = () => {
           {getCreditDisplay()}
         </span>
       </div>
-    </button>
+    </div>
   );
 };
 

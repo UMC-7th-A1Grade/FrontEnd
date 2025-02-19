@@ -1,33 +1,76 @@
 .credit_button {
-  min-width: 103px; /* width를 min-width로 변경 */
+  /* 기본 스타일 */
+  min-width: 103px;
   height: 28px;
-  display: flex;
+  display: inline-flex;  /* inline-flex로 변경 */
   align-items: center;
   justify-content: center;
   background-color: white;
   border: 1px solid #FFC700;
-  box-sizing: border-box;
   border-radius: 4px;
-  padding: 0 12px; /* 좌우 여백 추가 */
+  padding: 0 12px;  /* 패딩 감소 */
+  margin-right: 8px;  /* 우측 여백 추가 */
+  white-space: nowrap;  /* 텍스트 줄바꿈 방지 */
+  box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
 .credit_content {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px; 
+  gap: 6px;  /* gap 감소 */
+  width: auto;  /* width: 100% 제거 */
 }
 
 .credit_icon {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
-  margin: 0;
 }
 
 .credit_amount {
   color: #1E1E1E;
   font-family: 'Pretendard';
   font-size: 12px;
-  white-space: nowrap;
+  line-height: 1;  /* 라인 하이트 추가 */
+}
+
+/* 태블릿 */
+@media screen and (min-width: 768px) {
+  .credit_button {
+    min-width: 120px;
+    height: 32px;
+    padding: 0 16px;
+  }
+  
+  .credit_icon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .credit_amount {
+    font-size: 14px;
+  }
+}
+
+/* 데스크탑 */
+@media screen and (min-width: 1024px) {
+  .credit_button {
+    min-width: 120px;
+    height: 36px;
+    padding: 0 16px;  /* 패딩 유지 */
+  }
+  
+  .credit_icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .credit_amount {
+    font-size: 15px;  /* 폰트 사이즈 조정 */
+  }
+  
+  .credit_button:hover {
+    background-color: #FFF8E0;
+  }
 }

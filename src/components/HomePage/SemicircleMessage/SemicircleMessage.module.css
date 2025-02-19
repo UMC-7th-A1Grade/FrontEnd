@@ -1,3 +1,7 @@
+.container {
+  position: relative;
+}
+
 .semicircle {
   width: 220px;
   height: 34px;
@@ -7,9 +11,91 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  white-space: nowrap;  
+  white-space: nowrap;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
 
+/* 내부 이동하는 그라데이션 효과 */
+.semicircle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 212, 220, 0.05) 45%,
+    rgba(0, 212, 220, 0.1) 50%,
+    rgba(0, 212, 220, 0.05) 55%,
+    transparent 100%
+  );
+  animation: moveLight 3s linear infinite;
+}
 
+/* 테두리 빛나는 효과 */
+.semicircle::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 20px;
+  background: transparent;
+  border: 2px solid #00D4DC;
+  animation: borderGlow 3s linear infinite;
+  z-index: -1;
+}
+
+@keyframes moveLight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(50%);
+  }
+}
+
+@keyframes borderGlow {
+  0% {
+    border-left: 2px solid #00D4DC;
+    border-top: 2px solid transparent;
+    border-right: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    box-shadow: -5px 0 10px rgba(0, 212, 220, 0.5);
+  }
+  25% {
+    border-left: 2px solid transparent;
+    border-top: 2px solid #00D4DC;
+    border-right: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    box-shadow: 0 -5px 10px rgba(0, 212, 220, 0.5);
+  }
+  50% {
+    border-left: 2px solid transparent;
+    border-top: 2px solid transparent;
+    border-right: 2px solid #00D4DC;
+    border-bottom: 2px solid transparent;
+    box-shadow: 5px 0 10px rgba(0, 212, 220, 0.5);
+  }
+  75% {
+    border-left: 2px solid transparent;
+    border-top: 2px solid transparent;
+    border-right: 2px solid transparent;
+    border-bottom: 2px solid #00D4DC;
+    box-shadow: 0 5px 10px rgba(0, 212, 220, 0.5);
+  }
+  100% {
+    border-left: 2px solid #00D4DC;
+    border-top: 2px solid transparent;
+    border-right: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    box-shadow: -5px 0 10px rgba(0, 212, 220, 0.5);
+  }
 }
 
 .messageText {
@@ -18,4 +104,46 @@
   font-size: 12px;
   font-weight: 500;
   padding: 20px;
+  z-index: 2;
+}
+
+.highlight {
+  display: inline-block;
+  position: relative;
+  color: #00D4DC;
+  font-weight: 700;
+}
+
+/* Responsive Design */
+@media screen and (min-width: 768px) {
+  .semicircle {
+    width: 260px;
+    height: 38px;
+  }
+  .messageText {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 820px) {
+  .semicircle {
+    width: 240px;
+    height: 40px;
+  }
+  .messageText {
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .semicircle {
+    width: 300px;
+    height: 42px;
+  }
+  .messageText {
+    font-size: 16px;
+  }
+  .semicircle:hover {
+    transform: translateY(-2px);
+  }
 }

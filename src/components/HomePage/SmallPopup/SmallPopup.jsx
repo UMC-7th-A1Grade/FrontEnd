@@ -23,7 +23,7 @@ const SmallPopup = ({ image, onClose, onShowFullPopup }) => {
     // 1초 추가 지연 후 이미지 표시
     setTimeout(() => {
       setImageLoaded(true);
-    }, 1000);
+    }, 200);
   };
 
   return (
