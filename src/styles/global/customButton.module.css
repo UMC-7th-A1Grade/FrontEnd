@@ -81,3 +81,9 @@
 .outline:hover {
   background-color: transparent !important;
 }
+
+@media screen and (min-width: 768px) {
+  .customButton{
+    font-size: 16px;
+  }
+}

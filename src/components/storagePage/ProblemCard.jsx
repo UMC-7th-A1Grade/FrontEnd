@@ -118,6 +118,7 @@ export default function ProblemCard({ filters, showCheckboxes, selectAll, onChec
         <div className={styles.textContainer}>
           <img
             src={noImage}
+            className={styles.logoImage}
             alt='LOGO'
           />
           <div className={styles.emptyMessage}>원하는</div>

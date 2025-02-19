@@ -26,22 +26,27 @@ const SimilerQuestionModal = ({ isOpen, onClose, imageUrl }) => {
     try {
       const token = localStorage.getItem('accessToken');
 
-      await axios.patch(`${import.meta.env.VITE_SERVER_URL}/api/users/credit`, {}, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
       const params = new URLSearchParams({ imageUrl });
       const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/open-ai/generate?${params}`);
 
       if (response.data.isSuccess === true) {
+        // POST API가 성공하면 PATCH API 실행
+        await axios.patch(
+          `${import.meta.env.VITE_SERVER_URL}/api/users/credit`,
+          {},
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
         const questionText = response.data.result.question;
         const memo = response.data.result.memo;
         const answer = response.data.result.answer;
 
-        // question 텍스트를 이미지로 변환 (await로 Promise가 해결되도록 함)
+        // question 텍스트를 이미지로 변환
         const generatedImage = await generateImageFromText(questionText);
 
         // memo와 answer을 Context에 저장

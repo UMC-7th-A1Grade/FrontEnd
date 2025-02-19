@@ -6,7 +6,21 @@
     margin-top: 10%;
 }
 
-.image{
-    width: 340px;
-    height: auto;
-}
+.image {
+    width: 350px;
+    height: 250px;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .image {
+      width: 500px;
+      height: 400px;
+    }
+  }
+  
+  @media screen and (min-width: 1024px) {
+    .image {
+      width: 600px;
+      height: 500px;
+    }
+  }
