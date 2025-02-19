@@ -10,7 +10,7 @@ export default function ExplanationCard() {
   const formatMemo = (memo) => {
     if (!memo.includes('Step')) return [memo];
 
-    const result = memo.split(/(Step \d+: [^]*?(?=Step \d+:|$))/g).filter((part) => part.trim() !== "");
+    const result = memo.split(/(Step \d+: [^]*?(?=Step \d+:|$))/g).filter((part) => part.trim() !== '');
 
     return result;
   };
@@ -18,7 +18,7 @@ export default function ExplanationCard() {
   // 한글과 수식을 분리하는 함수
   const separateTextAndMath = (text) => {
     return text.split(/(\$[^$]+\$)/g).map((part, index) => {
-      if (part.startsWith("$") && part.endsWith("$")) {
+      if (part.startsWith('$') && part.endsWith('$')) {
         // 수식 처리
         return (
           <span
@@ -30,8 +30,8 @@ export default function ExplanationCard() {
                 strict: false,
                 trust: true,
                 macros: {
-                  "\\ ": " ", // 공백 처리
-                  "\\quad": "  ", // 넓은 공백 처리
+                  '\\ ': ' ', // 공백 처리
+                  '\\quad': '  ', // 넓은 공백 처리
                 },
               }),
             }}
@@ -39,7 +39,14 @@ export default function ExplanationCard() {
         );
       } else {
         // 한글 및 일반 텍스트 처리
-        return <span key={index} style={{ whiteSpace: "pre-wrap" }}>{part}</span>;
+        return (
+          <span
+            key={index}
+            style={{ whiteSpace: 'pre-wrap' }}
+          >
+            {part}
+          </span>
+        );
       }
     });
   };
@@ -48,12 +55,15 @@ export default function ExplanationCard() {
     <div className={styles.allContainer}>
       <div className={styles.cardContainer}>
         <div className={styles.header}>
-          <button className={styles.answerButton}>{similarData.answer}</button>
+          <div className={styles.answerButton}>{similarData.answer}</div>
         </div>
         <div className={styles.inputContainer}>
           <div className={styles.inputArea}>
             {formatMemo(similarData.memo).map((part, index) => (
-              <div key={index} style={{ fontSize: '12px', marginBottom: '16px', whiteSpace: 'pre-wrap', width: '100%' }}>
+              <div
+                key={index}
+                style={{ fontSize: '12px', marginBottom: '16px', whiteSpace: 'pre-wrap', width: '100%' }}
+              >
                 {separateTextAndMath(part)}
               </div>
             ))}
