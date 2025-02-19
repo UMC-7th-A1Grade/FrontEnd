@@ -1,37 +1,57 @@
 .randomButton {
   width: 265px;
+  max-width: calc(266px);
   height: 42px;
   padding: 14px 54px;
   display: flex;
   align-items: center;
   justify-content: center;
-  
   background-color: #00203E;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  
   transition: all 0.2s ease-in-out;
   box-sizing: border-box;
 }
 
-.randomButton:hover, 
-.randomButton:focus {
-  transform: scale(1.05);
-  box-shadow: 0px 4px 12px rgba(0, 32, 62, 0.25);
-}
-
 .buttonText {
-  width: 157px;
-  height: 14px;
-  
   color: white;
   font-family: 'Pretendard';
   font-size: 12px;
   font-weight: 500;
   line-height: 14.32px;
-  text-align: left;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
-  white-space: nowrap;  
+  text-align: center;
+  white-space: nowrap;
+}
+
+.randomButton:hover,
+.randomButton:focus {
+  transform: scale(1.02);
+  box-shadow: 0px 4px 12px rgba(0, 32, 62, 0.25);
+}
+
+/* 750px ~ 783px 사이에서만 반응형으로 동작 */
+@media (min-width: 750px) and (max-width: 783px) {
+  .randomButton {
+     width: calc(239px + 89px + 5vw - 46px);
+     max-width: calc(239px + 89px + 5vw - 46px);
+  }
+  
+  .buttonText {
+     width: auto;
+     font-size: 13px;
+  }
+}
+
+/* 783px 이상에서는 고정 크기 유지 */
+@media (min-width: 783px) {
+  .randomButton {
+     width: calc(239px + 89px + 39px - 46px);  /* 783px에서의 크기로 고정 */
+     max-width: calc(239px + 89px + 39px - 46px);
+  }
+  
+  .buttonText {
+     width: auto;
+     font-size: 13px;
+  }
 }

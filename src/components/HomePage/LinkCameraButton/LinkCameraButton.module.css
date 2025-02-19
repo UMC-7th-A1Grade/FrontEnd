@@ -43,12 +43,12 @@
 /* 데스크탑 크기 (1024px 이상) - 모바일 기준 1.4배 */
 @media (min-width: 1024px) {
   .circleContainer {
-    width: 56px;  /* 40px * 1.4 */
-    height: 56px;
+    width: 48px;  /* 40px * 1.2 */
+    height: 48px;
   }
   
   .cameraImage {
-    width: 28px;  /* 20px * 1.4 */
-    height: 28px;
+    width: 24px;  /* 20px * 1.2 */
+    height: 24px;
   }
 }

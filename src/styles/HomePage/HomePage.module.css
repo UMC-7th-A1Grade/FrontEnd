@@ -41,9 +41,9 @@
   top: 128px;
   left: 268.95px;
   z-index: 2;
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .layout__greeting {
@@ -68,7 +68,7 @@
   left: 50%;
   transform: translateX(-50%);
   font-family: 'Pretendard';
-  white-space: nowrap;  
+  white-space: nowrap;
   font-style: Medium;
   font-size: 18px;
   font-weight: 500;
@@ -85,9 +85,13 @@
 
 .layout__slider {
   position: absolute;
-  top: 316px; 
+  top: 316px;
+  left: 50%;
   transform: translateX(-50%);
+  width: 400px; 
 }
+
+
 
 .layout__slide_circle {
   position: absolute;
@@ -103,13 +107,12 @@
   width: 100%;
   text-align: center;
   top: -32px;
-  white-space: nowrap;  
+  white-space: nowrap;
   font-family: 'Pretendard';
   font-style: Medium;
   font-size: 12px;
   color: #1E1E1E;
 }
-
 
 .layout__random_button {
   position: absolute;
@@ -117,24 +120,79 @@
   left: 62.5px;
 }
 
+.layout__myButton, .layout__storagebutton {
+  max-width: 89px;
+  width: 89px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
 .layout__myButton {
   position: absolute;
   top: 617px;
   left: 62px;
-  border-radius: 4px;
 }
 
 .layout__storagebutton {
   position: absolute;
   top: 617px;
   left: 239px;
-  border-radius: 4px;
 }
 
 .layout__CameraButton {
   position: absolute;
   top: 606px;
   left: 171px;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+/* 768px 이상일 때 스타일 */
+@media (min-width: 768px) {
+
+  .layout {
+    width: 390px;  /* 너비 고정 유지 */
+    max-width: 390px;  /* 최대 너비도 고정 */
+    height: 844px;  /* 높이 고정 */
+    left: 50%;  /* 중앙 정렬 */
+    transform: translate(-50%, -50%);  /* 중앙 정렬 유지 */
+ }
+ 
+  .layout__slider {
+    left: calc(220px);
+    transform: translateX(-50%);
+ }
+
+  .layout__storagebutton {
+     left: calc(239px + 30px);
+  }
+  
+  .layout__CameraButton {
+     left: calc(171px + 25px);
+  }
+
+   .layout__header, 
+   .layout__greeting,
+   .layout__subtext,
+   .layout__message {
+      left: calc(171px + 45px);
+      transform: translateX(-50%);
+   }
+
+   .layout__slide_circle {
+      left: calc(171px + 45px - 17px);
+   }
+
+  /* 텍스트 반응형 */
+  .layout__greeting {
+     font-size: calc(24px + 0.3vw);
+  }
+
+  .layout__subtext {
+     font-size: calc(18px + 0.3vw);
+  }
 }
 
 .layout__content {
@@ -159,8 +217,7 @@
   font-family: 'Pretendard';
 }
 
-.layout__terms,
-.layout__privacy {
+.layout__terms, .layout__privacy {
   color: #666;
   text-decoration: none;
   margin-right: 10px;
@@ -168,7 +225,6 @@
   display: inline-block;
 }
 
-.layout__terms:hover,
-.layout__privacy:hover {
+.layout__terms:hover, .layout__privacy:hover {
   text-decoration: underline;
 }
