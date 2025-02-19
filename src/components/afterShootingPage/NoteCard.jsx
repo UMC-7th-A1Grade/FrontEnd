@@ -37,17 +37,7 @@ export default function NoteCard({ memo, setMemo, answer, setAnswer }) {
           onClick={() => setShowCalculator(true)}
           ref={inputRef}
         />
-        {showCalculator && (
-          <div
-            className={styles.calculatorContainer}
-            ref={calculatorRef}
-          >
-            <Calculator
-              input={answer}
-              setInput={setAnswer}
-            />
-          </div>
-        )}
+        
       </div>
 
       {/* 메모 입력 필드 */}
@@ -59,6 +49,17 @@ export default function NoteCard({ memo, setMemo, answer, setAnswer }) {
           onChange={(e) => setMemo(e.target.value)}
         ></textarea>
       </div>
+      {showCalculator && (
+          <div
+            className={styles.calculatorContainer}
+            ref={calculatorRef}
+          >
+            <Calculator
+              input={answer}
+              setInput={setAnswer}
+            />
+          </div>
+        )}
     </div>
   );
 }
