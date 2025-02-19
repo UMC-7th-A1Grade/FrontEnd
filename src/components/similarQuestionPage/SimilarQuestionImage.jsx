@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import styles from '../../styles/similarQuestionPage/similarQuestionImage.module.css';
-import QuestionImage from '../../assets/images/afterShootingPage/image.png';
 import { SimilarContext } from '../../contexts/SimilarContext.jsx';
 
 export default function SimilarQuestionImage() {
@@ -9,7 +8,7 @@ export default function SimilarQuestionImage() {
   return (
     <div className={styles.allContainer}>
       <img
-        src={similarData.image || QuestionImage}
+        src={similarData.image}
         alt='Generated Question'
         className={styles.image}
       />
