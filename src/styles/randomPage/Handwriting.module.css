@@ -23,14 +23,12 @@
 .controls {
   position: absolute;
   bottom: 5%;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   width: 220px;
   justify-content: space-between;
   align-items: center;
   background: rgba(0, 0, 0, 0.4);
-  padding: 20px;
+  padding: 15px 10px;
   border-radius: 4px;
 }
 
