@@ -7,6 +7,7 @@ import Problem from '../components/randomPage/RandomProblem.jsx';
 import Header from '../components/global/Header.jsx';
 import Loading from '../components/common/Loading';
 import { useTimer } from '../components/randomPage/TimerContext';
+import EmptyRandomPage from './EmptyRandomPage';
 
 function RandomPage() {
   const navigate = useNavigate();
@@ -53,6 +54,11 @@ function RandomPage() {
 
   if (loading) {
     return <Loading msg="랜덤 문제를 불러오는 중이에요" />;
+  }
+
+  // 문제 배열이 비어있으면 EmptyRandomPage를 렌더링합니다~
+  if (problems.length === 0) {
+    return <EmptyRandomPage />;
   }
 
   return (
