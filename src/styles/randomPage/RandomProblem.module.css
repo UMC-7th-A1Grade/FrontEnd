@@ -1,7 +1,6 @@
 .problemContainer {
   position: relative;
   width: 87.18%; 
-  max-width: 340px; 
   aspect-ratio: 340 / 228; 
   flex-shrink: 0;
   background-color: #ffffff;
@@ -12,6 +11,19 @@
   align-items: flex-end;
   padding: 10px;
   box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .problemContainer {
+    max-width: 340px;
+  }
+}
+
+@media (min-width: 769px) {
+  .problemContainer {
+    max-width: 600px; 
+  }
 }
 
 .problemNo {

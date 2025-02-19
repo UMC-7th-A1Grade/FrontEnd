@@ -24,7 +24,6 @@
 .problemContainer {
   position: relative;
   width: 87.18%; 
-  max-width: 340px; 
   aspect-ratio: 340 / 228; 
   flex-shrink: 0;
   background-color: #ffffff;
@@ -37,6 +36,18 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+@media (max-width: 768px) {
+  .problemContainer {
+    max-width: 340px;
+  }
+}
+
+@media (min-width: 769px) {
+  .problemContainer {
+    max-width: 600px; 
+  }
 }
 
 .mainText {
