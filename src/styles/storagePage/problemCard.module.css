@@ -48,22 +48,37 @@
   background: transparent;
 }
 
-@media screen and (min-width: 768px){
-  .checkbox{
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 60vh;
+  justify-content: center;
+  gap: 2%;
+}
+
+.emptyMessage {
+  font-size: 20px;
+  font-weight: 500;
+  color: #626262;
+}
+
+@media screen and (min-width: 768px) {
+  .checkbox {
     width: 25px;
     height: 25px;
   }
 }
 
-@media screen and (min-width: 820px){
-  .checkbox{
+@media screen and (min-width: 820px) {
+  .checkbox {
     width: 30px;
     height: 30px;
   }
 }
 
-@media screen and (min-width: 1024px){
-  .checkbox{
+@media screen and (min-width: 1024px) {
+  .checkbox {
     width: 30px;
     height: 30px;
   }

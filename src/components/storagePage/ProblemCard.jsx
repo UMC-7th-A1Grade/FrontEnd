@@ -4,6 +4,7 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import styles from '../../styles/storagePage/problemCard.module.css';
 import FullPopup from '../HomePage/FullPopup/FullPopup';
+import noImage from '../../assets/images/storagePage/noImage.webp';
 
 export default function ProblemCard({ filters, showCheckboxes, selectAll, onCheckedImagesChange }) {
   const [images, setImages] = useState([]); // 이미지 상태
@@ -97,47 +98,60 @@ export default function ProblemCard({ filters, showCheckboxes, selectAll, onChec
       if (sentinel) observer.unobserve(sentinel);
     };
   }, [cursor]); // cursor 변경될 때마다 observer 설정
-
+  
   return (
     <>
-      <div className={styles.gridContainer}>
-        {loading && images.length === 0
-          ? Array(10)
-              .fill(null)
-              .map((_, index) => (
-                <Skeleton
-                  key={index}
-                  className={styles.skeleton}
-                  width={100}
-                  height={110}
-                />
-              ))
-          : images.map((img, index) => (
-              <div
+      {loading && images.length === 0 ? (
+        <div className={styles.gridContainer}>
+          {Array(10)
+            .fill(null)
+            .map((_, index) => (
+              <Skeleton
                 key={index}
-                className={styles.imageWrapper}
-              >
-                {showCheckboxes && (
-                  <input
-                    type='checkbox'
-                    className={styles.checkbox}
-                    checked={checkedImages.includes(img.userQuestionId)}
-                    onChange={() => handleCheckboxChange(img.userQuestionId)}
-                  />
-                )}
-                <img
-                  src={img.imageUrl}
-                  alt={`Image ${index}`}
-                  className={styles.image}
-                  onClick={() => handleImageClick(img.userQuestionId)} // 이미지 클릭 이벤트 추가
-                />
-              </div>
+                className={styles.skeleton}
+                width={100}
+                height={110}
+              />
             ))}
-        <div
-          id='sentinel'
-          className={styles.sentinel}
-        ></div>
-      </div>
+        </div>
+      ) : images.length === 0 ? (
+        <div className={styles.textContainer}>
+          <img
+            src={noImage}
+            alt='LOGO'
+          />
+          <div className={styles.emptyMessage}>원하는</div>
+          <div className={styles.emptyMessage}>문제를 담아주세요</div>
+        </div>
+      ) : (
+        <div className={styles.gridContainer}>
+          {images.map((img, index) => (
+            <div
+              key={index}
+              className={styles.imageWrapper}
+            >
+              {showCheckboxes && (
+                <input
+                  type='checkbox'
+                  className={styles.checkbox}
+                  checked={checkedImages.includes(img.userQuestionId)}
+                  onChange={() => handleCheckboxChange(img.userQuestionId)}
+                />
+              )}
+              <img
+                src={img.imageUrl}
+                alt={`Image ${index}`}
+                className={styles.image}
+                onClick={() => handleImageClick(img.userQuestionId)}
+              />
+            </div>
+          ))}
+          <div
+            id='sentinel'
+            className={styles.sentinel}
+          ></div>
+        </div>
+      )}
 
       {/* FullPopup 컴포넌트 */}
       {selectedImageId && (
