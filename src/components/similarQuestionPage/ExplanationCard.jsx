@@ -66,7 +66,7 @@ export default function ExplanationCard() {
     <div className={styles.allContainer}>
       <div className={styles.cardContainer}>
         <div className={styles.header}>
-          <div className={styles.answerButton}>답 : {similarData.answer}</div>
+          <div className={styles.answerButton}>답: {similarData.answer}</div>
         </div>
         <div className={styles.inputContainer}>
           <div className={styles.inputArea}>
