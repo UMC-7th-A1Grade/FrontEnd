@@ -48,6 +48,12 @@ function RandomPage() {
   }, []);
 
   const handleProblemClick = (id) => {
+    // 이미 제출된 문제라면 alert
+    const clickedProblem = problems.find(problem => problem.id === id);
+    if (clickedProblem && clickedProblem.solved) {
+      alert('이미 정답을 제출했어요.');
+      return;
+    }
     startTimer();
     navigate(`/randomQuestion/${id}`, { state: { problems } });
   };
