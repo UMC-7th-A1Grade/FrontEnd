@@ -46,8 +46,8 @@
 
 .closeButton {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: -15px;
+  right: -15px;
   z-index: 10001;
   padding: 0.5rem;
   border-radius: 9999px;
@@ -57,12 +57,22 @@
   transition: background-color 0.2s;
 }
 
+/* 모바일 화면에서는 버튼을 더 안쪽으로 */
+@media (max-width: 768px) {
+  .closeButton {
+    top: -8px;
+    right: -8px;
+  }
+}
+
 .closeButton:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
 .closeIcon {
-  color: #4B5563;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 .image {
