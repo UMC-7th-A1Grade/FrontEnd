@@ -10,40 +10,37 @@
   background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(12px);
   z-index: 9999;
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
 }
 
 .wrapper {
   position: relative;
-  width: 100%;
-  max-width: 42rem;
-  margin: 0 1rem;
+  width: 90%;
+  max-width: 300px;
+  margin: 0 auto;
   z-index: 10000;
 }
 
 .guideText {
   position: absolute;
-  bottom: calc(100% + 1rem);
+  bottom: calc(100% + 0.8rem);
   left: 50%;
   transform: translateX(-50%);
   color: white;
-  font-size: 1.125rem;
+  font-size: 0.875rem;
   font-weight: 500;
   padding: 0.5rem 1rem;
   white-space: nowrap;
+  text-align: center;
 }
 
 .container {
   position: relative;
   width: 100%;
-  aspect-ratio: 3/2;
+  aspect-ratio: 4/3;
   background-color: white;
   border-radius: 0.5rem;
   cursor: pointer;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
@@ -106,20 +103,37 @@
   }
 }
 
-/* 반응형 스타일 */
-@media (max-width: 640px) {
+/* 태블릿 */
+@media (min-width: 768px) {
   .wrapper {
-    margin: 0 0.5rem;
+    max-width: 350px;
   }
   
   .guideText {
     font-size: 1rem;
-    bottom: calc(100% + 0.75rem);
+    bottom: calc(100% + 0.9rem);
   }
 }
 
+/* 작은 데스크톱 */
 @media (min-width: 1024px) {
   .wrapper {
-    max-width: 48rem;
+    max-width: 400px;
+  }
+  
+  .container {
+    aspect-ratio: 3/2;
+  }
+  
+  .guideText {
+    font-size: 1.125rem;
+    bottom: calc(100% + 1rem);
+  }
+}
+
+/* 큰 데스크톱 */
+@media (min-width: 1440px) {
+  .wrapper {
+    max-width: 450px;
   }
 }
