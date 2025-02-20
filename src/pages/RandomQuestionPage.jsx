@@ -55,7 +55,6 @@ function RandomQuestionPage() {
       note: handwritingImage, // 필기 내용이 없더라도 빈 값이 전달됨
       answer: inputAnswer,
     };
-    console.log("전송 데이터:", payload);
   
     try {
       const response = await axios.post(
