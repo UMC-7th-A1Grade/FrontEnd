@@ -1,17 +1,12 @@
-// FullPopup.js
 import React, { useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import styles from './FullPopup.module.css';
-import { mathService } from '../../../apis/mathApi';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
+import { mathService } from '../../../apis/mathApi';
 
-/**
- * 문제 풀이 상세 정보를 보여주는 팝업 컴포넌트
- * @param {string} userQuestionId - 문제 ID
- * @param {function} onClose - 팝업 닫기 핸들러
- */
 const FullPopup = ({ userQuestionId, onClose }) => {
-  // 상태 관리
+  // 기존 상태 관리 코드 유지
   const [activeTab, setActiveTab] = useState('memo');
   const [isLoading, setIsLoading] = useState(true);
   const [questionData, setQuestionData] = useState({
@@ -22,7 +17,7 @@ const FullPopup = ({ userQuestionId, onClose }) => {
   });
   const [error, setError] = useState(null);
 
-  // 문제 데이터 로딩
+  // 기존 useEffect와 유틸리티 함수들 유지
   useEffect(() => {
     const loadQuestionData = async () => {
       try {
@@ -39,25 +34,16 @@ const FullPopup = ({ userQuestionId, onClose }) => {
     loadQuestionData();
   }, [userQuestionId]);
 
-  /**
-   * 메모를 단계별로 분리하는 함수
-   * @param {string} memo - 원본 메모 텍스트
-   * @returns {string[]} 분리된 메모 단계들
-   */
+
+  
   const formatMemo = useCallback((memo) => {
     if (!memo || !memo.includes('Step')) return [memo];
-    
     return memo.split(/(Step \d+: [^]*?(?=Step \d+:|$))/g)
       .filter(part => part.trim() !== "");
   }, []);
 
-  /**
-   * 텍스트와 수식을 분리하여 렌더링하는 함수
-   * @param {string} text - 수식이 포함된 텍스트
-   */
   const separateTextAndMath = useCallback((text) => {
     if (!text) return null;
-
     return text.split(/(\$[^$]+\$)/g).map((part, index) => {
       if (part.startsWith("$") && part.endsWith("$")) {
         return (
@@ -82,9 +68,6 @@ const FullPopup = ({ userQuestionId, onClose }) => {
     });
   }, []);
 
-  /**
-   * 현재 탭에 따른 컨텐츠 렌더링
-   */
   const renderContent = () => {
     if (isLoading) {
       return <div className={styles.skeleton} />;
@@ -122,19 +105,26 @@ const FullPopup = ({ userQuestionId, onClose }) => {
     );
   };
 
-  // 에러 발생 시 에러 화면 표시
+  // 에러 UI를 Portal로 감싸기
+  // if (error) {
+  //   return createPortal(
+  //     <div className={styles.overlay}>
+  //       <div className={styles.error}>
+  //         {error}
+  //         <button onClick={onClose}>닫기</button>
+  //       </div>
+  //     </div>,
+  //     document.body
+  //   );
+  // }
+
   if (error) {
-    return (
-      <div className={styles.overlay}>
-        <div className={styles.error}>
-          {error}
-          <button onClick={onClose}>닫기</button>
-        </div>
-      </div>
-    );
+    mathService.showErrorPopup(error, onClose);
+    return null;
   }
 
-  return (
+  // 메인 UI를 Portal로 감싸기
+  return createPortal(
     <div className={styles.overlay}>
       <div className={styles.container}>
         <div className={styles.header}>
@@ -168,7 +158,8 @@ const FullPopup = ({ userQuestionId, onClose }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

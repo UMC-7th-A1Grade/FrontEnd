@@ -1,10 +1,9 @@
-/* FullPopup.module.css */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
@@ -14,10 +13,13 @@
 
 .container {
   position: relative;
-  width: 340px;
-  height: 540px;
+  width: 90%;
+  max-width: 340px;
+  height: 90vh;
+  max-height: 540px;
   background: white;
   border-radius: 4px;
+  margin: 0 auto;
 }
 
 .header {
@@ -26,7 +28,6 @@
   padding-top: 20px;
 }
 
-/* 답 컨테이너 스타일 수정 - 가운데 정렬 */
 .answer_container {
   display: flex;
   justify-content: center;
@@ -40,16 +41,14 @@
 
 .answer_container span {
   font-family: 'Pretendard', sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 22px;
   color: #27C5CB;
   min-width: 20px;
-  height: 22px;
   text-align: center;
 }
 
-/* 나머지 스타일은 동일하게 유지 */
 .close_button {
   position: absolute;
   top: 8px;
@@ -73,14 +72,14 @@
 
 .toggle_buttons {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   position: absolute;
   top: 67px;
   left: 14px;
 }
 
 .toggle_button {
-  padding: 4px 14px;
+  padding: 4px 12px;
   height: 22px;
   border-radius: 100px;
   font-size: 12px;
@@ -98,12 +97,6 @@
   cursor: pointer;
 }
 
-.toggle_button:active {
-  background-color: #00203E;
-  color: white;
-  transform: scale(0.95);
-}
-
 .toggle_button.active {
   background-color: #00203E;
   color: white;
@@ -114,8 +107,8 @@
   position: absolute;
   top: 104px;
   left: 16px;
-  width: 308px;
-  height: 400px;
+  width: calc(100% - 32px);
+  height: calc(100% - 120px);
   border-radius: 4px;
   border: 1px solid #E6E6E6;
   overflow: hidden;
@@ -129,7 +122,6 @@
   scrollbar-color: #888888 #f1f1f1;
 }
 
-/* 스크롤바 스타일링 */
 .image_container::-webkit-scrollbar {
   width: 6px;
 }
@@ -144,23 +136,10 @@
   border-radius: 3px;
 }
 
-.image_container::-webkit-scrollbar-thumb:hover {
-  background: #555555;
-}
-
 .problem_image {
   width: 100%;
   height: auto;
   display: block;
-}
-
-.no_note {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  font-size: 1.2rem;
-  color: #666;
 }
 
 .memo_container {
@@ -182,7 +161,15 @@
   border-radius: 4px;
 }
 
-/* 스켈레톤 로딩 애니메이션 */
+.no_note {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 1.2rem;
+  color: #666;
+}
+
 .skeleton {
   width: 100%;
   height: 100%;
@@ -192,19 +179,11 @@
 }
 
 @keyframes loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 .error {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background-color: white;
   padding: 20px;
   border-radius: 4px;
@@ -220,11 +199,60 @@
   background-color: #00203E;
   color: white;
   cursor: pointer;
-  font-family: 'Pretendard', sans-serif;
   font-size: 14px;
   transition: background-color 0.3s ease;
 }
 
-.error button:hover {
-  background-color: #001529;
+/* 태블릿 (768px 이상) */
+@media (min-width: 768px) {
+  .container {
+    max-width: 400px;
+    max-height: 600px;
+  }
+
+  .answer_container {
+    padding: 8px 24px;
+  }
+
+  .answer_container span {
+    font-size: 16px;
+  }
+
+  .toggle_button {
+    padding: 6px 16px;
+    font-size: 14px;
+  }
+
+  .memo_text {
+    font-size: 15px;
+  }
+}
+
+/* 데스크톱 (1024px 이상) */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 500px;
+    max-height: 700px;
+  }
+
+  .answer_container span {
+    font-size: 18px;
+  }
+
+  .toggle_button {
+    padding: 8px 20px;
+    font-size: 15px;
+  }
+
+  .memo_text {
+    font-size: 16px;
+  }
+}
+
+/* 큰 화면 (1440px 이상) */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 600px;
+    max-height: 800px;
+  }
 }
