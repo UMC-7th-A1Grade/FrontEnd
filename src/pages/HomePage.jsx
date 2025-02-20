@@ -41,57 +41,29 @@ const HomePage = () => {
   // }, [navigate]);
 
   // 최근 문제 불러오기
-  // useEffect(() => {
-  //   const fetchRecentQuestions = async () => {
-  //     try {
-  //       setIsLoading(true);
-  //       const questions = await getRecentQuestions();
-  //       setQuestions(questions);
-  //       setIsError(false);
-  //     } catch (error) {
-  //       console.error('최근 문제 조회 실패:', error);
-  //       setIsError(true);
-  //       if (error.response?.status === 401) {
-  //         localStorage.removeItem('accessToken');
-  //         navigate('/login');
-  //       }
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchRecentQuestions = async () => {
+      try {
+        setIsLoading(true);
+        const questions = await getRecentQuestions();
+        setQuestions(questions);
+        setIsError(false);
+      } catch (error) {
+        console.error('최근 문제 조회 실패:', error);
+        setIsError(true);
+        if (error.response?.status === 401) {
+          localStorage.removeItem('accessToken');
+          navigate('/login');
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  //   fetchRecentQuestions();
-  // }, [navigate]);
+    fetchRecentQuestions();
+  }, [navigate]);
 
-  // HomePage.js의 useEffect 부분을 수정
-useEffect(() => {
-  // 더미 데이터로 대체
-  const dummyQuestions = [
-    {
-      id: 1,
-      questionImg: '/src/assets/images/home/math_1.png'
-    },
-    {
-      id: 2,
-      questionImg: '/src/assets/images/home/math_2.png'
-    },
-    {
-      id: 3,
-      questionImg: '/src/assets/images/home/math_3.png'
-    },
-    {
-      id: 4,
-      questionImg: '/src/assets/images/home/math_4.png'
-    },
-    {
-      id: 5,
-      questionImg: '/src/assets/images/home/math_5.png'
-    }
-  ];
-  setQuestions(dummyQuestions);
-  setIsError(false);
-  setIsLoading(false);
-}, []);
+
 
   // 닉네임 불러오기
   useEffect(() => {
