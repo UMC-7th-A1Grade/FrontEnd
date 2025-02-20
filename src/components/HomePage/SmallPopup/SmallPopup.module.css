@@ -46,8 +46,8 @@
 
 .closeButton {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: 5px;
+  right: 5px;
   z-index: 10001;
   padding: 0.5rem;
   border-radius: 9999px;
@@ -62,8 +62,11 @@
 }
 
 .closeIcon {
-  color: #4B5563;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
+
 
 .image {
   width: 100%;
