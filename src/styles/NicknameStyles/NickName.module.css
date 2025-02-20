@@ -7,9 +7,17 @@ html, body {
   overflow-x: hidden;
 }
 
-.container {
+.background {
   width: 100%;
   min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
   margin: 0 auto;
   position: relative;
   display: flex;
@@ -23,13 +31,14 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 20px;
+  padding: 20px;
   box-sizing: border-box;
-  margin: auto;
+  position: relative;
+  transform: translateY(-5%);
 }
 
 .logoSection {
-  margin-top: clamp(80px, 15vh, 128px);
+  margin-top: 0;
   text-align: center;
   width: 100%;
   max-width: 500px;
@@ -53,7 +62,7 @@ html, body {
 .welcomeText {
   width: 100%;
   max-width: clamp(200px, 30vw, 300px);
-  margin-top: clamp(24px, 3vh, 32px);
+  margin-top: 16px; /* 마진 축소 */
   font-family: 'Pretendard', sans-serif;
   font-size: clamp(24px, 3vw, 32px);
   font-weight: 600;
@@ -73,7 +82,7 @@ html, body {
   max-width: 400px;
   display: flex;
   justify-content: center;
-  margin-top: clamp(20px, 4vh, 32px);
+  margin-top: 16px; /* 마진 축소 */
   padding: 0 20px;
   box-sizing: border-box;
 }
@@ -83,7 +92,7 @@ html, body {
   max-width: 500px;
   display: flex;
   justify-content: center;
-  margin-top: clamp(20px, 4vh, 32px);
+  margin-top: 16px; /* 마진 축소 */
   padding: 0 20px;
   box-sizing: border-box;
 }
@@ -127,23 +136,60 @@ html, body {
 
 /* Tablet specific styles */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-  .logoSection {
-    margin-top: 0;
-    margin-bottom: 40px;
+  .background,
+  .container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .contentWrapper {
+    padding: 0 20px;
+    height: auto;
+    max-height: 100vh;
     justify-content: center;
-    min-height: 100vh;
-    padding: 40px 20px;
+    transform: translateY(0);
   }
 
-  .welcomeText {
-    font-size: 28px;
+  .logoSection {
+    margin: 0 0 24px 0; /* 마진 축소 */
   }
 
   .inputWrapper,
   .buttonWrapper {
+    margin: 12px 0; /* 마진 축소 */
     max-width: 360px;
+  }
+
+  .welcomeText {
+    font-size: 28px;
+    margin-top: 12px; /* 마진 축소 */
+  }
+}
+
+/* 모바일 환경을 위한 추가 미디어 쿼리 */
+@media screen and (max-width: 767px) {
+  .contentWrapper {
+    padding: 16px;
+    transform: translateY(0);
+  }
+
+  .logoSection {
+    margin: 0 0 16px 0;
+  }
+
+  .welcomeText {
+    margin-top: 12px;
+  }
+
+  .inputWrapper {
+    margin-top: 12px;
+    padding: 0 16px;
+  }
+
+  .buttonWrapper {
+    margin-top: 12px;
+    padding: 0 16px;
   }
 }
