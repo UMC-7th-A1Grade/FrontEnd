@@ -11,10 +11,10 @@
 // import LinkStorageButton from '../components/HomePage/LinkStorageButton/LinkStorageButton';
 // import CreditButton from '../components/HomePage/CreditButton/CreditButton';
 // import LinkCameraButton from '../components/HomePage/LinkCameraButton/LinkCameraButton';
-// import { getRecentQuestions } from '../apis/questionApi';
-// import { getUserNickname } from '../apis/userApi';
-// import logoNickname from '../assets/images/nickname/Logo_Nickname.png';
 // import ChatbotButton from '../components/HomePage/ChatBotButton/ChatBotButton';
+// import { getRecentQuestions } from '../apis/questionApi';
+// import { getUserNickname, getUserCredits } from '../apis/userApi';
+// import logoNickname from '../assets/images/nickname/Logo_Nickname.png';
 
 // const HomePage = () => {
 //   const navigate = useNavigate();
@@ -26,60 +26,55 @@
 //   const [showFullPopup, setShowFullPopup] = useState(false);
 //   const [isError, setIsError] = useState(false);
 
-//   // 초기 로그인 체크
-//   // useEffect(() => {
-//   //   const accessToken = localStorage.getItem('accessToken');
-//   //   if (!accessToken) {
-//   //     localStorage.clear(); // 다른 데이터도 모두 삭제
-//   //     navigate('/login');
-//   //     return;
-//   //   }
-
-//   //   // 닉네임 즉시 체크
-//   //   const checkAuth = async () => {
-//   //     try {
-//   //       const { nickname, isSuccess } = await getUserNickname();
-//   //       if (!isSuccess) {
-//   //         throw new Error('Auth failed');
-//   //       }
-//   //       setUserNickname(nickname);
-//   //       localStorage.setItem('userNickname', nickname);
-//   //     } catch (error) {
-//   //       console.error('Authentication failed:', error);
-//   //       // 401이나 404 등 인증 관련 에러가 발생하면 로그인 페이지로 이동
-//   //       if (error.response?.status === 401 || error.response?.status === 404) {
-//   //         localStorage.clear(); // 인증 실패시 모든 데이터 삭제
-//   //         navigate('/login');
-//   //         return;
-//   //       }
-//   //     }
-//   //   };
-
-//   //   checkAuth();
-//   // }, [navigate]);
-
-//   // 최근 문제 불러오기
 //   useEffect(() => {
-//     const fetchRecentQuestions = async () => {
+//     const checkAuthAndLoadData = async () => {
 //       try {
-//         setIsLoading(true);
-//         const questions = await getRecentQuestions();
-//         setQuestions(questions);
-//         setIsError(false);
-//       } catch (error) {
-//         console.error('최근 문제 조회 실패:', error);
-//         setIsError(true);
-//         if (error.response?.status === 401 || error.response?.status === 404) {
-//           localStorage.clear(); // 인증 실패시 모든 데이터 삭제
-//           navigate('/login');
-//           return;
+//         // 먼저 최근 문제 데이터 로드 시도
+//         try {
+//           const questionsData = await getRecentQuestions();
+//           setQuestions(questionsData);
+//           setIsError(false);
+//         } catch (error) {
+//           // recent API가 403 에러인 경우 추가 인증 체크 진행
+//           if (error.response?.status === 403) {
+//             // 닉네임과 크레딧 API 체크
+//             const [nicknameResponse, creditResponse] = await Promise.allSettled([
+//               getUserNickname(),
+//               getUserCredits()
+//             ]);
+
+//             const isNicknameError = nicknameResponse.status === 'rejected';
+//             const isCreditError = creditResponse.status === 'rejected';
+
+//             // 두 API 모두 실패한 경우 로그인 페이지로 이동
+//             if (isNicknameError && isCreditError) {
+//               localStorage.clear();
+//               navigate('/login', { replace: true });
+//               return;
+//             }
+//           }
+//           setIsError(true);
 //         }
+
+//         // 닉네임 가져오기 시도
+//         try {
+//           const { nickname, isSuccess } = await getUserNickname();
+//           if (isSuccess && nickname) {
+//             setUserNickname(nickname);
+//           }
+//         } catch (error) {
+//           console.error('닉네임 로드 실패:', error);
+//         }
+
+//       } catch (error) {
+//         console.error('데이터 로드 실패:', error);
+//         setIsError(true);
 //       } finally {
 //         setIsLoading(false);
 //       }
 //     };
 
-//     fetchRecentQuestions();
+//     checkAuthAndLoadData();
 //   }, [navigate]);
 
 //   const handlePageChange = (newPage) => {
@@ -243,41 +238,43 @@ const HomePage = () => {
   useEffect(() => {
     const checkAuthAndLoadData = async () => {
       try {
-        // 먼저 최근 문제 데이터 로드 시도
-        try {
-          const questionsData = await getRecentQuestions();
-          setQuestions(questionsData);
+        // 모든 API 호출을 동시에 실행
+        const [questionsResponse, nicknameResponse, creditsResponse] = await Promise.allSettled([
+          getRecentQuestions(),
+          getUserNickname(),
+          getUserCredits()
+        ]);
+
+        // 500 에러 카운트 확인
+        const count500Errors = [questionsResponse, nicknameResponse, creditsResponse].filter(
+          response => response.status === 'rejected' && response.reason?.response?.status === 500
+        ).length;
+
+        // 닉네임 로드 실패 확인
+        const hasNicknameError = nicknameResponse.status === 'rejected' &&
+          nicknameResponse.reason?.message === 'Request failed with status code 500';
+
+        // 로그인 페이지로 리다이렉트 조건 체크
+        if (count500Errors >= 2 || hasNicknameError) {
+          console.log('인증 에러 발생: 로그인 페이지로 이동합니다.');
+          localStorage.clear();
+          navigate('/login', { replace: true });
+          return;
+        }
+
+        // 데이터 설정
+        if (questionsResponse.status === 'fulfilled') {
+          setQuestions(questionsResponse.value);
           setIsError(false);
-        } catch (error) {
-          // recent API가 403 에러인 경우 추가 인증 체크 진행
-          if (error.response?.status === 403) {
-            // 닉네임과 크레딧 API 체크
-            const [nicknameResponse, creditResponse] = await Promise.allSettled([
-              getUserNickname(),
-              getUserCredits()
-            ]);
-
-            const isNicknameError = nicknameResponse.status === 'rejected';
-            const isCreditError = creditResponse.status === 'rejected';
-
-            // 두 API 모두 실패한 경우 로그인 페이지로 이동
-            if (isNicknameError && isCreditError) {
-              localStorage.clear();
-              navigate('/login', { replace: true });
-              return;
-            }
-          }
+        } else {
           setIsError(true);
         }
 
-        // 닉네임 가져오기 시도
-        try {
-          const { nickname, isSuccess } = await getUserNickname();
+        if (nicknameResponse.status === 'fulfilled') {
+          const { nickname, isSuccess } = nicknameResponse.value;
           if (isSuccess && nickname) {
             setUserNickname(nickname);
           }
-        } catch (error) {
-          console.error('닉네임 로드 실패:', error);
         }
 
       } catch (error) {
