@@ -104,7 +104,20 @@ const FullPopup = ({ userQuestionId, onClose }) => {
       />
     );
   };
-  
+
+  // 에러 UI를 Portal로 감싸기
+  // if (error) {
+  //   return createPortal(
+  //     <div className={styles.overlay}>
+  //       <div className={styles.error}>
+  //         {error}
+  //         <button onClick={onClose}>닫기</button>
+  //       </div>
+  //     </div>,
+  //     document.body
+  //   );
+  // }
+
   if (error) {
     mathService.showErrorPopup(error, onClose);
     return null;
@@ -151,132 +164,3 @@ const FullPopup = ({ userQuestionId, onClose }) => {
 };
 
 export default FullPopup;
-
-// import React, { useState, useCallback } from 'react';
-// import { createPortal } from 'react-dom';
-// import styles from './FullPopup.module.css';
-// import katex from 'katex';
-// import 'katex/dist/katex.min.css';
-
-// const FullPopup = ({ onClose }) => {
-//   // 상태 관리
-//   const [activeTab, setActiveTab] = useState('memo');
-//   const [isLoading, setIsLoading] = useState(false); // 항상 false (더미 데이터 사용)
-
-//   // 더미 데이터 (API 호출 없이 직접 사용)
-//   const questionData = {
-//     questionImg: '/images/dummy/problem.png', // 더미 문제 이미지
-//     answer: '42', // 더미 정답
-//     memo: 'Step 1: $x = 2$ \n Step 2: $y = 3$ \n Step 3: $x + y = 5$',
-//     note: ['/images/dummy/note.png'] // 더미 필기 이미지
-//   };
-
-//   const formatMemo = useCallback((memo) => {
-//     if (!memo || !memo.includes('Step')) return [memo];
-//     return memo.split(/(Step \d+: [^]*?(?=Step \d+:|$))/g)
-//       .filter(part => part.trim() !== "");
-//   }, []);
-
-//   const separateTextAndMath = useCallback((text) => {
-//     if (!text) return null;
-//     return text.split(/(\$[^$]+\$)/g).map((part, index) => {
-//       if (part.startsWith("$") && part.endsWith("$")) {
-//         return (
-//           <span
-//             key={index}
-//             dangerouslySetInnerHTML={{
-//               __html: katex.renderToString(part.slice(1, -1), {
-//                 throwOnError: false,
-//                 displayMode: false,
-//                 strict: false,
-//                 trust: true,
-//                 macros: {
-//                   "\\ ": " ",
-//                   "\\quad": "  ",
-//                 },
-//               }),
-//             }}
-//           />
-//         );
-//       }
-//       return <span key={index} style={{ whiteSpace: "pre-wrap" }}>{part}</span>;
-//     });
-//   }, []);
-
-//   const renderContent = () => {
-//     if (isLoading) {
-//       return <div className={styles.skeleton} />;
-//     }
-
-//     if (activeTab === 'memo') {
-//       return (
-//         <div className={styles.memo_container}>
-//           <img
-//             src={questionData.questionImg}
-//             alt="문제 이미지"
-//             className={styles.problem_image}
-//           />
-//           <div className={styles.memo_text}>
-//             {formatMemo(questionData.memo).map((part, index) => (
-//               <div key={index} className={styles.memo_step}>
-//                 {separateTextAndMath(part)}
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       );
-//     }
-
-//     if (!questionData.note?.length) {
-//       return <div className={styles.no_note}>필기가 없습니다</div>;
-//     }
-
-//     return (
-//       <img
-//         src={questionData.note[0]}
-//         alt="필기 이미지"
-//         className={styles.problem_image}
-//       />
-//     );
-//   };
-
-//   return createPortal(
-//     <div className={styles.overlay}>
-//       <div className={styles.container}>
-//         <div className={styles.header}>
-//           <div className={styles.answer_container}>
-//             <span>{`답: ${questionData.answer || '...'}`}</span>
-//           </div>
-
-//           <button className={styles.close_button} onClick={onClose}>
-//             <img src="/images/home/X_button.png" alt="닫기" />
-//           </button>
-
-//           <div className={styles.toggle_buttons}>
-//             <button
-//               className={`${styles.toggle_button} ${activeTab === 'memo' ? styles.active : ''}`}
-//               onClick={() => setActiveTab('memo')}
-//             >
-//               메모
-//             </button>
-//             <button
-//               className={`${styles.toggle_button} ${activeTab === 'note' ? styles.active : ''}`}
-//               onClick={() => setActiveTab('note')}
-//             >
-//               필기
-//             </button>
-//           </div>
-//         </div>
-
-//         <div className={styles.content}>
-//           <div className={styles.image_container}>
-//             {renderContent()}
-//           </div>
-//         </div>
-//       </div>
-//     </div>,
-//     document.body
-//   );
-// };
-
-// export default FullPopup;
