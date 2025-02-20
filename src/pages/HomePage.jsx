@@ -26,19 +26,37 @@ const HomePage = () => {
   const [showFullPopup, setShowFullPopup] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  // 로그인 상태 확인
-  // useEffect(() => {
-  //   const checkAuthStatus = () => {
-  //     const accessToken = localStorage.getItem('accessToken');
-      
-  //     if (!accessToken) {
-  //       navigate('/login');
-  //       return;
-  //     }
-  //   };
+  // 초기 로그인 체크
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      localStorage.clear(); // 다른 데이터도 모두 삭제
+      navigate('/login');
+      return;
+    }
 
-  //   checkAuthStatus();
-  // }, [navigate]);
+    // 닉네임 즉시 체크
+    const checkAuth = async () => {
+      try {
+        const { nickname, isSuccess } = await getUserNickname();
+        if (!isSuccess) {
+          throw new Error('Auth failed');
+        }
+        setUserNickname(nickname);
+        localStorage.setItem('userNickname', nickname);
+      } catch (error) {
+        console.error('Authentication failed:', error);
+        // 401이나 404 등 인증 관련 에러가 발생하면 로그인 페이지로 이동
+        if (error.response?.status === 401 || error.response?.status === 404) {
+          localStorage.clear(); // 인증 실패시 모든 데이터 삭제
+          navigate('/login');
+          return;
+        }
+      }
+    };
+
+    checkAuth();
+  }, [navigate]);
 
   // 최근 문제 불러오기
   useEffect(() => {
@@ -51,9 +69,10 @@ const HomePage = () => {
       } catch (error) {
         console.error('최근 문제 조회 실패:', error);
         setIsError(true);
-        if (error.response?.status === 401) {
-          localStorage.removeItem('accessToken');
+        if (error.response?.status === 401 || error.response?.status === 404) {
+          localStorage.clear(); // 인증 실패시 모든 데이터 삭제
           navigate('/login');
+          return;
         }
       } finally {
         setIsLoading(false);
@@ -61,62 +80,6 @@ const HomePage = () => {
     };
 
     fetchRecentQuestions();
-  }, [navigate]);
-
-//   // HomePage.js의 useEffect 부분을 수정
-// useEffect(() => {
-//   // 더미 데이터로 대체
-//   const dummyQuestions = [
-//     {
-//       id: 1,
-//       questionImg: '/src/assets/images/home/math_1.png'
-//     },
-//     {
-//       id: 2,
-//       questionImg: '/src/assets/images/home/math_2.png'
-//     },
-//     {
-//       id: 3,
-//       questionImg: '/src/assets/images/home/math_3.png'
-//     },
-//     {
-//       id: 4,
-//       questionImg: '/src/assets/images/home/math_4.png'
-//     },
-//     {
-//       id: 5,
-//       questionImg: '/src/assets/images/home/math_5.png'
-//     }
-//   ];
-//   setQuestions(dummyQuestions);
-//   setIsError(false);
-//   setIsLoading(false);
-// }, []);
-
-  // 닉네임 불러오기
-  useEffect(() => {
-    const fetchNickname = async () => {
-      try {
-        const { nickname, isSuccess } = await getUserNickname();
-        if (isSuccess && nickname) {
-          setUserNickname(nickname);
-          localStorage.setItem('userNickname', nickname);
-        }
-      } catch (error) {
-        console.error('닉네임 조회 실패:', error);
-        if (error.response?.status === 401) {
-          localStorage.removeItem('accessToken');
-          navigate('/login');
-          return;
-        }
-        const storedNickname = localStorage.getItem('userNickname');
-        if (storedNickname) {
-          setUserNickname(storedNickname);
-        }
-      }
-    };
-
-    fetchNickname();
   }, [navigate]);
 
   const handlePageChange = (newPage) => {
