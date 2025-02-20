@@ -63,7 +63,35 @@ const HomePage = () => {
     fetchRecentQuestions();
   }, [navigate]);
 
-
+//   // HomePage.js의 useEffect 부분을 수정
+// useEffect(() => {
+//   // 더미 데이터로 대체
+//   const dummyQuestions = [
+//     {
+//       id: 1,
+//       questionImg: '/src/assets/images/home/math_1.png'
+//     },
+//     {
+//       id: 2,
+//       questionImg: '/src/assets/images/home/math_2.png'
+//     },
+//     {
+//       id: 3,
+//       questionImg: '/src/assets/images/home/math_3.png'
+//     },
+//     {
+//       id: 4,
+//       questionImg: '/src/assets/images/home/math_4.png'
+//     },
+//     {
+//       id: 5,
+//       questionImg: '/src/assets/images/home/math_5.png'
+//     }
+//   ];
+//   setQuestions(dummyQuestions);
+//   setIsError(false);
+//   setIsLoading(false);
+// }, []);
 
   // 닉네임 불러오기
   useEffect(() => {
