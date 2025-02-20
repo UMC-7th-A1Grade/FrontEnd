@@ -14,6 +14,7 @@ html, body {
   position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .contentWrapper {
@@ -24,6 +25,7 @@ html, body {
   align-items: center;
   padding: 0 20px;
   box-sizing: border-box;
+  margin: auto;
 }
 
 .logoSection {
@@ -110,7 +112,7 @@ html, body {
   background-color: #129CA1;
 }
 
-/* Responsive breakpoints using clamp() */
+/* Responsive breakpoints */
 @media screen and (max-width: 320px) {
   .inputWrapper,
   .buttonWrapper {
@@ -120,5 +122,28 @@ html, body {
   .button {
     height: 40px;
     font-size: 14px;
+  }
+}
+
+/* Tablet specific styles */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .logoSection {
+    margin-top: 0;
+    margin-bottom: 40px;
+  }
+
+  .contentWrapper {
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .welcomeText {
+    font-size: 28px;
+  }
+
+  .inputWrapper,
+  .buttonWrapper {
+    max-width: 360px;
   }
 }
