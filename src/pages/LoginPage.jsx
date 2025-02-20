@@ -1,7 +1,9 @@
 import React from 'react'
 import LogoAni from '../components/LoginPage/LoginAni'
 import GoogleLoginButton from '../components/LoginPage/LoginButton'
+import TestLoginButton from '../components/LoginPage/TestLogin'
 import styles from '../styles/LoginStyles/Login.module.css'
+
 
 const Login = () => {
   return (
@@ -12,6 +14,7 @@ const Login = () => {
         </section>
         <section className={styles.loginSection}>
           <GoogleLoginButton />
+          <TestLoginButton />
         </section>
       </main>
     </div>
