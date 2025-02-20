@@ -10,6 +10,7 @@ function SolutionModal({ isOpen, onClose, questionId }) {
   const [explanation, setExplanation] = useState('풀이를 불러오지 못했습니다');
   const token = localStorage.getItem('accessToken');
 
+  // LaTeX 문법($...$)을 분리하여 렌더링하는 함수
   const separateTextAndMath = useCallback((text) => {
     if (!text) return null;
     return text.split(/(\$[^$]+\$)/g).map((part, index) => {
@@ -34,6 +35,14 @@ function SolutionModal({ isOpen, onClose, questionId }) {
       }
       return <span key={index} style={{ whiteSpace: 'pre-wrap' }}>{part}</span>;
     });
+  }, []);
+
+  // explanation이 "Step"을 포함하면 정규식을 이용해 분리함
+  const formatMemo = useCallback((memo) => {
+    if (!memo || !memo.includes('Step')) return [memo];
+    return memo
+      .split(/(Step \d+: [^]*?(?=Step \d+:|$))/g)
+      .filter((part) => part.trim() !== '');
   }, []);
 
   useEffect(() => {
@@ -69,7 +78,6 @@ function SolutionModal({ isOpen, onClose, questionId }) {
       <div className={styles.modalContent}>
         <img src={xCircle} alt="닫기" className={styles.closeButton} onClick={onClose} />
         
-        {/* 헤더 컨테이너 추가 */}
         <div className={styles.header}>
           <div className={styles.solutionWrapper}>
             <p className={styles.solutionText}>
@@ -79,7 +87,11 @@ function SolutionModal({ isOpen, onClose, questionId }) {
         </div>
         
         <div className={styles.explanationBox}>
-          {separateTextAndMath(explanation)}
+          {formatMemo(explanation).map((part, index) => (
+            <div key={index}>
+              {separateTextAndMath(part)}
+            </div>
+          ))}
         </div>
       </div>
     </div>
