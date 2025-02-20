@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
-import { createPortal } from 'react-dom';
 import styles from './SmallPopup.module.css';
 
 const SmallPopup = ({ image, onClose, onShowFullPopup }) => {
   const [isLoading, setIsLoading] = useState(true);
-
   const handleContainerClick = (e) => {
     if (!e.target.closest(`.${styles.closeButton}`)) {
       onShowFullPopup();
     }
   };
 
-  return createPortal(
+  return (
     <div className={styles.overlay}>
       <div className={styles.wrapper}>
         <p className={styles.guideText}>
           문제를 터치하시면, 문제와 풀이도 볼 수 있어요!
         </p>
-        <div
+        
+        <div 
           onClick={handleContainerClick}
           className={styles.container}
         >
@@ -28,10 +27,10 @@ const SmallPopup = ({ image, onClose, onShowFullPopup }) => {
               onClose();
             }}
           >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
+            <svg 
+              width="20" 
+              height="20" 
+              viewBox="0 0 24 24" 
               className={styles.closeIcon}
             >
               <path
@@ -53,8 +52,7 @@ const SmallPopup = ({ image, onClose, onShowFullPopup }) => {
           />
         </div>
       </div>
-    </div>,
-    document.body
+    </div>
   );
 };
 
