@@ -244,24 +244,48 @@ const HomePage = () => {
           getUserNickname(),
           getUserCredits()
         ]);
-
-        // 500 에러 카운트 확인
-        const count500Errors = [questionsResponse, nicknameResponse, creditsResponse].filter(
-          response => response.status === 'rejected' && response.reason?.response?.status === 500
-        ).length;
-
-        // 닉네임 로드 실패 확인
-        const hasNicknameError = nicknameResponse.status === 'rejected' &&
-          nicknameResponse.reason?.message === 'Request failed with status code 500';
-
-        // 로그인 페이지로 리다이렉트 조건 체크
-        if (count500Errors >= 2 || hasNicknameError) {
+    
+        // 인증 에러 체크 함수
+        const hasAuthError = (response) => {
+          if (response.status === 'rejected') {
+            const error = response.reason;
+            // 토큰 없음 에러 체크
+            if (error.message === '토큰이 존재하지 않습니다.') {
+              return true;
+            }
+            // 401, 403 상태 코드 체크
+            if (error.response?.status === 401 || error.response?.status === 403) {
+              return true;
+            }
+          }
+          return false;
+        };
+    
+        // 인증 에러가 있는지 확인
+        if ([questionsResponse, nicknameResponse, creditsResponse].some(hasAuthError)) {
           console.log('인증 에러 발생: 로그인 페이지로 이동합니다.');
           localStorage.clear();
           navigate('/login', { replace: true });
           return;
         }
-
+    
+        // 500 에러 카운트 확인
+        const count500Errors = [questionsResponse, nicknameResponse, creditsResponse].filter(
+          response => response.status === 'rejected' && response.reason?.response?.status === 500
+        ).length;
+    
+        // 닉네임 로드 실패 확인
+        const hasNicknameError = nicknameResponse.status === 'rejected' &&
+          nicknameResponse.reason?.message === 'Request failed with status code 500';
+    
+        // 로그인 페이지로 리다이렉트 조건 체크
+        if (count500Errors >= 2 || hasNicknameError) {
+          console.log('서버 에러 발생: 로그인 페이지로 이동합니다.');
+          localStorage.clear();
+          navigate('/login', { replace: true });
+          return;
+        }
+    
         // 데이터 설정
         if (questionsResponse.status === 'fulfilled') {
           setQuestions(questionsResponse.value);
@@ -269,16 +293,26 @@ const HomePage = () => {
         } else {
           setIsError(true);
         }
-
+    
         if (nicknameResponse.status === 'fulfilled') {
           const { nickname, isSuccess } = nicknameResponse.value;
           if (isSuccess && nickname) {
             setUserNickname(nickname);
           }
         }
-
+    
       } catch (error) {
         console.error('데이터 로드 실패:', error);
+        // 캐치문에서도 인증 에러 체크
+        if (
+          error.message === '토큰이 존재하지 않습니다.' ||
+          error.response?.status === 401 ||
+          error.response?.status === 403
+        ) {
+          localStorage.clear();
+          navigate('/login', { replace: true });
+          return;
+        }
         setIsError(true);
       } finally {
         setIsLoading(false);
