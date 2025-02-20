@@ -17,7 +17,6 @@ function RankingPage() {
     const fetchRankingData = async () => {
       const token = localStorage.getItem('accessToken');
       try {
-        console.log("API 호출 시작...");
         const res = await axios.get(
           `${import.meta.env.VITE_SERVER_URL}/api/users/allgrade`,
           {
@@ -26,9 +25,6 @@ function RankingPage() {
             },
           }
         );
-
-        console.log("API 응답 받음:", res);
-        console.log("응답 데이터:", res.data);
 
         if (res.data.isSuccess) {
           const apiData = res.data.result.map((user) => ({
@@ -98,7 +94,7 @@ function RankingPage() {
           {dummyMode
             ? "첫 번째 주자가 되어보세요!"
             : rankingData.length > 0
-              ? `오늘의 MVP ${rankingData[0].name}`
+              ? `오늘의 MVP ${rankingData[0].name}님`
               : '랭킹 불러오는 중...'}
         </div>
         <div className={styles.infoText}>매일 밤 12시 초기화 됩니다.</div>
