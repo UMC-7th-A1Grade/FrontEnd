@@ -27,36 +27,36 @@ const HomePage = () => {
   const [isError, setIsError] = useState(false);
 
   // 초기 로그인 체크
-  useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) {
-      localStorage.clear(); // 다른 데이터도 모두 삭제
-      navigate('/login');
-      return;
-    }
+  // useEffect(() => {
+  //   const accessToken = localStorage.getItem('accessToken');
+  //   if (!accessToken) {
+  //     localStorage.clear(); // 다른 데이터도 모두 삭제
+  //     navigate('/login');
+  //     return;
+  //   }
 
-    // 닉네임 즉시 체크
-    const checkAuth = async () => {
-      try {
-        const { nickname, isSuccess } = await getUserNickname();
-        if (!isSuccess) {
-          throw new Error('Auth failed');
-        }
-        setUserNickname(nickname);
-        localStorage.setItem('userNickname', nickname);
-      } catch (error) {
-        console.error('Authentication failed:', error);
-        // 401이나 404 등 인증 관련 에러가 발생하면 로그인 페이지로 이동
-        if (error.response?.status === 401 || error.response?.status === 404) {
-          localStorage.clear(); // 인증 실패시 모든 데이터 삭제
-          navigate('/login');
-          return;
-        }
-      }
-    };
+  //   // 닉네임 즉시 체크
+  //   const checkAuth = async () => {
+  //     try {
+  //       const { nickname, isSuccess } = await getUserNickname();
+  //       if (!isSuccess) {
+  //         throw new Error('Auth failed');
+  //       }
+  //       setUserNickname(nickname);
+  //       localStorage.setItem('userNickname', nickname);
+  //     } catch (error) {
+  //       console.error('Authentication failed:', error);
+  //       // 401이나 404 등 인증 관련 에러가 발생하면 로그인 페이지로 이동
+  //       if (error.response?.status === 401 || error.response?.status === 404) {
+  //         localStorage.clear(); // 인증 실패시 모든 데이터 삭제
+  //         navigate('/login');
+  //         return;
+  //       }
+  //     }
+  //   };
 
-    checkAuth();
-  }, [navigate]);
+  //   checkAuth();
+  // }, [navigate]);
 
   // 최근 문제 불러오기
   useEffect(() => {
