@@ -14,8 +14,11 @@ const Login = () => {
         </section>
         <section className={styles.loginSection}>
           <GoogleLoginButton />
+          </section>
+          <section className={styles.testloginSection}>
           <TestLoginButton />
-        </section>
+          </section>
+
       </main>
     </div>
   )

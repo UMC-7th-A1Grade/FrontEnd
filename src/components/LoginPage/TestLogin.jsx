@@ -23,7 +23,7 @@ const TestLoginButton = () => {
         localStorage.setItem("socialId", data.result.socialId);
 
         // 메인 페이지로 이동
-        navigate("/");
+        navigate("/nickname");
       } else {
         console.error("테스트 계정 로그인 실패:", data.message);
       }
@@ -33,7 +33,7 @@ const TestLoginButton = () => {
   };
 
   return (
-    <p onClick={handleTestLogin} style={{ color: "gray", fontSize: "14px", textAlign: "center", marginTop: "8px", cursor: "pointer" }}>
+    <p onClick={handleTestLogin} style={{ color: "gray", fontSize: "14px", textAlign: "center", marginTop: "1px", cursor: "pointer" }}>
       테스트 계정 로그인
     </p>
   );
