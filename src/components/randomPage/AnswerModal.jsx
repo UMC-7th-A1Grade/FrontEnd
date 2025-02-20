@@ -16,8 +16,8 @@ function AnswerModal({ isOpen, isCorrect, onClose, questionId }) {
             {isCorrect ? '축하합니다!' : '아쉽지만, 더욱 발전할 수 있어요!'}
           </p>
           <div className={styles.buttonContainer}>
-            <CustomButton size="medium" color="gray" type="filled" text="돌아가기" onClick={onClose} />
-            <CustomButton size="medium" color="blue" type="filled" text="풀이 보러가기" onClick={() => setIsSolutionOpen(true)} />
+            <CustomButton size="middle" color="gray" type="filled" text="돌아가기" onClick={onClose} />
+            <CustomButton size="middle" color="blue" type="filled" text="풀이 보러가기" onClick={() => setIsSolutionOpen(true)} />
           </div>
         </div>
       </div>

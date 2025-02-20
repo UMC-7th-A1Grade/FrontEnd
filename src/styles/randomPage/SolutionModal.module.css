@@ -31,20 +31,25 @@
   cursor: pointer;
 }
 
-.solutionWrapper {
-  position: relative;
-  margin-left: -73%;
-  padding: 10px 20px;
-  justify-content: center;
+.header {
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
-  gap: 10px;
-  border: 1px solid #00E3EA;
+  width: 100%;
+  padding: 0 20px 10px 20px;
+}
+
+.solutionWrapper {
+  padding: 6px 20px;
+  border: 2px solid #19ced4;
   border-radius: 4px;
-  text-align: left;
+  background-color: #fff;
+  color: #19ced4;
   font-size: 16px;
   font-weight: 600;
-  color: #00D4DC;
+  text-align: center;
   margin-bottom: 15px;
+  margin-left: 16px; 
 }
 
 .solutionText {
