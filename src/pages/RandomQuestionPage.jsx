@@ -35,36 +35,42 @@ function RandomQuestionPage() {
 
   const submitAnswer = async () => {
     if (!problemData) return;
-    
-    const handwritingImage = handwritingRef.current?.getCanvasImage();
-    if (!handwritingImage) {
-      alert('필기 내용을 먼저 작성해주세요.');
+  
+    // answer가 비어있는지 확인 (공백 제거 후)
+    if (!inputAnswer.trim()) {
+      alert('답안을 입력해주세요.');
       return;
     }
-
+  
+    const handwritingImage = handwritingRef.current?.getCanvasImage();
+  
     const token = localStorage.getItem('accessToken');
     if (!token) {
       alert('로그인이 필요합니다.');
       return;
     }
-
+  
+    // 전송할 데이터는 여기에서 확인 가능합니다~ 
+    const payload = {
+      note: handwritingImage, // 필기 내용이 없더라도 빈 값이 전달됨
+      answer: inputAnswer,
+    };
+    console.log("전송 데이터:", payload);
+  
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_URL}/api/question/${problemId}/submit/`,
-        {
-          note: handwritingImage,
-          answer: inputAnswer,
-        },
+        payload,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
+  
       const data = response.data;
       if (data.isSuccess) {
         setIsCorrect(data.result.correct);
         setIsModalOpen(true);
-        // 제출 여부 업데이트: 정답 여부와 상관없이 제출 시 표시됨
+        // 정답 여부와 상관없이 제출 시 표시됨 (수정됨)
         problems[problemIndex].solved = true;
       } else {
         alert(data.message);
@@ -74,6 +80,7 @@ function RandomQuestionPage() {
       console.error(error);
     }
   };
+  
 
   const handleBack = () => {
     navigate('/random', { state: { problems } });
