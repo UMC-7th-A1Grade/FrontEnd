@@ -21,7 +21,7 @@ export default function MyPage() {
   let remaining = data?.result.grade ?? 30; // API에서 받아온 정답 개수 (없으면 0)
 
   // 등급별 정답 개수 가공
-  const chartDataList = ['1등급', '2등급', '3등급', '4등급', '5등급']
+  const chartDataList = ['5등급', '4등급', '3등급', '2등급', '1등급']
     .map((label) => {
       const correct = Math.min(remaining, totalPerGrade);
       remaining = Math.max(remaining - totalPerGrade, 0);
